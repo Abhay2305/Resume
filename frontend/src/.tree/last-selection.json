@@ -1,0 +1,23 @@
+[
+  "assets/hero.png",
+  "assets/react.svg",
+  "assets/vite.svg",
+  "components/ATSSection.jsx",
+  "components/constants.js",
+  "components/FAQ.jsx",
+  "components/Footer.jsx",
+  "components/Hero.jsx",
+  "components/Navbar.jsx",
+  "components/Pricing.jsx",
+  "components/Templates.jsx",
+  "components/Testimonials.jsx",
+  "components/Workflow.jsx",
+  "hooks/useReveal.js",
+  "styles/globals.css",
+  "utils/constants.js",
+  "App.css",
+  "App.jsx",
+  "index.css",
+  "LandingPage.jsx",
+  "main.jsx"
+]

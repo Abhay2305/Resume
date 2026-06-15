@@ -1,0 +1,16 @@
+export const COLORS = {
+  teal: "#7BC4BE",
+  tealLight: "#A8D8D3",
+  tealDark: "#4A9E98",
+  tealDeep: "#2D7A74",
+  ivory: "#F4F1EA",
+  cream: "#FFFDF8",
+  amber: "#F6B233",
+  amberLight: "#FAD07A",
+  amberDark: "#D4920F",
+  text: "#1A2B2A",
+  textMid: "#3D5552",
+  textMuted: "#6B8A87",
+  border: "rgba(123,196,190,0.25)",
+  borderMid: "rgba(123,196,190,0.45)",
+};
