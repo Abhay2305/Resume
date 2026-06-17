@@ -1,464 +1,353 @@
-# Prompt Resume
+# AI Resume Builder
 
 ## Project Overview
 
-Prompt Resume is an AI-powered Career Document Platform currently under active development.
+AI Resume Builder is a full-stack web application that helps users create professional, ATS-friendly resumes using AI. Instead of manually filling out templates, users can describe their experience in natural language, and the application generates structured resume content that can be edited, optimized, and exported.
 
-The goal is to build a production-grade SaaS application that generates professional, ATS-optimized resumes and cover letters using AI while following Harvard, Stanford, MIT, and other university career-writing guidance.
+The long-term vision is to provide an intelligent resume platform capable of:
 
-This repository already contains a significant amount of frontend and backend implementation.
-
-Before making any changes, understand the existing architecture and continue building on top of it instead of replacing it.
+* AI-powered resume generation
+* ATS score analysis
+* Resume optimization
+* Cover letter generation
+* Multiple professional templates
+* PDF export
+* Real-time editing experience
 
 ---
 
 # Current Project Status
 
-This project is **NOT** starting from scratch.
+The project foundation has been established.
 
-Approximate completion:
+## Backend
 
-Frontend: **70%**
+* FastAPI backend
+* Authentication system
+* Database models
+* API routing
+* AI service layer
+* Resume service architecture
+* Template management
+* SQLite database
 
-Backend: **45%**
+## Frontend
 
-AI Layer: **25%**
+* React + Vite
+* Component-based architecture
+* API integration layer
+* Resume editor foundation
+* Landing page
+* Authentication pages
+* Dashboard pages
+* Global styling
 
-Overall Product: **60-65%**
-
-The foundation has already been built.
-
-The remaining work should extend the existing architecture instead of rebuilding it.
-
----
-
-# Existing Frontend
-
-The frontend already contains the following modules:
-
-* Landing Page
-* Authentication
-* Login
-* Register
-* Dashboard
-* Resume Builder Flow
-* Resume Editor
-* Resume Preview
-* ATS Review Components
-* AI Generation Screens
-* Resume Export
-* Template Selection
-* Modern UI Components
-* Responsive Layout
-* Animations
-
-Most frontend pages already exist.
-
-Do not recreate them unless absolutely necessary.
-
-Focus on integrating real backend functionality.
+The project is currently transitioning from infrastructure development into feature implementation.
 
 ---
 
-# Existing Backend
+# Technology Stack
 
-The backend is built using FastAPI.
+## Frontend
 
-Existing components include:
+* React
+* Vite
+* JavaScript
+* CSS
 
-* JWT Authentication
-* SQLAlchemy ORM
-* Database Models
-* API Routers
-* Service Layer
-* Template APIs
-* Resume APIs
-* ATS APIs
-* PDF Services
-* Storage Services
-* LLM Service
-* Authentication System
+## Backend
 
-The backend architecture is already modular.
+* FastAPI
+* Python
+* SQLAlchemy
+* SQLite
 
-Continue following the existing structure.
+## AI
 
-Do not collapse everything into a single file.
+Current development uses Claude Code for implementation.
 
----
+The project is designed so AI providers can be swapped without affecting the application architecture.
 
-# Current AI Implementation
+Possible providers include:
 
-The project already contains an LLM service.
-
-Current implementation includes:
-
-* LLM abstraction
-* Gemini integration
-* Mock fallback generation
-
-However, most AI generation is still placeholder or fallback based.
-
-The existing architecture should be improved rather than replaced.
+* Gemini
+* OpenRouter
+* OpenCode Zen
+* Anthropic
+* OpenAI
 
 ---
 
-# Existing Architecture
+# Repository Structure
 
-Current architecture already follows a service-oriented approach.
+```
+Resume-main/
 
+├── backend/
+│   ├── app/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   ├── auth.py
+│   │   ├── database.py
+│   │   ├── models.py
+│   │   ├── schemas.py
+│   │   └── main.py
+│   │
+│   ├── requirements.txt
+│   ├── run.py
+│   └── resume_builder.db
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── styles/
+│   │   └── ...
+│   │
+│   ├── implementation_plan.md
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+# Planned User Flow
+
+```
+Landing Page
+        │
+        ▼
+Prompt Entry
+        │
+        ▼
+AI Resume Generation
+        │
+        ▼
+Resume Preview
+        │
+        ▼
+Resume Editor
+        │
+        ▼
+ATS Analysis
+        │
+        ▼
+Template Selection
+        │
+        ▼
+PDF Export
+```
+
+---
+
+# Major Features
+
+## Resume Generation
+
+Generate complete resumes from natural language prompts.
+
+Example:
+
+> "I am a software engineer with three years of Python experience."
+
+---
+
+## Resume Editing
+
+Users can edit every generated section.
+
+* Summary
+* Skills
+* Experience
+* Education
+* Projects
+* Certifications
+
+---
+
+## ATS Optimization
+
+The application will evaluate resumes against ATS standards.
+
+Future metrics include:
+
+* Keyword matching
+* Formatting quality
+* Readability
+* Missing sections
+* Overall ATS score
+
+---
+
+## Cover Letter Generation
+
+Generate personalized cover letters based on:
+
+* Resume
+* Job description
+* Company information
+
+---
+
+## Resume Templates
+
+Planned templates:
+
+* Meridian
+* Ashford
+* Luma
+* Pulse
+
+Users will be able to switch templates without losing resume data.
+
+---
+
+## PDF Export
+
+Generate professional PDFs while preserving formatting.
+
+---
+
+# Current Development Progress
+
+## Completed
+
+* Project architecture
+* Backend initialization
+* Database setup
+* API structure
+* Frontend initialization
+* Component organization
+* Authentication foundation
+* Resume service foundation
+* AI service abstraction
+
+---
+
+## In Progress
+
+* AI resume generation workflow
+* Resume editor
+* Prompt-driven generation
+* Template rendering
+* ATS analysis
+* Export functionality
+
+---
+
+## Planned
+
+* Cover letter generator
+* Job description analyzer
+* Resume comparison
+* Resume version history
+* AI suggestions
+* Interview preparation
+* Portfolio generation
+
+---
+
+# Development Philosophy
+
+This project follows a modular architecture.
+
+Each major responsibility is isolated into its own layer.
+
+```
 Frontend
 
 ↓
 
-FastAPI Backend
+API Layer
 
 ↓
 
-Services
+Backend Routers
+
+↓
+
+Business Services
+
+↓
+
+AI Providers
 
 ↓
 
 Database
+```
 
-↓
-
-LLM Service
-
-↓
-
-Generated Output
-
-Continue using this architecture.
+This makes the project easier to maintain and allows future AI providers to be integrated with minimal changes.
 
 ---
 
-# Current Goal
+# AI Development Workflow
 
-The current objective is **NOT** to redesign the application.
+Development is performed using Claude Code.
 
-The objective is to replace mocked AI functionality with a production-ready AI pipeline.
+Current capabilities:
 
----
+* Read repository
+* Modify code
+* Refactor components
+* Implement features
+* Generate documentation
+* Debug issues
 
-# What Already Exists
+Current limitations:
 
-The following systems already exist in some form:
-
-Authentication
-
-Database
-
-Resume CRUD
-
-Template Selection
-
-Resume Preview
-
-Dashboard
-
-Backend APIs
-
-LLM Service
-
-PDF Services
-
-Storage Services
-
-JWT Authentication
-
-Do not rebuild these modules.
-
-Improve and extend them.
+* Repository-wide planning using Anthropic Explore Agents is not supported by third-party proxy providers.
+* Large repository analysis should be performed module-by-module.
 
 ---
 
-# What Still Needs To Be Built
+# Development Guidelines
 
-The following features are incomplete or missing:
+When implementing new features:
 
-## AI Provider
-
-Replace mocked generation with production-ready OpenAI integration.
-
-The architecture should remain provider-independent so Gemini and Claude can be added later.
-
----
-
-## Prompt Builder
-
-Create a dedicated Prompt Builder Service.
-
-Responsibilities:
-
-* Build prompts
-* Inject writing rules
-* Inject ATS rules
-* Inject knowledge
-* Build structured prompts
-
-Never send raw user input directly to the LLM.
+1. Reuse existing components whenever possible.
+2. Keep business logic inside backend services.
+3. Keep UI components focused on presentation.
+4. Maintain separation between frontend and backend.
+5. Avoid hardcoding AI provider logic.
+6. Build reusable, maintainable components.
+7. Preserve modular architecture.
 
 ---
 
-## Knowledge Engine
+# Long-Term Vision
 
-Create a knowledge ingestion system.
+The goal is to build a production-ready AI career platform rather than a simple resume builder.
 
-The application will contain a folder similar to:
+Future capabilities include:
 
-backend/
-
-knowledge/
-
-pdfs/
-
-Harvard Resume Guide.pdf
-
-Harvard Cover Letter Guide.pdf
-
-Stanford Career Guide.pdf
-
-MIT Career Guide.pdf
-
-Yale Career Guide.pdf
-
-...
-
-The application should automatically read these PDFs.
-
-Extract useful information.
-
-Store the extracted knowledge inside the database.
-
-Do not hardcode knowledge inside prompts.
+* AI Resume Builder
+* AI Cover Letter Generator
+* ATS Scanner
+* Job Matching
+* Interview Preparation
+* Career Assistant
+* Portfolio Generator
+* Resume Analytics
+* Multiple Export Formats
+* User Dashboard
+* Resume Version Management
 
 ---
 
-## Knowledge Retrieval
-
-During generation:
-
-Retrieve relevant knowledge from the database.
-
-Inject it into prompts.
-
-The LLM should use retrieved university guidance while generating resumes and cover letters.
-
----
-
-## Resume Examples
-
-Create a database containing professional resume transformations.
-
-Example:
-
-Raw:
-
-Worked with Oracle.
-
-Professional:
-
-Developed Oracle SQL reporting solutions supporting enterprise business operations.
-
-These examples should improve prompt quality.
-
----
-
-## ATS Engine
-
-Implement a deterministic ATS scoring engine.
-
-Do not rely on AI for ATS scores.
-
-Scoring should include:
-
-Resume completeness
-
-Action verbs
-
-Skills
-
-Formatting
-
-Keywords
-
-Section coverage
-
-Length
-
-Generate:
-
-Score
-
-Suggestions
-
-Recommendations
-
----
-
-## Job Description Analyzer
-
-Implement:
-
-Keyword extraction
-
-Technology extraction
-
-Skill extraction
-
-Resume matching
-
-Gap analysis
-
-Match score
-
----
-
-## Cover Letter Engine
-
-Generate professional cover letters using:
-
-Resume
-
-Job Description
-
-Company
-
-Role
-
-University guidance
-
-ATS best practices
-
----
-
-## Knowledge Base
-
-The application will use career guidance from:
-
-Harvard University
-
-Stanford University
-
-MIT
-
-Yale
-
-Princeton
-
-Columbia
-
-Carnegie Mellon
-
-Georgia Tech
-
-University of Pennsylvania
-
-Other trusted universities.
-
-These PDFs are knowledge sources.
-
-They should become part of the application's knowledge base.
-
-The LLM should reference this knowledge during generation.
-
----
-
-## Future RAG Support
-
-Design the architecture so it can later support:
-
-Vector embeddings
-
-Semantic search
-
-pgvector
-
-Retrieval-Augmented Generation (RAG)
-
-Do not tightly couple the system to today's implementation.
-
----
-
-# Development Principles
-
-Continue using the existing architecture.
-
-Avoid unnecessary rewrites.
-
-Write modular services.
-
-Avoid hardcoding business logic.
-
-Avoid hardcoding prompts.
-
-Avoid hardcoding templates.
-
-Keep frontend and backend loosely coupled.
-
-Write production-quality code.
-
-Follow clean architecture.
-
-Follow SOLID principles.
-
----
-
-# AI Development Philosophy
-
-The competitive advantage is **NOT** the LLM.
-
-The competitive advantage is:
-
-Knowledge Engine
-
-Prompt Builder
-
-Resume Rules
-
-University Career Guidance
-
-ATS Engine
-
-Resume Examples
-
-Job Matching
-
-The LLM is only responsible for writing.
-
-The application is responsible for intelligence.
-
----
-
-# Immediate Development Priority
-
-The next implementation phase should focus on:
-
-1. Production-ready OpenAI integration
-
-2. Prompt Builder Service
-
-3. Knowledge Ingestion Pipeline
-
-4. Knowledge Retrieval Layer
-
-5. Resume Generation Pipeline
-
-6. Cover Letter Generation
-
-7. ATS Scoring Engine
-
-8. Job Description Analyzer
-
-The existing frontend should begin consuming these services rather than mocked responses.
-
----
-
-# Mission
-
-Continue building Prompt Resume into a production-ready AI Career Document Platform by extending the existing architecture, replacing mocked AI with real intelligence, and using university career guidance as the foundation for high-quality resume and cover letter generation.
-
-Do not rebuild what already exists.
-
-Build on top of it.
+# Notes for AI Coding Assistants
+
+Before implementing any feature:
+
+* Read the existing architecture.
+* Reuse existing services whenever possible.
+* Avoid duplicate components.
+* Preserve the project structure.
+* Follow modular design principles.
+* Keep frontend and backend responsibilities separate.
+* Prefer incremental implementation over large-scale refactoring.
+
+The goal is to extend the existing architecture rather than replace it.
