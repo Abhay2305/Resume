@@ -106,6 +106,15 @@ export const api = {
     return res.json();
   },
 
+  async getActivityLog() {
+    const res = await fetch(`${BASE_URL}/user/activity`, {
+      method: "GET",
+      headers: getHeaders(),
+    });
+    if (!res.ok) throw new Error("Failed to fetch activity log");
+    return res.json();
+  },
+
   // Resumes
   async createResume(title, templateId = "harvard") {
     const res = await fetch(`${BASE_URL}/resume/create`, {

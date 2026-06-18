@@ -11,13 +11,16 @@ export default function ResumeCreateFlow() {
   const handlePromptSubmit = async (promptText, archetype) => {
     setIsGenerating(true);
     try {
-      // 1. Submit prompt to AI FastAPI extractor
-      const resume = await api.generateResumeFromPrompt(promptText, archetype);
-      
-      // 2. Allow the loading simulation (which has a 4 second interval) to complete for engaging UX
-      setTimeout(() => {
-        navigate(`/resume/edit/${resume.id}`);
-      }, 4000);
+      // Run the AI generation and a minimum animation window in parallel.
+      // Navigation happens only after the API call actually succeeds; the
+      // minimum delay just prevents the loader from flashing on fast responses.
+      const minAnimation = new Promise((resolve) => setTimeout(resolve, 2500));
+      const [resume] = await Promise.all([
+        api.generateResumeFromPrompt(promptText, archetype),
+        minAnimation,
+      ]);
+
+      navigate(`/resume/edit/${resume.id}`);
     } catch (err) {
       alert("AI Generation failed: " + err.message);
       setIsGenerating(false);

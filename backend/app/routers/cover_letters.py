@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from ..database import get_db
-from ..models import CoverLetter, User
+from ..models import CoverLetter, User, ActivityLog
 from ..schemas import CoverLetterOut, CoverLetterCreate, CoverLetterUpdate
 from ..auth import get_current_user
 from ..services.ai_service import CoverLetterGeneratorService
@@ -34,6 +34,13 @@ def generate_cover_letter(req: CoverLetterCreate, db: Session = Depends(get_db),
     db.add(new_cl)
     db.commit()
     db.refresh(new_cl)
+    
+    db.add(ActivityLog(
+        user_id=current_user.id,
+        activity_type="cover_letter_generated",
+        description=f"Generated cover letter for {req.job_role} at {req.company_name}"
+    ))
+    db.commit()
     
     return new_cl
 

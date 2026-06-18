@@ -179,3 +179,13 @@ class PaymentOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+# Activity Log Schema
+class ActivityLogOut(BaseModel):
+    id: str
+    activity_type: str
+    description: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

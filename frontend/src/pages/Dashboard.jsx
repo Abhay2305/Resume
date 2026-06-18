@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [templates, setTemplates] = useState([]);
   const [sub, setSub] = useState({ plan_type: "free", status: "active" });
   const [payments, setPayments] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [loading, setLoading] = useState(true);
   
   // AI assistant states
@@ -53,6 +54,13 @@ export default function Dashboard() {
       
       const billing = await api.getBillingHistory();
       setPayments(billing);
+
+      try {
+        const acts = await api.getActivityLog();
+        setActivity(acts);
+      } catch (actErr) {
+        console.error("Failed to load activity log:", actErr);
+      }
     } catch (err) {
       console.error("Failed to load dashboard data, redirecting to login:", err);
       api.logout();
@@ -103,28 +111,37 @@ export default function Dashboard() {
   };
 
   // Cover letter operations
-  const handleCreateCoverLetter = async () => {
-    const role = prompt("Enter Target Job Role (e.g. Software Engineer):");
-    if (!role) return;
-    const company = prompt("Enter Company Name:");
-    if (!company) return;
-    const exp = prompt("Provide brief experience context:");
-    if (!exp) return;
+  const [showLetterModal, setShowLetterModal] = useState(false);
+  const [letterForm, setLetterForm] = useState({ jobRole: "", companyName: "", experienceSummary: "" });
+  const [letterSubmitting, setLetterSubmitting] = useState(false);
 
+  const handleCreateCoverLetter = () => {
+    setLetterForm({ jobRole: "", companyName: "", experienceSummary: "" });
+    setShowLetterModal(true);
+  };
+
+  const submitCoverLetter = async (e) => {
+    e.preventDefault();
+    const { jobRole, companyName, experienceSummary } = letterForm;
+    if (!jobRole.trim() || !companyName.trim()) {
+      alert("Job role and company name are required.");
+      return;
+    }
     try {
-      setLoading(true);
+      setLetterSubmitting(true);
       const letter = await api.generateCoverLetter(
-        `Cover Letter - ${company}`,
-        role,
-        company,
-        exp
+        `Cover Letter - ${companyName}`,
+        jobRole,
+        companyName,
+        experienceSummary
       );
-      setLetters([letter, ...letters]);
+      setLetters((prev) => [letter, ...prev]);
+      setShowLetterModal(false);
       setActiveTab("letters");
     } catch (err) {
       alert("Generation failed: " + err.message);
     } finally {
-      setLoading(false);
+      setLetterSubmitting(false);
     }
   };
 
@@ -420,6 +437,30 @@ export default function Dashboard() {
                           >
                             Open Editor
                           </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Recent Activity */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Recent Activity</h3>
+                {activity.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500 text-xs">
+                    No recent activity yet. Your actions will appear here.
+                  </div>
+                ) : (
+                  <div className="divide-y divide-white/5">
+                    {activity.slice(0, 6).map(act => (
+                      <div key={act.id} className="flex items-center gap-3 py-3 px-2">
+                        <div className="w-8 h-8 rounded-lg bg-[#7BC4BE]/15 flex items-center justify-center text-[#7BC4BE] shrink-0">
+                          <Check size={14} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-semibold text-white truncate">{act.description || act.activity_type}</div>
+                          <div className="text-[10px] text-gray-500">{new Date(act.created_at).toLocaleString()}</div>
                         </div>
                       </div>
                     ))}
@@ -847,6 +888,84 @@ export default function Dashboard() {
           )}
         </AnimatePresence>
       </main>
+
+      {/* Cover Letter Creation Modal */}
+      {showLetterModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-md bg-[#16302F] border border-white/10 rounded-2xl p-6 shadow-2xl">
+            <div className="flex justify-between items-start mb-5">
+              <div>
+                <h3 className="text-base font-bold text-white">New Cover Letter</h3>
+                <p className="text-[11px] text-gray-400 mt-0.5">The AI advisor will draft a targeted letter.</p>
+              </div>
+              <button
+                onClick={() => setShowLetterModal(false)}
+                className="text-gray-500 hover:text-white text-lg leading-none"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={submitCoverLetter} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Target Job Role</label>
+                <input
+                  type="text"
+                  value={letterForm.jobRole}
+                  onChange={(e) => setLetterForm({ ...letterForm, jobRole: e.target.value })}
+                  placeholder="e.g. Senior Software Engineer"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Company Name</label>
+                <input
+                  type="text"
+                  value={letterForm.companyName}
+                  onChange={(e) => setLetterForm({ ...letterForm, companyName: e.target.value })}
+                  placeholder="e.g. Stripe"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Experience Context</label>
+                <textarea
+                  rows={4}
+                  value={letterForm.experienceSummary}
+                  onChange={(e) => setLetterForm({ ...letterForm, experienceSummary: e.target.value })}
+                  placeholder="Briefly summarize your relevant experience and strengths..."
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowLetterModal(false)}
+                  className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-xl text-xs font-semibold transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={letterSubmitting}
+                  className="flex-1 py-2.5 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 disabled:opacity-60"
+                >
+                  {letterSubmitting ? (
+                    <>
+                      <RefreshCw size={12} className="animate-spin" /> Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={12} /> Generate Letter
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

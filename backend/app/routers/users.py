@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from ..database import get_db
 from ..models import User, Profile, Subscription, Payment, ActivityLog
-from ..schemas import ProfileOut, ProfileUpdate, SubscriptionOut, PaymentOut
+from ..schemas import ProfileOut, ProfileUpdate, SubscriptionOut, PaymentOut, ActivityLogOut
 from ..auth import get_current_user
 
 router = APIRouter(prefix="/user", tags=["Users & Billing"])
@@ -82,3 +82,14 @@ def upgrade_subscription(plan_type: str, db: Session = Depends(get_db), current_
 @router.get("/billing/history", response_model=List[PaymentOut])
 def get_billing_history(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return db.query(Payment).filter(Payment.user_id == current_user.id).order_by(Payment.payment_date.desc()).all()
+
+@router.get("/activity", response_model=List[ActivityLogOut])
+def get_activity_log(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    """Returns the authenticated user's recent activity log entries."""
+    return (
+        db.query(ActivityLog)
+        .filter(ActivityLog.user_id == current_user.id)
+        .order_by(ActivityLog.created_at.desc())
+        .limit(50)
+        .all()
+    )

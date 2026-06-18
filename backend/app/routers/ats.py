@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Dict, Any, List
 from ..database import get_db
-from ..models import User, ATSResult, Resume
+from ..models import User, ATSResult, Resume, ResumeRule
 from ..schemas import ATSResultOut, ResumeImproveRequest, ResumeImproveResponse
 from ..auth import get_current_user
 from ..services.ai_service import ATSScoreService
@@ -76,8 +76,8 @@ def improve_text(req: ResumeImproveRequest, db: Session = Depends(get_db), curre
     if cleaned_improved.startswith('"') and cleaned_improved.endswith('"'):
         cleaned_improved = cleaned_improved[1:-1]
         
-    # Query rules active for information response
-    rules = [rule.rule_name for rule in db.query(db.models.ResumeRule if hasattr(db, "models") else ResumeRule).filter(ResumeRule.is_active == True).all()]
+    # Query active rules to report which guidance was applied.
+    rules = [rule.rule_name for rule in db.query(ResumeRule).filter(ResumeRule.is_active == True).all()]
     
     return ResumeImproveResponse(
         original_text=req.text_content,

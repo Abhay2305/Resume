@@ -25,9 +25,24 @@ import ResumePreview from "./ResumePreview";
 export default function ResumeEditor({ data, template, onChange, onChangeTemplate, onBack, onNext }) {
   const [activeTab, setActiveTab] = useState("personal");
   const [localData, setLocalData] = useState(data);
-  const [selectedStyle, setSelectedStyle] = useState(template || "Meridian");
+  const [selectedStyle, setSelectedStyle] = useState(template || "harvard");
+  const [templateOptions, setTemplateOptions] = useState([]);
   const [isRewriting, setIsRewriting] = useState(null); // section ID being rewritten
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+
+  // Load the real seeded template catalog so the style switcher uses valid IDs.
+  useEffect(() => {
+    let active = true;
+    api
+      .listTemplates()
+      .then((list) => {
+        if (active) setTemplateOptions(list);
+      })
+      .catch((err) => console.error("Failed to load templates:", err));
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     setLocalData(data);
@@ -40,13 +55,18 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
   }, [template]);
 
   const updateField = (section, field, value) => {
-    const updated = {
-      ...localData,
-      [section]: {
-        ...localData[section],
-        [field]: value
-      }
-    };
+    // When field is null the section itself is a scalar value (e.g. summary),
+    // so set it directly instead of spreading it into an object.
+    const updated =
+      field === null
+        ? { ...localData, [section]: value }
+        : {
+            ...localData,
+            [section]: {
+              ...localData[section],
+              [field]: value
+            }
+          };
     setLocalData(updated);
     onChange(updated);
   };
@@ -189,10 +209,15 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                 className="w-full text-xs font-semibold p-2 bg-white border rounded-lg focus:outline-none"
                 style={{ borderColor: COLORS.borderMid }}
               >
-                <option value="Meridian">Meridian (Teal Modern)</option>
-                <option value="Ashford">Ashford (Classic Executive)</option>
-                <option value="Luma">Luma (Minimalist Monospace)</option>
-                <option value="Pulse">Pulse (Technical Sidebar)</option>
+                {templateOptions.length === 0 ? (
+                  <option value={selectedStyle}>{selectedStyle}</option>
+                ) : (
+                  templateOptions.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name} ({t.category})
+                    </option>
+                  ))
+                )}
               </select>
             </div>
 
@@ -302,7 +327,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                     placeholder="Enter professional summary"
                   />
                   
-                  {isRewriting === "summary-improve" || isRewriting === "summary-shorten" || isRewriting === "summary-formal" ? (
+                  {isRewriting === "summary-improve" || isRewriting === "summary-shorten" || isRewriting === "summary-professional" ? (
                     <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col justify-center items-center rounded-lg border border-teal-200 gap-2">
                       <RefreshCw size={24} className="text-[#7BC4BE] animate-spin" />
                       <span className="text-xs font-semibold text-teal-800">AI Rewriting summary...</span>
@@ -330,7 +355,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                       <span>Shorten</span>
                     </button>
                     <button
-                      onClick={() => handleAIAssist("summary", null, "formal")}
+                      onClick={() => handleAIAssist("summary", null, "professional")}
                       className="px-2.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1 hover:bg-[#7BC4BE]/10 hover:border-[#7BC4BE] text-[#2D7A74] cursor-pointer"
                       style={{ borderColor: COLORS.borderMid }}
                     >
@@ -413,7 +438,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             placeholder="Describe your role and key accomplishments"
                           />
 
-                          {isRewriting === `experience-${idx}-improve` || isRewriting === `experience-${idx}-shorten` || isRewriting === `experience-${idx}-formal` ? (
+                          {isRewriting === `experience-${idx}-improve` || isRewriting === `experience-${idx}-shorten` || isRewriting === `experience-${idx}-professional` ? (
                             <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col justify-center items-center rounded-lg border border-teal-200 gap-1.5">
                               <RefreshCw size={18} className="text-[#7BC4BE] animate-spin" />
                               <span className="text-[10px] font-semibold text-teal-800">AI Rewriting experience...</span>
@@ -441,7 +466,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                           <span>Concise</span>
                         </button>
                         <button
-                          onClick={() => handleAIAssist("experience", idx, "formal")}
+                          onClick={() => handleAIAssist("experience", idx, "professional")}
                           className="px-2 py-1 bg-white border rounded text-[10px] font-semibold text-[#2D7A74] hover:border-[#7BC4BE]"
                           style={{ borderColor: COLORS.borderMid }}
                         >
@@ -624,7 +649,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             placeholder="Describe project details, technology used, and results"
                           />
 
-                          {isRewriting === `projects-${idx}-improve` || isRewriting === `projects-${idx}-shorten` || isRewriting === `projects-${idx}-formal` ? (
+                          {isRewriting === `projects-${idx}-improve` || isRewriting === `projects-${idx}-shorten` || isRewriting === `projects-${idx}-professional` ? (
                             <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col justify-center items-center rounded-lg border border-teal-200 gap-1.5">
                               <RefreshCw size={18} className="text-[#7BC4BE] animate-spin" />
                               <span className="text-[10px] font-semibold text-teal-800">AI Rewriting project...</span>
@@ -652,7 +677,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                           <span>Shorten</span>
                         </button>
                         <button
-                          onClick={() => handleAIAssist("projects", idx, "formal")}
+                          onClick={() => handleAIAssist("projects", idx, "professional")}
                           className="px-2 py-1 bg-white border rounded text-[10px] font-semibold text-[#2D7A74] hover:border-[#7BC4BE]"
                           style={{ borderColor: COLORS.borderMid }}
                         >

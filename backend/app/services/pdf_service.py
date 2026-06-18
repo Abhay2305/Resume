@@ -41,7 +41,11 @@ class PDFExportService:
                 browser.close()
                 return pdf_bytes
         except Exception as e:
-            print(f"Playwright PDF generation failed: {e}. Falling back to clean text format.")
-            # If Playwright completely fails (e.g. environment missing browser dependencies),
-            # return the HTML as simple text file or fallback response bytes
-            return html_content.encode("utf-8")
+            # Surface the failure instead of returning HTML bytes mislabeled as a
+            # PDF (which produces a corrupt download). The router converts this
+            # into a clear HTTP 500 so the client can show a real error.
+            print(f"Playwright PDF generation failed: {e}")
+            raise RuntimeError(
+                "PDF rendering is unavailable. Ensure Playwright Chromium is installed "
+                f"on the server (playwright install chromium). Original error: {e}"
+            )

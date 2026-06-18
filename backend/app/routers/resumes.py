@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any, Optional
 from ..database import get_db
-from ..models import Resume, ResumeSection, ResumeVersion, User, Template
+from ..models import Resume, ResumeSection, ResumeVersion, User, Template, Subscription, ActivityLog
 from ..schemas import ResumeOut, ResumeCreate, ResumeUpdate, ResumeGenerateRequest, ResumeSectionUpdate
 from ..auth import get_current_user
 from ..services.ai_service import ResumeGeneratorService
@@ -10,8 +10,28 @@ from ..services.ai_service import ResumeGeneratorService
 router = APIRouter(prefix="/resume", tags=["Resumes"])
 generator_service = ResumeGeneratorService()
 
+# Plan-based resume limits. Free tier is capped; paid tiers are unlimited.
+FREE_RESUME_LIMIT = 1
+
+
+def enforce_resume_quota(db: Session, user_id: str):
+    """Block resume creation beyond the free-tier limit. Paid plans are unlimited."""
+    sub = db.query(Subscription).filter(Subscription.user_id == user_id).first()
+    plan = sub.plan_type if sub else "free"
+    if plan == "free":
+        count = db.query(Resume).filter(Resume.user_id == user_id).count()
+        if count >= FREE_RESUME_LIMIT:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=(
+                    "Free plan is limited to 1 resume. Upgrade to Pro for unlimited "
+                    "resumes and cover letters."
+                ),
+            )
+
 @router.post("/create", response_model=ResumeOut)
 def create_resume(resume_in: ResumeCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    enforce_resume_quota(db, current_user.id)
     # Create resume
     new_resume = Resume(
         user_id=current_user.id,
@@ -36,7 +56,13 @@ def create_resume(resume_in: ResumeCreate, db: Session = Depends(get_db), curren
             position=idx
         )
         db.add(sec)
-        
+
+    db.add(ActivityLog(
+        user_id=current_user.id,
+        activity_type="resume_created",
+        description=f"Created resume '{new_resume.title}'"
+    ))
+
     db.commit()
     db.refresh(new_resume)
     return new_resume
@@ -82,6 +108,7 @@ def generate_resume(req: ResumeGenerateRequest, db: Session = Depends(get_db), c
     Parses unstructured input using AI, converts to structured JSON, 
     and inserts it into database sections for the user.
     """
+    enforce_resume_quota(db, current_user.id)
     # 1. Run LLM Extraction
     structured_data = generator_service.generate_structured_resume(
         db=db, 
@@ -116,7 +143,13 @@ def generate_resume(req: ResumeGenerateRequest, db: Session = Depends(get_db), c
             position=idx
         )
         db.add(sec)
-        
+
+    db.add(ActivityLog(
+        user_id=current_user.id,
+        activity_type="resume_generated",
+        description=f"AI generated resume '{new_resume.title}'"
+    ))
+
     db.commit()
     db.refresh(new_resume)
     return new_resume

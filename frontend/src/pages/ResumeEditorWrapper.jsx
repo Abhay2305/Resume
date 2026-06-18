@@ -94,6 +94,33 @@ export default function ResumeEditorWrapper() {
     }, 1500); // 1.5 seconds debounce
   };
 
+  // Flush any pending debounced autosave immediately. Used before moving to the
+  // ATS step so analysis runs against the latest persisted section data.
+  const flushSave = async () => {
+    if (autosaveTimer.current) {
+      clearTimeout(autosaveTimer.current);
+      autosaveTimer.current = null;
+    }
+    setSaving(true);
+    try {
+      const payload = Object.keys(resumeData).map((key, idx) => ({
+        section_type: key,
+        content: resumeData[key],
+        position: idx
+      }));
+      await api.saveResumeSections(id, payload);
+    } catch (err) {
+      console.error("Flush save failed:", err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleGoToATS = async () => {
+    await flushSave();
+    setStep("ats");
+  };
+
   const handleTemplateSelect = async (templateId) => {
     setSelectedTemplate(templateId);
     try {
@@ -182,7 +209,7 @@ export default function ResumeEditorWrapper() {
             onChange={triggerAutosave}
             onChangeTemplate={handleTemplateChange}
             onBack={handleBack}
-            onNext={() => setStep("ats")}
+            onNext={handleGoToATS}
           />
         )}
 
@@ -190,6 +217,7 @@ export default function ResumeEditorWrapper() {
           <ATSReview
             data={resumeData}
             template={selectedTemplate}
+            resumeId={id}
             onChange={triggerAutosave}
             onBack={handleBack}
             onNext={() => setStep("export")}
