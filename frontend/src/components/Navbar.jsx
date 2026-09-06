@@ -1,22 +1,31 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { api } from "../services/api";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-export default function Navbar({ onBuildResume }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", fn);
-    setIsLoggedIn(api.isAuthenticated());
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    } else {
+      navigate("/register");
+    }
+  };
 
   return (
     <nav className={`nav${scrolled ? " scrolled" : ""}`}>
       <Link to="/" className="nav-logo">
-        <div className="nav-logo-mark">PR</div>
+        <img src="/prompt_logo.png" alt="Prompt Resume" className="nav-logo-img" />
         Prompt Resume
       </Link>
       <ul className="nav-links">
@@ -27,15 +36,10 @@ export default function Navbar({ onBuildResume }) {
         <li><Link to="/about">About</Link></li>
       </ul>
       <div className="nav-cta">
-        {isLoggedIn ? (
-          <Link to="/dashboard" className="btn-primary">Dashboard →</Link>
-        ) : (
-          <>
-            <Link to="/login" className="btn-ghost" style={{ display: 'inline-flex', alignItems: 'center' }}>Log in</Link>
-            <Link to="/register" className="btn-primary">Start free →</Link>
-          </>
-        )}
+        <Link to="/register" className="btn-ghost" style={{ display: "inline-flex", alignItems: "center" }} onClick={handleSignUp}>
+          Sign Up
+        </Link>
       </div>
     </nav>
   );
-}
+}

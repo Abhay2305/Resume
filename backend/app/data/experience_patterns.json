@@ -1,0 +1,29 @@
+{
+  "years_patterns": [
+    "(\\d+)\\s*\\+?\\s*(?:to|-|\\u2013)\\s*(\\d+)\\s*years?",
+    "(\\d+)\\s*\\+?\\s*years?",
+    "(?:minimum|at least|min)\\s*(?:of\\s*)?(\\d+)\\s*years?",
+    "(?:up to|maximum|max)\\s*(?:of\\s*)?(\\d+)\\s*years?",
+    "(\\d+)\\s*(?:or more|\\+)\\s*years?"
+  ],
+  "level_mapping": {
+    "junior": {"min_years": 0, "max_years": 2},
+    "mid": {"min_years": 3, "max_years": 5},
+    "senior": {"min_years": 6, "max_years": 10},
+    "lead": {"min_years": 8, "max_years": 15},
+    "staff": {"min_years": 8, "max_years": 15},
+    "principal": {"min_years": 10, "max_years": 20},
+    "director": {"min_years": 10, "max_years": 20},
+    "executive": {"min_years": 15, "max_years": 30}
+  },
+  "level_keywords": {
+    "junior": ["junior", "entry level", "entry-level", "associate", "graduate", "intern", "trainee"],
+    "mid": ["mid level", "mid-level", "intermediate", "experienced"],
+    "senior": ["senior", "sr.", "sr", "experienced", "seasoned"],
+    "lead": ["lead", "tech lead", "technical lead", "team lead", "engineering lead"],
+    "staff": ["staff", "staff engineer", "staff software engineer"],
+    "principal": ["principal", "principal engineer", "principal software engineer"],
+    "director": ["director", "engineering director", "director of engineering"],
+    "executive": ["vp", "vice president", "cto", "ceo", "coo", "cfo", "executive", "chief"]
+  }
+}

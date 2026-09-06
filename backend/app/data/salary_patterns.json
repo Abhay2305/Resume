@@ -1,0 +1,18 @@
+{
+  "patterns": [
+    "\\$\\s*(\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?)\\s*(?:k|K)?\\s*(?:to|-|\\u2013)\\s*\\$?\\s*(\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?)\\s*(?:k|K)?",
+    "\\$\\s*(\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?)\\s*(?:k|K)?",
+    "(\\d{1,3}(?:,\\d{3})*)\\s*(?:to|-|\\u2013)\\s*(\\d{1,3}(?:,\\d{3})*)\\s*(?:per year|annually|/year|/annum)",
+    "(\\d{1,3}(?:,\\d{3})*)\\s*(?:per hour|hourly|/hour|/hr)",
+    "(?:salary|compensation|pay|pay range|salary range)[:\\s]*\\$?\\s*(\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?)\\s*(?:k|K)?\\s*(?:to|-|\\u2013)?\\s*\\$?\\s*(\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?)?\\s*(?:k|K)?"
+  ],
+  "multiplier": {
+    "k": 1000,
+    "K": 1000
+  },
+  "period_patterns": {
+    "hourly": ["per hour", "hourly", "/hour", "/hr", "an hour"],
+    "monthly": ["per month", "monthly", "/month", "/mo"],
+    "annual": ["per year", "annually", "/year", "/annum", "a year", "per annum"]
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { COLORS } from "../utils/constants";
 import { api } from "../services/api";
 import {
@@ -10,33 +10,138 @@ import {
   Code,
   FolderGit,
   Award,
-  Check,
   ChevronRight,
   Eye,
   Plus,
   Trash2,
-  Settings,
   RefreshCw,
-  TrendingUp,
   Layout
 } from "lucide-react";
 import ResumePreview from "./ResumePreview";
 
+const VALID_SECTION_TYPES = ["summary", "experience", "education", "projects", "skills", "certifications", "achievements"];
+
+const DEFAULT_DATA = {
+  personalInfo: { fullName: "", jobTitle: "", email: "", phone: "", location: "", website: "", linkedin: "" },
+  summary: "",
+  experience: [],
+  education: [],
+  skills: [],
+  projects: [],
+  certifications: [],
+  achievements: [],
+  section_order: [...VALID_SECTION_TYPES],
+};
+
+function normalizeResumeData(data) {
+  if (!data || typeof data !== "object") return { ...DEFAULT_DATA };
+
+  const normalized = { ...data };
+
+  normalized.personalInfo = {
+    fullName: "", jobTitle: "", email: "", phone: "",
+    location: "", website: "", linkedin: "",
+    ...(normalized.personalInfo && typeof normalized.personalInfo === "object" ? normalized.personalInfo : {}),
+  };
+  for (const key of Object.keys(normalized.personalInfo)) {
+    if (typeof normalized.personalInfo[key] !== "string") {
+      normalized.personalInfo[key] = String(normalized.personalInfo[key] ?? "");
+    }
+  }
+
+  normalized.summary = typeof normalized.summary === "string" ? normalized.summary : "";
+
+  normalized.experience = Array.isArray(normalized.experience) ? normalized.experience.map(exp => {
+    const e = exp && typeof exp === "object" ? exp : {};
+    return {
+      company: typeof e.company === "string" ? e.company : "",
+      role: typeof e.role === "string" ? e.role : (typeof e.title === "string" ? e.title : ""),
+      duration: typeof e.duration === "string" ? e.duration : (typeof e.dates === "string" ? e.dates : ""),
+      description: typeof e.description === "string"
+        ? e.description
+        : Array.isArray(e.description) ? e.description.join("\n") : "",
+    };
+  }) : [];
+
+  normalized.education = Array.isArray(normalized.education) ? normalized.education.map(edu => {
+    const e = edu && typeof edu === "object" ? edu : {};
+    return {
+      institution: typeof e.institution === "string" ? e.institution : (typeof e.school === "string" ? e.school : ""),
+      degree: typeof e.degree === "string" ? e.degree : "",
+      duration: typeof e.duration === "string" ? e.duration : (typeof e.dates === "string" ? e.dates : ""),
+      description: typeof e.description === "string"
+        ? e.description
+        : typeof e.details === "string" ? e.details
+        : Array.isArray(e.description) ? e.description.join("\n")
+        : Array.isArray(e.details) ? e.details.join("\n")
+        : "",
+    };
+  }) : [];
+
+  normalized.skills = Array.isArray(normalized.skills)
+    ? normalized.skills.map(s => typeof s === "string" ? s : String(s ?? "")).filter(Boolean)
+    : [];
+
+  normalized.projects = Array.isArray(normalized.projects) ? normalized.projects.map(proj => {
+    const p = proj && typeof proj === "object" ? proj : {};
+    return {
+      name: typeof p.name === "string" ? p.name : (typeof p.title === "string" ? p.title : ""),
+      description: typeof p.description === "string"
+        ? p.description
+        : Array.isArray(p.description) ? p.description.join("\n") : "",
+    };
+  }) : [];
+
+  normalized.certifications = Array.isArray(normalized.certifications)
+    ? normalized.certifications.map(c => typeof c === "string" ? c : String(c ?? "")).filter(Boolean)
+    : [];
+
+  normalized.achievements = Array.isArray(normalized.achievements)
+    ? normalized.achievements.map(a => typeof a === "string" ? a : String(a ?? "")).filter(Boolean)
+    : [];
+
+  const rawOrder = normalized.section_order;
+  if (Array.isArray(rawOrder) && rawOrder.length > 0) {
+    const filtered = rawOrder.filter(s => VALID_SECTION_TYPES.includes(s));
+    normalized.section_order = filtered.length > 0 ? filtered : [...VALID_SECTION_TYPES];
+  } else {
+    normalized.section_order = [...VALID_SECTION_TYPES];
+  }
+
+  return normalized;
+}
+
 export default function ResumeEditor({ data, template, onChange, onChangeTemplate, onBack, onNext }) {
   const [activeTab, setActiveTab] = useState("personal");
-  const [localData, setLocalData] = useState(data);
+  const [localData, setLocalData] = useState(() => normalizeResumeData(data));
   const [selectedStyle, setSelectedStyle] = useState(template || "harvard");
   const [templateOptions, setTemplateOptions] = useState([]);
   const [isRewriting, setIsRewriting] = useState(null); // section ID being rewritten
   const [showMobilePreview, setShowMobilePreview] = useState(false);
 
+  const lastEmittedRef = useRef(data);
+
+  const onChangeWrapped = (updated) => {
+    lastEmittedRef.current = updated;
+    onChange(updated);
+  };
+
+  useEffect(() => {
+    if (data !== lastEmittedRef.current) {
+      setLocalData(normalizeResumeData(data));
+    }
+  }, [data]);
+
   // Load the real seeded template catalog so the style switcher uses valid IDs.
   useEffect(() => {
     let active = true;
     api
-      .listTemplates()
-      .then((list) => {
-        if (active) setTemplateOptions(list);
+      .templates.getPublished()
+      .then((res) => {
+        if (active) {
+          const list = Array.isArray(res) ? res : (res?.items || []);
+          setTemplateOptions(list);
+        }
       })
       .catch((err) => console.error("Failed to load templates:", err));
     return () => {
@@ -44,15 +149,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
     };
   }, []);
 
-  useEffect(() => {
-    setLocalData(data);
-  }, [data]);
 
-  useEffect(() => {
-    if (template) {
-      setSelectedStyle(template);
-    }
-  }, [template]);
 
   const updateField = (section, field, value) => {
     // When field is null the section itself is a scalar value (e.g. summary),
@@ -68,7 +165,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
             }
           };
     setLocalData(updated);
-    onChange(updated);
+    onChangeWrapped(updated);
   };
 
   const updateArrayField = (section, index, field, value) => {
@@ -82,7 +179,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
       [section]: updatedArr
     };
     setLocalData(updated);
-    onChange(updated);
+    onChangeWrapped(updated);
   };
 
   const addArrayItem = (section, emptyItem) => {
@@ -91,7 +188,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
       [section]: [...localData[section], emptyItem]
     };
     setLocalData(updated);
-    onChange(updated);
+    onChangeWrapped(updated);
   };
 
   const removeArrayItem = (section, index) => {
@@ -101,7 +198,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
       [section]: updatedArr
     };
     setLocalData(updated);
-    onChange(updated);
+    onChangeWrapped(updated);
   };
 
   const updateSkills = (newSkillsString) => {
@@ -111,7 +208,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
       skills: skillList
     };
     setLocalData(updated);
-    onChange(updated);
+    onChangeWrapped(updated);
   };
 
   const handleTemplateChange = (e) => {
@@ -135,7 +232,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
     }
 
     try {
-      const res = await api.improveText(originalText, type, section);
+      const res = await api.ats.improveText(originalText, type, section);
       const rewrittenText = res.improved_text;
 
       if (section === "summary") {
@@ -587,7 +684,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             const newSkills = localData.skills.filter((_, i) => i !== idx);
                             const updated = { ...localData, skills: newSkills };
                             setLocalData(updated);
-                            onChange(updated);
+                            onChangeWrapped(updated);
                           }}
                           className="text-gray-400 hover:text-red-500 font-bold ml-1 text-[10px]"
                         >
@@ -707,7 +804,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                           certifications: [...(localData.certifications || []), "New Certificate"]
                         };
                         setLocalData(updated);
-                        onChange(updated);
+                        onChangeWrapped(updated);
                       }}
                       className="text-[10px] font-semibold text-[#2D7A74] flex items-center gap-0.5 hover:underline"
                     >
@@ -725,7 +822,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             updatedArr[idx] = e.target.value;
                             const updated = { ...localData, certifications: updatedArr };
                             setLocalData(updated);
-                            onChange(updated);
+                            onChangeWrapped(updated);
                           }}
                           className="flex-1 border bg-white rounded-lg p-2 text-xs focus:outline-none focus:border-[#7BC4BE]"
                           style={{ borderColor: COLORS.borderMid }}
@@ -735,7 +832,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             const updatedArr = localData.certifications.filter((_, i) => i !== idx);
                             const updated = { ...localData, certifications: updatedArr };
                             setLocalData(updated);
-                            onChange(updated);
+                            onChangeWrapped(updated);
                           }}
                           className="text-gray-300 hover:text-red-500 transition-colors p-1"
                         >
@@ -757,7 +854,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                           achievements: [...(localData.achievements || []), "Award details"]
                         };
                         setLocalData(updated);
-                        onChange(updated);
+                        onChangeWrapped(updated);
                       }}
                       className="text-[10px] font-semibold text-[#2D7A74] flex items-center gap-0.5 hover:underline"
                     >
@@ -775,7 +872,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             updatedArr[idx] = e.target.value;
                             const updated = { ...localData, achievements: updatedArr };
                             setLocalData(updated);
-                            onChange(updated);
+                            onChangeWrapped(updated);
                           }}
                           className="flex-1 border bg-white rounded-lg p-2 text-xs focus:outline-none focus:border-[#7BC4BE]"
                           style={{ borderColor: COLORS.borderMid }}
@@ -785,7 +882,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             const updatedArr = localData.achievements.filter((_, i) => i !== idx);
                             const updated = { ...localData, achievements: updatedArr };
                             setLocalData(updated);
-                            onChange(updated);
+                            onChangeWrapped(updated);
                           }}
                           className="text-gray-300 hover:text-red-500 transition-colors p-1"
                         >
@@ -840,7 +937,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                             section_order: newOrder
                           };
                           setLocalData(updated);
-                          onChange(updated);
+                          onChangeWrapped(updated);
                         }}
                         className="flex justify-between items-center p-3 bg-gray-50 border border-gray-200 hover:border-[#7BC4BE] rounded-xl hover:shadow-xs cursor-grab active:cursor-grabbing transition-all select-none"
                       >
@@ -860,7 +957,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                               newOrder[index - 1] = temp;
                               const updated = { ...localData, section_order: newOrder };
                               setLocalData(updated);
-                              onChange(updated);
+                              onChangeWrapped(updated);
                             }}
                             className="p-1 hover:bg-gray-200 rounded text-gray-500 disabled:opacity-30 cursor-pointer"
                           >
@@ -876,7 +973,7 @@ export default function ResumeEditor({ data, template, onChange, onChangeTemplat
                               newOrder[index + 1] = temp;
                               const updated = { ...localData, section_order: newOrder };
                               setLocalData(updated);
-                              onChange(updated);
+                              onChangeWrapped(updated);
                             }}
                             className="p-1 hover:bg-gray-200 rounded text-gray-500 disabled:opacity-30 cursor-pointer"
                           >

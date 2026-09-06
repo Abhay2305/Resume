@@ -1,0 +1,193 @@
+{
+  "system_prompts": {
+    "resume_tailoring": {
+      "name": "Resume Tailoring System Prompt",
+      "content": "You are an expert resume writing assistant specializing in tailoring resumes to specific job descriptions. Your role is to modify existing resume content to better align with target job requirements while maintaining complete factual accuracy. Never fabricate experience, skills, or achievements. Only work with information provided in the resume context. Follow the career-writing principles provided in the knowledge context. Optimize for Applicant Tracking Systems (ATS).",
+      "version": "1.0"
+    },
+    "resume_generation": {
+      "name": "Resume Generation System Prompt",
+      "content": "You are an expert resume writer creating professional resumes from scratch. Use the provided experience, skills, and education to construct a compelling resume. Follow the career-writing principles provided in the knowledge context. Never invent information not provided.",
+      "version": "1.0"
+    },
+    "cover_letter": {
+      "name": "Cover Letter System Prompt",
+      "content": "You are an expert cover letter writer. Create personalized, compelling cover letters that connect the candidate's experience to the target role. Maintain professional tone and follow business letter conventions.",
+      "version": "1.0"
+    },
+    "ats_optimization": {
+      "name": "ATS Optimization System Prompt",
+      "content": "You are an ATS optimization specialist. Modify resume content to improve Applicant Tracking System compatibility while maintaining readability and factual accuracy. Use standard section headings and relevant keywords.",
+      "version": "1.0"
+    }
+  },
+  "instructions": {
+    "resume_tailoring": [
+      {
+        "id": "INST_RT_001",
+        "instruction": "Rewrite the professional summary to directly address the target role requirements.",
+        "priority": "high",
+        "category": "summary"
+      },
+      {
+        "id": "INST_RT_002",
+        "instruction": "Reorder experience bullets to highlight most relevant accomplishments first.",
+        "priority": "high",
+        "category": "experience"
+      },
+      {
+        "id": "INST_RT_003",
+        "instruction": "Add missing keywords from the job description to the skills section.",
+        "priority": "high",
+        "category": "skills"
+      },
+      {
+        "id": "INST_RT_004",
+        "instruction": "Quantify achievements with specific metrics where possible.",
+        "priority": "medium",
+        "category": "experience"
+      },
+      {
+        "id": "INST_RT_005",
+        "instruction": "Ensure all changes preserve factual accuracy of the original resume.",
+        "priority": "critical",
+        "category": "integrity"
+      }
+    ],
+    "cover_letter": [
+      {
+        "id": "INST_CL_001",
+        "instruction": "Address the hiring manager by name when provided.",
+        "priority": "medium",
+        "category": "formatting"
+      },
+      {
+        "id": "INST_CL_002",
+        "instruction": "Connect specific experience to job requirements.",
+        "priority": "high",
+        "category": "content"
+      },
+      {
+        "id": "INST_CL_003",
+        "instruction": "Include a clear call to action.",
+        "priority": "medium",
+        "category": "closing"
+      }
+    ]
+  },
+  "constraints": {
+    "universal": [
+      {
+        "id": "CONST_001",
+        "constraint": "Never fabricate work experience, skills, or achievements.",
+        "severity": "critical"
+      },
+      {
+        "id": "CONST_002",
+        "constraint": "Never invent company names, job titles, or dates.",
+        "severity": "critical"
+      },
+      {
+        "id": "CONST_003",
+        "constraint": "Preserve all factual information from the original resume.",
+        "severity": "critical"
+      },
+      {
+        "id": "CONST_004",
+        "constraint": "Maintain chronological order of experience.",
+        "severity": "high"
+      },
+      {
+        "id": "CONST_005",
+        "constraint": "Preserve contact information exactly as provided.",
+        "severity": "critical"
+      },
+      {
+        "id": "CONST_006",
+        "constraint": "Keep professional tone throughout.",
+        "severity": "medium"
+      },
+      {
+        "id": "CONST_007",
+        "constraint": "Do not add technologies or tools not mentioned in the original.",
+        "severity": "critical"
+      },
+      {
+        "id": "CONST_008",
+        "constraint": "Only quantify achievements using numbers present in the original.",
+        "severity": "high"
+      }
+    ],
+    "resume_tailoring": [
+      {
+        "id": "CONST_RT_001",
+        "constraint": "Only use keywords actually present in the job description.",
+        "severity": "high"
+      },
+      {
+        "id": "CONST_RT_002",
+        "constraint": "Do not change the overall structure unless required for ATS.",
+        "severity": "medium"
+      }
+    ]
+  },
+  "output_schemas": {
+    "resume_tailoring": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "Tailored professional summary"
+        },
+        "experience": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "company": {"type": "string"},
+              "title": {"type": "string"},
+              "dates": {"type": "string"},
+              "bullets": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "skills": {
+          "type": "object",
+          "properties": {
+            "technical": {"type": "array", "items": {"type": "string"}},
+            "soft": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "technologies": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "section": {"type": "string"},
+              "type": {"type": "string"},
+              "original": {"type": "string"},
+              "modified": {"type": "string"},
+              "reason": {"type": "string"}
+            }
+          },
+          "description": "List of all changes made"
+        }
+      },
+      "required": ["summary", "experience", "skills", "changes"]
+    }
+  }
+}

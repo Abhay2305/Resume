@@ -1,0 +1,80 @@
+{
+  "documents": [
+    {
+      "id": "harvard_resume",
+      "name": "Harvard Resume Guide",
+      "source": "Harvard University",
+      "type": "resume_guide",
+      "version": "1.0",
+      "description": "Harvard Business School resume writing guidelines",
+      "confidence": 0.95
+    },
+    {
+      "id": "harvard_cover_letter",
+      "name": "Harvard Cover Letter Guide",
+      "source": "Harvard University",
+      "type": "cover_letter_guide",
+      "version": "1.0",
+      "description": "Harvard Business School cover letter writing guidelines",
+      "confidence": 0.95
+    },
+    {
+      "id": "mit_resume",
+      "name": "MIT Resume Guide",
+      "source": "MIT Career Services",
+      "type": "resume_guide",
+      "version": "1.0",
+      "description": "MIT Career Services resume guidelines",
+      "confidence": 0.90
+    },
+    {
+      "id": "yale_resume",
+      "name": "Yale Resume Guide",
+      "source": "Yale University",
+      "type": "resume_guide",
+      "version": "1.0",
+      "description": "Yale Office of Career Strategy resume guidelines",
+      "confidence": 0.90
+    },
+    {
+      "id": "ats_guidelines",
+      "name": "ATS Resume Guidelines",
+      "source": "Industry Best Practices",
+      "type": "ats_guide",
+      "version": "1.0",
+      "description": "Applicant Tracking System optimization guidelines",
+      "confidence": 0.85
+    },
+    {
+      "id": "internal_resume_rules",
+      "name": "Internal Resume Writing Rules",
+      "source": "Platform Internal",
+      "type": "internal_rules",
+      "version": "1.0",
+      "description": "Internal resume writing rules and best practices",
+      "confidence": 0.80
+    },
+    {
+      "id": "internal_cover_letter_rules",
+      "name": "Internal Cover Letter Rules",
+      "source": "Platform Internal",
+      "type": "internal_rules",
+      "version": "1.0",
+      "description": "Internal cover letter writing rules",
+      "confidence": 0.80
+    }
+  ],
+  "priority_levels": {
+    "critical": 1,
+    "high": 2,
+    "medium": 3,
+    "low": 4
+  },
+  "source_confidence": {
+    "Harvard University": 0.95,
+    "MIT Career Services": 0.90,
+    "Yale University": 0.90,
+    "Industry Best Practices": 0.85,
+    "Platform Internal": 0.80
+  }
+}

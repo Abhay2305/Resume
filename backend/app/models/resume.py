@@ -9,12 +9,15 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    Boolean,
     Column,
+    Index,
     String,
     Integer,
     DateTime,
     ForeignKey,
     JSON,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import relationship
 
@@ -32,6 +35,7 @@ class Resume(Base):
     template_id = Column(
         String(100), ForeignKey("templates.id", ondelete="SET NULL"), nullable=True
     )
+    section_order = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -82,14 +86,77 @@ class ResumeVersion(Base):
 
 
 class Template(Base):
+    """Dynamic resume template with full CMS support.
+
+    Templates are versioned, publishable entities. Only 'published' templates
+    appear in the Prompt Resume frontend. Admins can upload thumbnails, preview
+    images, and template definitions without code changes.
+    """
     __tablename__ = "templates"
+    __table_args__ = (
+        Index("ix_templates_status_sort", "status", "sort_order"),
+    )
 
     id = Column(String(100), primary_key=True)
     name = Column(String(100), nullable=False)
+    slug = Column(String(120), nullable=True, unique=True, index=True)
+    description = Column(String(500), nullable=True)
     category = Column(String(50), nullable=False)
-    preview_image = Column(String(255), nullable=True)
+
+    # Media
+    thumbnail_url = Column(String(500), nullable=True)
+    preview_images = Column(JSON, nullable=True)  # List of preview image URLs
+
+    # Template definition (the JSON that the renderer interprets)
     color_scheme = Column(JSON, nullable=False)
     layout_schema = Column(JSON, nullable=False)
+    template_definition = Column(JSON, nullable=True)  # Full template JSON for advanced rendering
+
+    # Appearance
+    theme = Column(String(50), nullable=True)  # light, dark
+    fonts = Column(JSON, nullable=True)  # {heading: "...", body: "...", mono: "..."}
+    colors = Column(JSON, nullable=True)  # Extended color palette
+
+    # Lifecycle
+    status = Column(String(20), nullable=False, default="draft", index=True)  # draft, published, archived, deprecated
+    version = Column(Integer, nullable=False, default=1)
+    author = Column(String(100), nullable=True)
+    is_default = Column(Boolean, default=False)
+    sort_order = Column(Integer, default=0, index=True)
+
+    # Discovery
+    tags = Column(JSON, nullable=True)  # List of tag strings
+    usage_count = Column(Integer, default=0)
+
+    # Metadata
+    metadata_json = Column(JSON, nullable=True)
+
+    # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    published_at = Column(DateTime, nullable=True)
 
     resumes = relationship("Resume", back_populates="template")
+    versions = relationship("TemplateVersion", back_populates="template", cascade="all, delete-orphan")
+
+
+class TemplateVersion(Base):
+    """Template version history snapshot.
+
+    Each time a template is published or significantly updated,
+    a version snapshot is created for rollback support.
+    """
+    __tablename__ = "template_versions"
+    __table_args__ = (
+        UniqueConstraint("template_id", "version", name="uq_template_version"),
+    )
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    template_id = Column(
+        String(100), ForeignKey("templates.id", ondelete="CASCADE"), nullable=False
+    )
+    version = Column(Integer, nullable=False)
+    snapshot = Column(JSON, nullable=False)  # Full template state at this version
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    template = relationship("Template", back_populates="versions")

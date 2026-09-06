@@ -1,24 +1,46 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from ..database import get_db
-from ..models import User, ATSResult, Resume, ResumeRule
+from ..models import User, ATSResult, Resume
 from ..schemas import ATSResultOut, ResumeImproveRequest, ResumeImproveResponse
 from ..auth import get_current_user
-from ..services.ai_service import ATSScoreService
-from ..services.llm_service import LLMProviderService, PromptBuilderService
+from ..services.ai_service import ATSScoreService, get_ai_service, run_async, get_knowledge_rules_for_context
+from ..services.llm_service import LLMProviderService
+from ..services.prompt_intelligence_v2.builder import PromptBuilder as PromptBuilderV2
+from ..services.prompt_intelligence_v2.types import PromptRequest
 
 router = APIRouter(prefix="/ats", tags=["ATS Scoring & AI Assistance"])
 llm = LLMProviderService()
+prompt_engine = PromptBuilderV2()
+
+# Action type → Prompt Intelligence v2 prompt_type mapping
+_ACTION_TO_PROMPT_TYPE = {
+    "improve": "text_improve",
+    "shorten": "text_shorten",
+    "expand": "text_expand",
+    "professional": "text_professional",
+    "autofix": "text_autofix",
+}
 
 @router.post("/analyze/{resume_id}", response_model=ATSResultOut)
-def analyze_resume(resume_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def analyze_resume(
+    resume_id: str,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
     """
     Analyzes the resume sections, calculates the ATS score (0-100), 
     generates targeted improvements, saves the history in `ats_results`, and returns the results.
+    
+    Guests can analyze resumes - no authentication required.
     """
-    resume = db.query(Resume).filter(Resume.id == resume_id, Resume.user_id == current_user.id).first()
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
+    # For security, only allow access to own resumes or guest resumes
+    if current_user and resume.user_id != current_user.id and resume.user_id != "guest":
         raise HTTPException(status_code=404, detail="Resume not found")
         
     # Reconstruct resume dictionary representation for the analyzer
@@ -52,35 +74,52 @@ def analyze_resume(resume_id: str, db: Session = Depends(get_db), current_user: 
     return new_result
 
 @router.post("/improve-text", response_model=ResumeImproveResponse)
-def improve_text(req: ResumeImproveRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def improve_text(
+    req: ResumeImproveRequest,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
     """
-    Polishes experience bullets or summaries dynamically based on Harvard resume writing rules.
+    Polishes experience bullets or summaries dynamically based on approved knowledge rules.
     Actions supported: 'improve', 'shorten', 'expand', 'professional', 'autofix'
+    
+    Guests can use AI text improvement - no authentication required.
     """
-    system_rules = PromptBuilderService.get_active_rules_instruction(db)
+    # Get knowledge rules from knowledge_intelligence (approved methodology)
+    knowledge_rules = get_knowledge_rules_for_context(db)
     
-    action_prompts = {
-        "improve": f"Polishing this wording to sound more professional and high impact: \"{req.text_content}\".",
-        "shorten": f"Condense this experience bullet to be brief and punchy, maintaining active verbs: \"{req.text_content}\".",
-        "expand": f"Expand this experience to add detail, context, and potential achievements (add placeholders for metrics if needed): \"{req.text_content}\".",
-        "professional": f"Translate this casual experience bullet into professional business language: \"{req.text_content}\".",
-        "autofix": f"Fix all Harvard style rule issues (like removing 'I' or starting with active verbs) for this item: \"{req.text_content}\"."
-    }
+    # Map action type to Prompt Intelligence v2 prompt type
+    prompt_type = _ACTION_TO_PROMPT_TYPE.get(req.action_type.lower(), "text_improve")
     
-    action_prompt = action_prompts.get(req.action_type.lower(), action_prompts["improve"])
+    # Build context with knowledge rules
+    context = {"text_content": req.text_content}
+    if knowledge_rules:
+        context["knowledge_rules"] = knowledge_rules
     
-    improved_text = llm.generate(action_prompt, system_instruction=system_rules)
+    # Build request for Prompt Intelligence v2
+    request = PromptRequest(
+        prompt_type=prompt_type,
+        context=context,
+    )
+    
+    # Get messages from Prompt Intelligence v2
+    messages = prompt_engine.build_messages(request)
+    
+    # Call UniversalAIService directly with the constructed messages
+    ai_service = get_ai_service()
+    response = run_async(ai_service.generate(messages))
+    improved_text = response.content
     
     # Clean output
     cleaned_improved = improved_text.strip()
     if cleaned_improved.startswith('"') and cleaned_improved.endswith('"'):
         cleaned_improved = cleaned_improved[1:-1]
         
-    # Query active rules to report which guidance was applied.
-    rules = [rule.rule_name for rule in db.query(ResumeRule).filter(ResumeRule.is_active == True).all()]
+    # Report which knowledge rules were applied
+    applied_rules = [r.get("source", "knowledge") for r in knowledge_rules[:3]] if knowledge_rules else []
     
     return ResumeImproveResponse(
         original_text=req.text_content,
         improved_text=cleaned_improved,
-        applied_rules=rules[:3]  # Return top rules applied
+        applied_rules=applied_rules
     )

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, MessageSquare, Send, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
@@ -32,7 +32,7 @@ export default function Contact() {
         <div className="flex gap-4">
           <Link to="/about" className="text-gray-300 hover:text-white text-sm transition-all">About</Link>
           <Link to="/pricing" className="text-gray-300 hover:text-white text-sm transition-all">Pricing</Link>
-          <Link to="/login" className="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm transition-all border border-white/10">Sign In</Link>
+          <Link to="/register" className="px-4 py-2 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-lg text-sm font-semibold transition-all">Sign Up</Link>
         </div>
       </header>
 

@@ -1,6 +1,9 @@
+import logging
 import os
 import subprocess
 from playwright.sync_api import sync_playwright
+
+logger = logging.getLogger(__name__)
 
 class PDFExportService:
     @staticmethod
@@ -17,7 +20,7 @@ class PDFExportService:
                     browser = p.chromium.launch(headless=True)
                     browser.close()
             except Exception as ex:
-                print(f"Playwright chromium not detected, attempting auto-installation: {ex}")
+                logger.info("Playwright chromium not detected, attempting auto-installation: %s", ex)
                 subprocess.run(["playwright", "install", "chromium"], check=False)
             
             with sync_playwright() as p:
@@ -44,7 +47,7 @@ class PDFExportService:
             # Surface the failure instead of returning HTML bytes mislabeled as a
             # PDF (which produces a corrupt download). The router converts this
             # into a clear HTTP 500 so the client can show a real error.
-            print(f"Playwright PDF generation failed: {e}")
+            logger.exception("Playwright PDF generation failed")
             raise RuntimeError(
                 "PDF rendering is unavailable. Ensure Playwright Chromium is installed "
                 f"on the server (playwright install chromium). Original error: {e}"

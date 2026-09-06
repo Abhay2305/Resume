@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Shield, Sparkles, BookOpen, UserCheck } from "lucide-react";
+import { Shield, Sparkles, BookOpen } from "lucide-react";
 
 export default function About() {
   return (
@@ -15,7 +14,7 @@ export default function About() {
         <div className="flex gap-4">
           <Link to="/pricing" className="text-gray-300 hover:text-white text-sm transition-all">Pricing</Link>
           <Link to="/contact" className="text-gray-300 hover:text-white text-sm transition-all">Contact</Link>
-          <Link to="/login" className="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm transition-all border border-white/10">Sign In</Link>
+          <Link to="/register" className="px-4 py-2 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-lg text-sm font-semibold transition-all">Sign Up</Link>
         </div>
       </header>
 

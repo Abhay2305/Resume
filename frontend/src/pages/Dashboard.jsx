@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Home, FileText, Mail, Layout, MessageSquare, User, CreditCard, LogOut, 
-  Plus, Sparkles, Trash2, Edit3, Download, RefreshCw, Award, Send, 
-  CheckCircle, ShieldAlert, ArrowUpRight, Check 
+  FileText, Mail, Layout, User, CreditCard, LogOut, 
+  Plus, Trash2, Edit3, Download, RefreshCw, 
+  Briefcase, MapPin, Phone, Globe, ExternalLink,
+  Lock, Sparkles, ArrowRight
 } from "lucide-react";
 import { api } from "../services/api";
+import { useAuth } from "../hooks/useAuth";
 import ResumePreview from "../components/ResumePreview";
+import TemplatePreviewModal from "../components/TemplatePreviewModal";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("home"); // home, resumes, letters, templates, ai, profile, billing
+  const [activeTab, setActiveTab] = useState("profile"); // profile, resumes, letters, templates, jd, account
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState({});
   const [resumes, setResumes] = useState([]);
@@ -18,92 +21,112 @@ export default function Dashboard() {
   const [templates, setTemplates] = useState([]);
   const [sub, setSub] = useState({ plan_type: "free", status: "active" });
   const [payments, setPayments] = useState([]);
-  const [activity, setActivity] = useState([]);
+  const [, setActivity] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // AI assistant states
-  const [aiMessage, setAiMessage] = useState("");
-  const [aiChat, setAiChat] = useState([
-    { sender: "ai", text: "Hello! I am your Harvard-trained career advisor. Ask me to write, shorten, or review any resume bullet points or cover letters." }
-  ]);
-  const [aiLoading, setAiLoading] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewTemplateId, setPreviewTemplateId] = useState(
+    () => sessionStorage.getItem("lastPreviewTemplate") || "harvard"
+  );
 
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   // Load user details & database records
   const loadData = async () => {
     try {
       setLoading(true);
-      const me = await api.getMe();
-      setUser(me);
-      
-      const prof = await api.getProfile();
-      setProfile(prof);
-      
-      const resList = await api.listResumes();
-      setResumes(resList);
-      
-      const lettersList = await api.listCoverLetters();
-      setLetters(lettersList);
-      
-      const tempsList = await api.listTemplates();
-      setTemplates(tempsList);
-      
-      const subscription = await api.getSubscription();
-      setSub(subscription);
-      
-      const billing = await api.getBillingHistory();
-      setPayments(billing);
 
+      // Auth check — if this fails, user is not logged in
+      let me;
       try {
-        const acts = await api.getActivityLog();
-        setActivity(acts);
-      } catch (actErr) {
-        console.error("Failed to load activity log:", actErr);
+        me = await api.auth.getMe();
+        setUser(me);
+      } catch (authErr) {
+        console.error("Auth check failed, redirecting to login:", authErr);
+        logout();
+        navigate("/login");
+        return;
       }
-    } catch (err) {
-      console.error("Failed to load dashboard data, redirecting to login:", err);
-      api.logout();
-      navigate("/login");
+
+      // Profile — non-critical, default to empty
+      try {
+        const prof = await api.user.getProfile();
+        setProfile(prof);
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      }
+
+      // Resumes — non-critical, default to empty
+      try {
+        const resList = await api.resumes.list();
+        setResumes(resList);
+      } catch (err) {
+        console.error("Failed to load resumes:", err);
+      }
+
+      // Cover letters — non-critical, default to empty
+      try {
+        const lettersList = await api.coverLetters.list();
+        setLetters(lettersList);
+      } catch (err) {
+        console.error("Failed to load cover letters:", err);
+      }
+
+      // Templates — non-critical, default to empty
+      try {
+        const tempsRes = await api.templates.getPublished();
+        setTemplates(Array.isArray(tempsRes) ? tempsRes : tempsRes.items || []);
+      } catch (err) {
+        console.error("Failed to load templates:", err);
+      }
+
+      // Subscription — non-critical, default to free
+      try {
+        const subscription = await api.user.getSubscription();
+        setSub(subscription);
+      } catch (err) {
+        console.error("Failed to load subscription:", err);
+      }
+
+      // Billing — non-critical, default to empty
+      try {
+        const billing = await api.user.getBillingHistory();
+        setPayments(billing);
+      } catch (err) {
+        console.error("Failed to load billing history:", err);
+      }
+
+      // Activity log — non-critical, default to empty
+      try {
+        const acts = await api.user.getActivityLog();
+        setActivity(acts);
+      } catch (err) {
+        console.error("Failed to load activity log:", err);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!api.isAuthenticated()) {
-      navigate("/login");
-      return;
-    }
     loadData();
   }, []);
 
   const handleLogout = () => {
-    api.logout();
+    logout();
     navigate("/");
   };
 
   // Resume operations
   const handleCreateResume = async () => {
-    try {
-      const title = prompt("Enter resume title:", "My Professional Resume");
-      if (!title) return;
-      const res = await api.createResume(title, "harvard");
-      navigate(`/resume/edit/${res.id}`);
-    } catch (err) {
-      alert("Failed to create resume: " + err.message);
-    }
-  };
-
-  const handleGenerateResumeAI = () => {
-    navigate("/resume/create"); // Navigate to the AI prompt workflow page
+    navigate("/resume/create-flow");
   };
 
   const handleDeleteResume = async (id, e) => {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to delete this resume?")) return;
     try {
-      await api.deleteResume(id);
+      await api.resumes.delete(id);
       setResumes(resumes.filter(r => r.id !== id));
     } catch (err) {
       alert("Delete failed: " + err.message);
@@ -116,7 +139,18 @@ export default function Dashboard() {
   const [letterSubmitting, setLetterSubmitting] = useState(false);
 
   const handleCreateCoverLetter = () => {
-    setLetterForm({ jobRole: "", companyName: "", experienceSummary: "" });
+    // Pre-fill experience context from profile
+    const experienceContext = [
+      profile.job_title ? `Current role: ${profile.job_title}` : "",
+      profile.company ? `Company: ${profile.company}` : "",
+      profile.summary ? `Summary: ${profile.summary.substring(0, 200)}...` : "",
+    ].filter(Boolean).join("\n");
+    
+    setLetterForm({ 
+      jobRole: "", 
+      companyName: "", 
+      experienceSummary: experienceContext 
+    });
     setShowLetterModal(true);
   };
 
@@ -129,7 +163,7 @@ export default function Dashboard() {
     }
     try {
       setLetterSubmitting(true);
-      const letter = await api.generateCoverLetter(
+      const letter = await api.coverLetters.generate(
         `Cover Letter - ${companyName}`,
         jobRole,
         companyName,
@@ -149,7 +183,7 @@ export default function Dashboard() {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to delete this cover letter?")) return;
     try {
-      await api.deleteCoverLetter(id);
+      await api.coverLetters.delete(id);
       setLetters(letters.filter(l => l.id !== id));
     } catch (err) {
       alert("Delete failed: " + err.message);
@@ -157,14 +191,79 @@ export default function Dashboard() {
   };
 
   // Selections
-  const handleUseTemplate = async (templateId) => {
+  const handleOpenPreview = (templateId) => {
+    setPreviewTemplateId(templateId);
+    sessionStorage.setItem("lastPreviewTemplate", templateId);
+    setShowPreviewModal(true);
+  };
+
+  const handleUseTemplateFromPreview = async (templateId, resumeName) => {
     try {
-      const title = prompt("Enter resume title:");
-      if (!title) return;
-      const res = await api.createResume(title, templateId);
+      const res = await api.resumes.create(resumeName, templateId);
+
+      // Auto-fill from expanded profile if available
+      if (profile) {
+        const parseJson = (val) => {
+          if (!val) return [];
+          try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch { return []; }
+        };
+        const sections = [
+          {
+            section_type: "personalInfo",
+            content: {
+              fullName: user?.full_name || "",
+              jobTitle: profile.job_title || "",
+              email: user?.email || "",
+              phone: profile.phone || "",
+              location: profile.location || "",
+              website: profile.website || "",
+              linkedin: profile.linkedin || "",
+            },
+            position: 0,
+          },
+          {
+            section_type: "summary",
+            content: profile.summary || "",
+            position: 1,
+          },
+          {
+            section_type: "experience",
+            content: parseJson(profile.experience_json),
+            position: 2,
+          },
+          {
+            section_type: "education",
+            content: parseJson(profile.education_json),
+            position: 3,
+          },
+          {
+            section_type: "skills",
+            content: parseJson(profile.skills_json),
+            position: 4,
+          },
+          {
+            section_type: "projects",
+            content: parseJson(profile.projects_json),
+            position: 5,
+          },
+          {
+            section_type: "certifications",
+            content: parseJson(profile.certifications_json),
+            position: 6,
+          },
+          {
+            section_type: "achievements",
+            content: parseJson(profile.achievements_json),
+            position: 7,
+          },
+        ];
+        await api.resumes.saveSections(res.id, sections);
+      }
+
+      setShowPreviewModal(false);
       navigate(`/resume/edit/${res.id}`);
     } catch (err) {
-      alert("Failed: " + err.message);
+      alert("Failed to create resume: " + err.message);
     }
   };
 
@@ -172,31 +271,26 @@ export default function Dashboard() {
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     try {
-      const updated = await api.updateProfile(profile);
+      const updated = await api.user.updateProfile({
+        phone: profile.phone || null,
+        location: profile.location || null,
+        job_title: profile.job_title || null,
+        company: profile.company || null,
+        industry: profile.industry || null,
+        years_of_experience: profile.years_of_experience ? parseInt(profile.years_of_experience) : null,
+        education_level: profile.education_level || null,
+        summary: profile.summary || null,
+        linkedin: profile.linkedin || null,
+        github: profile.github || null,
+        website: profile.website || null,
+        portfolio: profile.portfolio || null,
+        professional_headline: profile.professional_headline || null,
+        date_of_birth: profile.date_of_birth || null,
+      });
       setProfile(updated);
       alert("Profile updated successfully!");
     } catch (err) {
       alert("Failed to save profile: " + err.message);
-    }
-  };
-
-  // Send message to AI assistant
-  const handleSendAiMessage = async (e) => {
-    e.preventDefault();
-    if (!aiMessage.trim()) return;
-    
-    const userMsg = { sender: "user", text: aiMessage };
-    setAiChat(prev => [...prev, userMsg]);
-    setAiMessage("");
-    setAiLoading(true);
-
-    try {
-      const res = await api.improveText(aiMessage, "improve", "summary");
-      setAiChat(prev => [...prev, { sender: "ai", text: res.improved_text }]);
-    } catch (err) {
-      setAiChat(prev => [...prev, { sender: "ai", text: "I apologize, but I encountered an issue optimizing your prompt. Please check your network connection." }]);
-    } finally {
-      setAiLoading(false);
     }
   };
 
@@ -233,7 +327,7 @@ export default function Dashboard() {
         </html>
       `;
       
-      const blob = await api.exportPDF(resumeHtml, `${resume.title.replace(/\s+/g, "_")}.pdf`);
+      const blob = await api.pdf.export(resumeHtml, `${resume.title.replace(/\s+/g, "_")}.pdf`);
       const downloadUrl = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = downloadUrl;
@@ -257,13 +351,12 @@ export default function Dashboard() {
   }
 
   const sidebarItems = [
-    { id: "home", label: "Home Workspace", icon: Home },
-    { id: "resumes", label: "My Resumes", icon: FileText },
-    { id: "letters", label: "Cover Letters", icon: Mail },
-    { id: "templates", label: "Templates Hub", icon: Layout },
-    { id: "ai", label: "AI Advisor Chat", icon: MessageSquare },
-    { id: "profile", label: "Advisor Profile", icon: User },
-    { id: "billing", label: "Billing & Plans", icon: CreditCard },
+    { id: "profile", label: "Profile", icon: User },
+    { id: "resumes", label: "My Resume", icon: FileText },
+    { id: "letters", label: "My Cover Letter", icon: Mail },
+    { id: "templates", label: "My Templates", icon: Layout },
+    { id: "jd", label: "JD Based", icon: Briefcase },
+    { id: "account", label: "Account", icon: CreditCard },
   ];
 
   return (
@@ -276,7 +369,7 @@ export default function Dashboard() {
               <span className="text-[#7BC4BE]">✦</span> Prompt<span className="text-[#7BC4BE]">Resume</span>
             </span>
             <div className="mt-2 text-[10px] uppercase font-bold tracking-widest text-[#7BC4BE] bg-[#7BC4BE]/15 px-2 py-0.5 rounded inline-block">
-              {sub.plan_type.toUpperCase()} PLAN
+              {(sub.plan_type || "free").toUpperCase()} PLAN
             </div>
           </div>
           <nav className="p-4 space-y-1">
@@ -286,7 +379,13 @@ export default function Dashboard() {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
+                  onClick={() => {
+                    if (item.id === "jd") {
+                      navigate("/jd-based");
+                    } else {
+                      setActiveTab(item.id);
+                    }
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold transition-all ${
                     isActive 
                       ? "bg-[#7BC4BE] text-[#1A2B2A] shadow-md shadow-[#7BC4BE]/15" 
@@ -325,151 +424,52 @@ export default function Dashboard() {
       <main className="flex-1 overflow-y-auto p-8 relative">
         {/* Hidden Preview Container for Playwright HTML parsing */}
         <div className="hidden">
-          {resumes.map(r => (
+          {resumes.map(r => {
+            const sections = r.sections || [];
+            const getSectionContent = (type, fallback) => {
+              const content = sections.find(s => s.section_type === type)?.content;
+              if (content == null) return fallback;
+              if (typeof content === "object" && !Array.isArray(content) && Object.keys(content).length === 0) return fallback;
+              return content;
+            };
+            const getStringContent = (type, fallback) => {
+              const content = getSectionContent(type, fallback);
+              return typeof content === "string" ? content : fallback;
+            };
+            const getArrayContent = (type, fallback) => {
+              const content = getSectionContent(type, fallback);
+              return Array.isArray(content) ? content : fallback;
+            };
+            const piContent = getSectionContent("personalInfo", null);
+            return (
             <div key={r.id} id={`res-preview-hidden-${r.id}`}>
               <ResumePreview 
                 data={{
                   personalInfo: {
-                    fullName: r.sections.find(s => s.section_type === "personalInfo")?.content?.fullName || user?.full_name || "Applicant Name",
-                    jobTitle: r.sections.find(s => s.section_type === "personalInfo")?.content?.jobTitle || profile.job_title || "Professional",
-                    email: r.sections.find(s => s.section_type === "personalInfo")?.content?.email || user?.email || "",
-                    phone: r.sections.find(s => s.section_type === "personalInfo")?.content?.phone || profile.phone || "",
-                    location: r.sections.find(s => s.section_type === "personalInfo")?.content?.location || profile.location || "",
-                    website: r.sections.find(s => s.section_type === "personalInfo")?.content?.website || profile.website || "",
-                    linkedin: r.sections.find(s => s.section_type === "personalInfo")?.content?.linkedin || profile.linkedin || ""
+                    fullName: (piContent?.fullName) || user?.full_name || "Applicant Name",
+                    jobTitle: (piContent?.jobTitle) || profile.job_title || "Professional",
+                    email: (piContent?.email) || user?.email || "",
+                    phone: (piContent?.phone) || profile.phone || "",
+                    location: (piContent?.location) || profile.location || "",
+                    website: (piContent?.website) || profile.website || "",
+                    linkedin: (piContent?.linkedin) || profile.linkedin || ""
                   },
-                  summary: r.sections.find(s => s.section_type === "summary")?.content || profile.summary || "",
-                  experience: r.sections.find(s => s.section_type === "experience")?.content || [],
-                  education: r.sections.find(s => s.section_type === "education")?.content || [],
-                  skills: r.sections.find(s => s.section_type === "skills")?.content || [],
-                  projects: r.sections.find(s => s.section_type === "projects")?.content || [],
-                  certifications: r.sections.find(s => s.section_type === "certifications")?.content || [],
-                  achievements: r.sections.find(s => s.section_type === "achievements")?.content || []
+                  summary: getStringContent("summary", "") || profile.summary || "",
+                  experience: getArrayContent("experience", []),
+                  education: getArrayContent("education", []),
+                  skills: getArrayContent("skills", []),
+                  projects: getArrayContent("projects", []),
+                  certifications: getArrayContent("certifications", []),
+                  achievements: getArrayContent("achievements", [])
                 }} 
                 template={r.template_id || "harvard"} 
               />
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <AnimatePresence mode="wait">
-          {/* TAB: HOME WORKSPACE */}
-          {activeTab === "home" && (
-            <motion.div
-              key="home"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-8"
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h1 className="text-2xl font-bold tracking-tight">Welcome, {user?.full_name || "Career Professional"}</h1>
-                  <p className="text-gray-400 text-xs mt-1">Design, analyze, and optimize your executive assets.</p>
-                </div>
-                <div className="flex gap-3">
-                  <button 
-                    onClick={handleCreateResume}
-                    className="px-4 py-2.5 bg-white/10 hover:bg-white/15 text-white border border-white/10 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5"
-                  >
-                    <Plus size={14} /> New Manual Resume
-                  </button>
-                  <button
-                    onClick={handleGenerateResumeAI}
-                    className="px-4 py-2.5 bg-gradient-to-r from-[#7BC4BE] to-[#4A9E98] hover:from-[#8AD6CF] hover:to-[#5BB2AC] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-[#7BC4BE]/10"
-                  >
-                    <Sparkles size={14} /> Create with AI Advisor
-                  </button>
-                </div>
-              </div>
-
-              {/* Quick Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden">
-                  <div className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Total Resumes</div>
-                  <div className="text-3xl font-bold mb-1">{resumes.length}</div>
-                  <p className="text-gray-500 text-[10px] leading-relaxed">Saved drafts in your database</p>
-                  <FileText className="absolute right-4 bottom-4 text-white/5" size={48} />
-                </div>
-                
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden">
-                  <div className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Cover Letters</div>
-                  <div className="text-3xl font-bold mb-1">{letters.length}</div>
-                  <p className="text-gray-500 text-[10px]">Generated target documents</p>
-                  <Mail className="absolute right-4 bottom-4 text-white/5" size={48} />
-                </div>
-
-                <div className="bg-white/5 border border-[#7BC4BE]/20 rounded-2xl p-6 relative overflow-hidden bg-gradient-to-br from-white/5 to-[#7BC4BE]/5">
-                  <div className="text-[#7BC4BE] text-[10px] font-bold uppercase tracking-wider mb-2">Plan Tier</div>
-                  <div className="text-3xl font-bold mb-1 flex items-baseline gap-1">
-                    {sub.plan_type.toUpperCase()}
-                  </div>
-                  <Link to="/pricing" className="text-xs text-[#7BC4BE] hover:underline flex items-center gap-1 mt-1 font-semibold">
-                    Manage Subscriptions <ArrowUpRight size={12} />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Recent Resumes List */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Recent Resumes</h3>
-                {resumes.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500 text-xs">
-                    No resumes created yet. Click "Create with AI Advisor" to launch.
-                  </div>
-                ) : (
-                  <div className="divide-y divide-white/5">
-                    {resumes.slice(0, 3).map(res => (
-                      <div key={res.id} className="flex justify-between items-center py-3.5 hover:bg-white/5 transition-all rounded-lg px-2">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-[#7BC4BE]/15 flex items-center justify-center text-[#7BC4BE]">
-                            <FileText size={18} />
-                          </div>
-                          <div>
-                            <div className="text-xs font-bold text-white">{res.title}</div>
-                            <div className="text-[10px] text-gray-500">Template: {res.template_id || "Harvard"} • Updated: {new Date(res.updated_at).toLocaleDateString()}</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <button
-                            onClick={() => navigate(`/resume/edit/${res.id}`)}
-                            className="px-3 py-1.5 bg-white/10 hover:bg-white/15 rounded-lg text-[10px] font-semibold transition-all"
-                          >
-                            Open Editor
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Recent Activity */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Recent Activity</h3>
-                {activity.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 text-xs">
-                    No recent activity yet. Your actions will appear here.
-                  </div>
-                ) : (
-                  <div className="divide-y divide-white/5">
-                    {activity.slice(0, 6).map(act => (
-                      <div key={act.id} className="flex items-center gap-3 py-3 px-2">
-                        <div className="w-8 h-8 rounded-lg bg-[#7BC4BE]/15 flex items-center justify-center text-[#7BC4BE] shrink-0">
-                          <Check size={14} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-xs font-semibold text-white truncate">{act.description || act.activity_type}</div>
-                          <div className="text-[10px] text-gray-500">{new Date(act.created_at).toLocaleString()}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-
           {/* TAB: MY RESUMES */}
           {activeTab === "resumes" && (
             <motion.div
@@ -481,14 +481,14 @@ export default function Dashboard() {
             >
               <div className="flex justify-between items-center">
                 <div>
-                  <h1 className="text-2xl font-bold tracking-tight">My Resumes</h1>
+                  <h1 className="text-2xl font-bold tracking-tight">My Resume</h1>
                   <p className="text-gray-400 text-xs mt-1">Manage and edit your saved drafts</p>
                 </div>
                 <button
                   onClick={handleCreateResume}
                   className="px-4 py-2 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
                 >
-                  <Plus size={14} /> New Resume
+                  <Plus size={14} /> Create Resume
                 </button>
               </div>
 
@@ -563,7 +563,7 @@ export default function Dashboard() {
             >
               <div className="flex justify-between items-center">
                 <div>
-                  <h1 className="text-2xl font-bold tracking-tight">Cover Letters</h1>
+                  <h1 className="text-2xl font-bold tracking-tight">My Cover Letter</h1>
                   <p className="text-gray-400 text-xs mt-1">Generate targeted applications for active roles</p>
                 </div>
                 <button
@@ -632,7 +632,7 @@ export default function Dashboard() {
               className="space-y-6"
             >
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Templates Hub</h1>
+                <h1 className="text-2xl font-bold tracking-tight">My Templates</h1>
                 <p className="text-gray-400 text-xs mt-1">Browse our 24 professional database-driven visual styles</p>
               </div>
 
@@ -648,24 +648,28 @@ export default function Dashboard() {
                       {categoryTemplates.map(t => (
                         <div 
                           key={t.id} 
-                          className="bg-white/5 border border-white/10 rounded-xl p-4 hover:border-[#7BC4BE]/30 transition-all flex flex-col justify-between"
+                          onClick={() => handleOpenPreview(t.id)}
+                          className="bg-white/5 border border-white/10 rounded-xl p-4 hover:border-[#7BC4BE]/30 transition-all flex flex-col justify-between cursor-pointer group"
                         >
                           <div>
-                            <h4 className="text-xs font-bold text-white mb-1">{t.name}</h4>
+                            <h4 className="text-xs font-bold text-white mb-1 group-hover:text-[#7BC4BE] transition-colors">{t.name}</h4>
                             <div className="flex items-center gap-1.5 mt-2">
-                              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: t.color_scheme.primary }} />
+                              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: typeof t.color_scheme?.primary === "string" ? t.color_scheme.primary : "#888" }} />
                               <span className="text-[10px] text-gray-400 font-medium">Primary accent</span>
                             </div>
                             <div className="text-[10px] text-gray-500 mt-1 uppercase font-semibold">
-                              Layout: {t.layout_schema.structure} • Font: {t.layout_schema.fontFamily}
+                              Layout: {typeof t.layout_schema?.structure === "string" ? t.layout_schema.structure : "N/A"} • Font: {typeof t.layout_schema?.fontFamily === "string" ? t.layout_schema.fontFamily : "N/A"}
                             </div>
                           </div>
                           
                           <button
-                            onClick={() => handleUseTemplate(t.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenPreview(t.id);
+                            }}
                             className="w-full mt-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-lg text-[10px] font-semibold border border-white/5 transition-all text-center"
                           >
-                            Use Style →
+                            Preview & Use →
                           </button>
                         </div>
                       ))}
@@ -676,64 +680,7 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {/* TAB: AI ASSISTANT */}
-          {activeTab === "ai" && (
-            <motion.div
-              key="ai"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-4 h-[calc(100vh-100px)] flex flex-col justify-between"
-            >
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">AI Advisor</h1>
-                <p className="text-gray-400 text-xs mt-1">Review resume content against Harvard resume principles</p>
-              </div>
-
-              {/* Chat Window */}
-              <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 overflow-y-auto space-y-4 flex flex-col justify-end">
-                <div className="space-y-4 overflow-y-auto max-h-[400px]">
-                  {aiChat.map((msg, index) => (
-                    <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[70%] p-3.5 rounded-2xl text-xs leading-relaxed ${
-                        msg.sender === "user" 
-                          ? "bg-[#7BC4BE] text-[#1A2B2A] rounded-tr-none" 
-                          : "bg-white/10 text-white rounded-tl-none border border-white/5"
-                      }`}>
-                        {msg.text}
-                      </div>
-                    </div>
-                  ))}
-                  {aiLoading && (
-                    <div className="flex justify-start">
-                      <div className="bg-white/10 text-white rounded-2xl rounded-tl-none p-3.5 border border-white/5 text-xs flex items-center gap-2">
-                        <RefreshCw className="animate-spin text-[#7BC4BE]" size={12} /> Improving writing copy...
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Prompt Input */}
-              <form onSubmit={handleSendAiMessage} className="flex gap-2">
-                <input
-                  type="text"
-                  value={aiMessage}
-                  onChange={(e) => setAiMessage(e.target.value)}
-                  placeholder="e.g. Worked as an intern at Oracle. Managed SQL database. Make it professional."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE]"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-[#7BC4BE]/15"
-                >
-                  Ask <Send size={12} />
-                </button>
-              </form>
-            </motion.div>
-          )}
-
-          {/* TAB: PROFILE */}
+          {/* TAB: PROFILE (Master User Profile) */}
           {activeTab === "profile" && (
             <motion.div
               key="profile"
@@ -742,109 +689,159 @@ export default function Dashboard() {
               exit={{ opacity: 0, y: -10 }}
               className="space-y-6"
             >
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight">Advisor Profile</h1>
-                <p className="text-gray-400 text-xs mt-1">Manage global default values for your resumes</p>
+              {/* Build My Resume Hero Card */}
+              <div className="bg-gradient-to-r from-[#7BC4BE]/20 to-[#4A9E98]/20 border border-[#7BC4BE]/30 rounded-2xl p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                      <Sparkles size={20} className="text-[#7BC4BE]" />
+                      Build My Resume
+                    </h2>
+                    <p className="text-xs text-gray-300 mt-1">
+                      Create a new resume using AI or manual builder. Your profile will auto-fill the basics.
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleCreateResume}
+                    className="px-6 py-3 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-lg shadow-[#7BC4BE]/20"
+                  >
+                    <Plus size={16} />
+                    Start Building
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
               </div>
 
-              <form onSubmit={handleSaveProfile} className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Target Job Title</label>
-                    <input
-                      type="text"
-                      value={profile.job_title || ""}
-                      onChange={(e) => setProfile({ ...profile, job_title: e.target.value })}
-                      placeholder="e.g. Senior Software Engineer"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                    />
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
+                <p className="text-gray-400 text-xs mt-1">Master profile — auto-fills all resumes and cover letters</p>
+              </div>
+
+              <form onSubmit={handleSaveProfile} className="space-y-6">
+                {/* Basic Info */}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#7BC4BE] mb-4 flex items-center gap-1.5">
+                    <User size={14} /> Basic Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Full Name</label>
+                      <input type="text" value={user?.full_name || ""} disabled className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs opacity-60 cursor-not-allowed" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label>
+                      <input type="email" value={user?.email || ""} disabled className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs opacity-60 cursor-not-allowed" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Phone</label>
+                      <div className="relative">
+                        <Phone size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input type="text" value={profile.phone || ""} onChange={(e) => setProfile({ ...profile, phone: e.target.value })} placeholder="+1 (555) 019-2834" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Location</label>
+                      <div className="relative">
+                        <MapPin size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input type="text" value={profile.location || ""} onChange={(e) => setProfile({ ...profile, location: e.target.value })} placeholder="San Francisco, CA" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Contact Phone</label>
-                    <input
-                      type="text"
-                      value={profile.phone || ""}
-                      onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                      placeholder="+1 (555) 019-2834"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Location</label>
-                    <input
-                      type="text"
-                      value={profile.location || ""}
-                      onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-                      placeholder="San Francisco, CA"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Personal Website</label>
-                    <input
-                      type="text"
-                      value={profile.website || ""}
-                      onChange={(e) => setProfile({ ...profile, website: e.target.value })}
-                      placeholder="portfolio.dev"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">LinkedIn</label>
+                      <div className="relative">
+                        <ExternalLink size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input type="text" value={profile.linkedin || ""} onChange={(e) => setProfile({ ...profile, linkedin: e.target.value })} placeholder="linkedin.com/in/username" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">GitHub</label>
+                      <div className="relative">
+                        <Globe size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input type="text" value={profile.github || ""} onChange={(e) => setProfile({ ...profile, github: e.target.value })} placeholder="github.com/username" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Portfolio</label>
+                      <div className="relative">
+                        <Globe size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input type="text" value={profile.website || ""} onChange={(e) => setProfile({ ...profile, website: e.target.value })} placeholder="yoursite.com" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">LinkedIn Handle</label>
-                  <input
-                    type="text"
-                    value={profile.linkedin || ""}
-                    onChange={(e) => setProfile({ ...profile, linkedin: e.target.value })}
-                    placeholder="linkedin.com/in/username"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                  />
+                {/* Professional Info */}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#7BC4BE] mb-4 flex items-center gap-1.5">
+                    <Briefcase size={14} /> Professional Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Job Title</label>
+                      <input type="text" value={profile.job_title || ""} onChange={(e) => setProfile({ ...profile, job_title: e.target.value })} placeholder="Senior Software Engineer" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Industry</label>
+                      <input type="text" value={profile.industry || ""} onChange={(e) => setProfile({ ...profile, industry: e.target.value })} placeholder="Technology" className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Professional Summary</label>
+                    <textarea rows={4} value={profile.summary || ""} onChange={(e) => setProfile({ ...profile, summary: e.target.value })} placeholder="Experienced software engineer with expertise in building scalable distributed systems..." className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]" />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Professional Summary</label>
-                  <textarea
-                    rows={4}
-                    value={profile.summary || ""}
-                    onChange={(e) => setProfile({ ...profile, summary: e.target.value })}
-                    placeholder="Brief objective summary statement..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-white text-xs focus:outline-none focus:border-[#7BC4BE]"
-                  />
+                {/* Links & Resume Sections Info */}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#7BC4BE] mb-4 flex items-center gap-1.5">
+                    <ExternalLink size={14} /> Resume Sections
+                  </h3>
+                  <p className="text-xs text-gray-400 mb-4">
+                    Edit your full profile including Education, Experience, Projects, Skills, and more from the Profile Setup page.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/profile/setup")}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-xl text-xs font-semibold transition-all"
+                  >
+                    Edit Full Profile →
+                  </button>
                 </div>
 
                 <button
                   type="submit"
                   className="px-6 py-2.5 bg-[#7BC4BE] hover:bg-[#8AD6CF] text-[#1A2B2A] rounded-xl text-xs font-bold transition-all"
                 >
-                  Save Workspace Defaults
+                  Save Profile
                 </button>
               </form>
             </motion.div>
           )}
 
-          {/* TAB: BILLING */}
-          {activeTab === "billing" && (
+          {/* TAB: ACCOUNT */}
+          {activeTab === "account" && (
             <motion.div
-              key="billing"
+              key="account"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               className="space-y-6"
             >
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Billing & Plans</h1>
-                <p className="text-gray-400 text-xs mt-1">Review active plan, subscription state, and historical invoices</p>
+                <h1 className="text-2xl font-bold tracking-tight">Account</h1>
+                <p className="text-gray-400 text-xs mt-1">Manage your subscription and account settings</p>
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex justify-between items-center bg-gradient-to-r from-white/5 to-[#7BC4BE]/5">
                 <div>
                   <div className="text-[10px] text-[#7BC4BE] font-bold uppercase tracking-widest mb-1">Active Plan</div>
                   <h3 className="text-2xl font-bold text-white flex items-center gap-1.5">
-                    {sub.plan_type.toUpperCase()} PLAN
+                    {(sub.plan_type || "free").toUpperCase()} PLAN
                   </h3>
                   <p className="text-gray-400 text-xs mt-1">
-                    Status: <span className="text-emerald-400 font-semibold">{sub.status.toUpperCase()}</span>
+                    Status: <span className="text-emerald-400 font-semibold">{(sub.status || "active").toUpperCase()}</span>
                   </p>
                 </div>
                 {sub.plan_type === "free" && (
@@ -855,6 +852,21 @@ export default function Dashboard() {
                     Upgrade Tier
                   </Link>
                 )}
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-300 mb-4 border-b border-white/5 pb-2">
+                  Account Settings
+                </h3>
+                <div className="space-y-3">
+                  <Link
+                    to="/settings/auth"
+                    className="flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all text-xs text-gray-300 hover:text-white"
+                  >
+                    <Lock size={14} className="text-[#7BC4BE]" />
+                    Security & Password Settings
+                  </Link>
+                </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
@@ -886,6 +898,8 @@ export default function Dashboard() {
               </div>
             </motion.div>
           )}
+
+          {/* TAB: JD BASED - Redirects to /jd-based */}
         </AnimatePresence>
       </main>
 
@@ -966,6 +980,18 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Template Preview Modal */}
+      <TemplatePreviewModal
+        isOpen={showPreviewModal}
+        onClose={() => setShowPreviewModal(false)}
+        templates={templates}
+        initialTemplateId={previewTemplateId}
+        user={user}
+        profile={profile}
+        onUseTemplate={handleUseTemplateFromPreview}
+        onTemplateChange={(id) => sessionStorage.setItem("lastPreviewTemplate", id)}
+      />
     </div>
   );
 }

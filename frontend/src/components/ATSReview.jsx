@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { COLORS } from "../utils/constants";
-import { Check, AlertTriangle, Sparkles, ChevronRight, RefreshCw, Star, Info } from "lucide-react";
+import { Check, AlertTriangle, Sparkles, ChevronRight, RefreshCw, Star } from "lucide-react";
 import { api } from "../services/api";
 import ResumePreview from "./ResumePreview";
 
@@ -11,22 +11,20 @@ export default function ATSReview({ data, template, resumeId, onChange, onBack, 
   const [isFixing, setIsFixing] = useState(false);
   const [fixed, setFixed] = useState(false);
 
-  const runAnalysis = async () => {
-    try {
-      setLoading(true);
-      const res = await api.analyzeATS(resumeId);
-      setAnalysis(res);
-      setScore(res.score);
-    } catch (err) {
-      console.error("Failed to run ATS analysis:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (resumeId) {
-      runAnalysis();
+      (async () => {
+        try {
+          setLoading(true);
+          const res = await api.ats.analyze(resumeId);
+          setAnalysis(res);
+          setScore(res.score);
+        } catch (err) {
+          console.error("Failed to run ATS analysis:", err);
+        } finally {
+          setLoading(false);
+        }
+      })();
     }
   }, [resumeId]);
 
@@ -55,7 +53,7 @@ export default function ATSReview({ data, template, resumeId, onChange, onBack, 
     try {
       // Improve the professional summary via AI autofix
       const summaryText = data.summary || "";
-      const res = await api.improveText(summaryText, "autofix", "summary");
+      const res = await api.ats.improveText(summaryText, "autofix", "summary");
       
       // Update parent data
       const updated = {
@@ -69,11 +67,11 @@ export default function ATSReview({ data, template, resumeId, onChange, onBack, 
         content: updated[key],
         position: idx
       }));
-      await api.saveResumeSections(resumeId, payload);
+      await api.resumes.saveSections(resumeId, payload);
       onChange(updated);
       
       // Re-run analysis
-      const newAnalysis = await api.analyzeATS(resumeId);
+      const newAnalysis = await api.ats.analyze(resumeId);
       setAnalysis(newAnalysis);
       setScore(newAnalysis.score);
       setFixed(true);

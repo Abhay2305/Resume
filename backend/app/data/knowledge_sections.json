@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "summary": {
+      "keywords": ["summary", "professional summary", "executive summary", "profile", "about me", "objective"],
+      "category": "summary",
+      "description": "Professional summary or objective section"
+    },
+    "experience": {
+      "keywords": ["experience", "work experience", "employment", "professional experience", "work history"],
+      "category": "experience",
+      "description": "Work experience section"
+    },
+    "education": {
+      "keywords": ["education", "academic", "degree", "university", "college", "gpa"],
+      "category": "education",
+      "description": "Education section"
+    },
+    "skills": {
+      "keywords": ["skills", "technical skills", "competencies", "proficiencies", "technologies"],
+      "category": "skills",
+      "description": "Skills section"
+    },
+    "projects": {
+      "keywords": ["projects", "portfolio", "side projects", "personal projects"],
+      "category": "projects",
+      "description": "Projects section"
+    },
+    "certifications": {
+      "keywords": ["certifications", "licenses", "credentials", "certificates"],
+      "category": "certifications",
+      "description": "Certifications section"
+    },
+    "achievements": {
+      "keywords": ["achievements", "accomplishments", "awards", "honors", "recognition"],
+      "category": "achievements",
+      "description": "Achievements and awards section"
+    },
+    "leadership": {
+      "keywords": ["leadership", "management", "team lead", "supervisory"],
+      "category": "leadership",
+      "description": "Leadership and management section"
+    },
+    "ats": {
+      "keywords": ["ats", "applicant tracking", "keyword", "formatting"],
+      "category": "ats",
+      "description": "ATS optimization rules"
+    },
+    "cover_letter": {
+      "keywords": ["cover letter", "coverLetter", "letter of application"],
+      "category": "cover_letter",
+      "description": "Cover letter rules"
+    },
+    "interview": {
+      "keywords": ["interview", "behavioral", "situational", " STAR"],
+      "category": "interview",
+      "description": "Interview preparation rules"
+    },
+    "formatting": {
+      "keywords": ["format", "formatting", "layout", "design", "template", "style"],
+      "category": "formatting",
+      "description": "Resume formatting rules"
+    }
+  },
+  "categories": {
+    "quantification": {
+      "description": "Rules about quantifying achievements",
+      "sections": ["experience", "projects", "achievements"]
+    },
+    "action_verbs": {
+      "description": "Rules about using strong action verbs",
+      "sections": ["experience", "projects"]
+    },
+    "keywords": {
+      "description": "Rules about ATS keyword optimization",
+      "sections": ["skills", "summary", "experience"]
+    },
+    "tailoring": {
+      "description": "Rules about tailoring resume to job description",
+      "sections": ["summary", "skills", "experience"]
+    },
+    "length": {
+      "description": "Rules about resume length and conciseness",
+      "sections": ["summary", "experience"]
+    },
+    "clarity": {
+      "description": "Rules about clear and concise writing",
+      "sections": ["summary", "experience", "projects"]
+    },
+    "impact": {
+      "description": "Rules about demonstrating impact",
+      "sections": ["experience", "projects", "achievements"]
+    },
+    "relevance": {
+      "description": "Rules about relevance to target role",
+      "sections": ["summary", "skills", "experience"]
+    },
+    "specificity": {
+      "description": "Rules about being specific and detailed",
+      "sections": ["experience", "projects", "education"]
+    },
+    "formatting": {
+      "description": "Rules about formatting and presentation",
+      "sections": ["formatting"]
+    }
+  }
+}

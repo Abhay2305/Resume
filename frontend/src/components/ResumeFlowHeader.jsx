@@ -4,7 +4,6 @@ import { ArrowLeft, Check, CloudLightning } from "lucide-react";
 
 export default function ResumeFlowHeader({ step, onBack, onExit }) {
   const steps = [
-    { id: "prompt", label: "Prompt" },
     { id: "templates", label: "Gallery" },
     { id: "editor", label: "Editor" },
     { id: "ats", label: "ATS Score" },
@@ -12,8 +11,8 @@ export default function ResumeFlowHeader({ step, onBack, onExit }) {
   ];
 
   const getStepStatus = (stepId) => {
-    const stepOrder = ["prompt", "generating", "templates", "editor", "ats", "export"];
-    const currentIndex = stepOrder.indexOf(step === "generating" ? "prompt" : step);
+    const stepOrder = ["templates", "editor", "ats", "export"];
+    const currentIndex = stepOrder.indexOf(step);
     const targetIndex = stepOrder.indexOf(stepId);
 
     if (targetIndex < currentIndex) return "completed";
@@ -32,7 +31,7 @@ export default function ResumeFlowHeader({ step, onBack, onExit }) {
     >
       {/* Left side: Back or Logo */}
       <div className="flex items-center gap-4">
-        {step !== "prompt" && step !== "generating" ? (
+        {step !== "templates" ? (
           <button
             onClick={onBack}
             className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
@@ -72,8 +71,7 @@ export default function ResumeFlowHeader({ step, onBack, onExit }) {
       </div>
 
       {/* Middle: Stepper (Progress Tracker) */}
-      {step !== "generating" && (
-        <nav className="hidden md:flex items-center gap-1">
+      <nav className="hidden md:flex items-center gap-1">
           {steps.map((s, index) => {
             const status = getStepStatus(s.id);
             return (
@@ -128,11 +126,10 @@ export default function ResumeFlowHeader({ step, onBack, onExit }) {
             );
           })}
         </nav>
-      )}
 
       {/* Right side: Save status / Exit */}
       <div className="flex items-center gap-4">
-        {step !== "prompt" && step !== "generating" && (
+        {step !== "templates" && (
           <div
             className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all duration-300"
             style={{

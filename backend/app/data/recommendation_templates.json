@@ -1,0 +1,148 @@
+{
+  "skill_gap": {
+    "missing_required": {
+      "template": "Add {skill} to your skills section",
+      "priority": "high",
+      "category": "skills",
+      "action": "add_skill"
+    },
+    "missing_preferred": {
+      "template": "Consider adding {skill} to your skills section",
+      "priority": "medium",
+      "category": "skills",
+      "action": "add_skill"
+    },
+    "weak_skill": {
+      "template": "Strengthen your {skill} experience with more details or examples",
+      "priority": "medium",
+      "category": "skills",
+      "action": "strengthen_skill"
+    }
+  },
+  "technology_gap": {
+    "missing_framework": {
+      "template": "Add {technology} experience to your resume",
+      "priority": "high",
+      "category": "technologies",
+      "action": "add_technology"
+    },
+    "missing_database": {
+      "template": "Include {technology} in your database experience",
+      "priority": "high",
+      "category": "technologies",
+      "action": "add_technology"
+    },
+    "missing_cloud": {
+      "template": "Add {technology} cloud experience to your resume",
+      "priority": "medium",
+      "category": "technologies",
+      "action": "add_technology"
+    },
+    "missing_devops": {
+      "template": "Add {technology} to your DevOps experience",
+      "priority": "medium",
+      "category": "technologies",
+      "action": "add_technology"
+    }
+  },
+  "experience_gap": {
+    "insufficient_years": {
+      "template": "The role requires {required} years of experience; you have {actual} years",
+      "priority": "high",
+      "category": "experience",
+      "action": "highlight_experience"
+    },
+    "missing_role": {
+      "template": "Highlight your {role} experience more prominently",
+      "priority": "medium",
+      "category": "experience",
+      "action": "highlight_experience"
+    },
+    "missing_industry": {
+      "template": "Emphasize your {industry} industry experience",
+      "priority": "medium",
+      "category": "experience",
+      "action": "highlight_experience"
+    }
+  },
+  "education_gap": {
+    "missing_degree": {
+      "template": "The role requires a {degree} degree",
+      "priority": "high",
+      "category": "education",
+      "action": "add_education"
+    },
+    "missing_field": {
+      "template": "Add your {field} educational background",
+      "priority": "medium",
+      "category": "education",
+      "action": "add_education"
+    }
+  },
+  "certification_gap": {
+    "missing_required": {
+      "template": "Obtain {certification} certification",
+      "priority": "high",
+      "category": "certifications",
+      "action": "add_certification"
+    },
+    "missing_preferred": {
+      "template": "Consider obtaining {certification} certification",
+      "priority": "medium",
+      "category": "certifications",
+      "action": "add_certification"
+    }
+  },
+  "keyword_gap": {
+    "missing_ats_keyword": {
+      "template": "Add '{keyword}' to your resume for ATS optimization",
+      "priority": "medium",
+      "category": "keywords",
+      "action": "add_keyword"
+    },
+    "weak_keyword_density": {
+      "template": "Increase mentions of '{keyword}' in your resume",
+      "priority": "low",
+      "category": "keywords",
+      "action": "enhance_keyword"
+    }
+  },
+  "general": {
+    "summary_rewrite": {
+      "template": "Rewrite your summary to better align with this role",
+      "priority": "high",
+      "category": "summary",
+      "action": "rewrite_summary"
+    },
+    "highlight_experience": {
+      "template": "Move your {technology} experience higher in your resume",
+      "priority": "medium",
+      "category": "experience",
+      "action": "reorder_experience"
+    },
+    "add_quantified_metrics": {
+      "template": "Add quantified metrics to your experience bullets",
+      "priority": "high",
+      "category": "achievements",
+      "action": "add_metrics"
+    },
+    "expand_project": {
+      "template": "Expand your {project} project description with more details",
+      "priority": "medium",
+      "category": "projects",
+      "action": "expand_project"
+    },
+    "reorder_skills": {
+      "template": "Reorder your skills to match the job requirements",
+      "priority": "medium",
+      "category": "skills",
+      "action": "reorder_skills"
+    },
+    "remove_irrelevant": {
+      "template": "Remove or de-emphasize {technology} as it's not relevant to this role",
+      "priority": "low",
+      "category": "technologies",
+      "action": "remove_technology"
+    }
+  }
+}

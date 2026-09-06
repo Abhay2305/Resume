@@ -1,0 +1,15 @@
+{
+  "types": {
+    "full-time": ["full-time", "full time", "ft", "permanent", "regular"],
+    "part-time": ["part-time", "part time", "pt"],
+    "contract": ["contract", "contractor", "1099", "w2 contract", "ctc"],
+    "freelance": ["freelance", "freelancer", "independent", "self-employed"],
+    "internship": ["internship", "intern", "co-op", "coop", "training"],
+    "temporary": ["temporary", "temp", "fixed-term", "term", "seasonal"]
+  },
+  "patterns": [
+    "(?:employment\\s+)?type[:\\s]+(full[- ]?time|part[- ]?time|contract|freelance|internship|temporary)",
+    "(?:position|role)\\s+(?:is\\s+)?(full[- ]?time|part[- ]?time|contract|freelance|internship|temporary)",
+    "(full[- ]?time|part[- ]?time|contract|freelance|internship|temporary)\\s+(?:position|role|opportunity)"
+  ]
+}

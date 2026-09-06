@@ -1,0 +1,54 @@
+{
+  "remote_keywords": [
+    "remote", "work from home", "wfh", "distributed",
+    "telecommute", "telework", "work remotely",
+    "fully remote", "100% remote", "all remote",
+    "anywhere", "global", "worldwide"
+  ],
+  "hybrid_keywords": [
+    "hybrid", "flexible", "flex", "mixed",
+    "partial remote", "partially remote",
+    "2-3 days in office", "3 days in office",
+    "office and remote", "remote and office"
+  ],
+  "onsite_keywords": [
+    "onsite", "on-site", "in-office", "in office",
+    "on campus", "at office", "office based",
+    "in-person", "in person"
+  ],
+  "common_locations": {
+    "us": [
+      "san francisco", "new york", "seattle", "austin", "boston",
+      "chicago", "los angeles", "san diego", "denver", "atlanta",
+      "miami", "houston", "dallas", "portland", "phoenix",
+      "detroit", "minneapolis", "nashville", "raleigh", "charlotte",
+      "pittsburgh", "salt lake city", "las vegas", "orlando", "tampa",
+      "washington dc", "washington d.c.", "philadelphia", "columbus",
+      "indianapolis", "san jose", "sacramento", "new orleans",
+      "hartford", "richmond", "baltimore", "milwaukee", "kansas city"
+    ],
+    "canada": [
+      "toronto", "vancouver", "montreal", "calgary", "ottawa",
+      "edmonton", "winnipeg", "quebec city", "halifax", "victoria"
+    ],
+    "uk": [
+      "london", "manchester", "birmingham", "edinburgh", "glasgow",
+      "bristol", "leeds", "cambridge", "oxford", "liverpool"
+    ],
+    "europe": [
+      "berlin", "munich", "amsterdam", "paris", "dublin",
+      "zurich", "geneva", "barcelona", "madrid", "rome",
+      "milan", "copenhagen", "stockholm", "oslo", "helsinki",
+      "vienna", "prague", "warsaw", "budapest", "lisbon"
+    ],
+    "asia": [
+      "singapore", "tokyo", "seoul", "bangalore", "mumbai",
+      "hyderabad", "pune", "delhi", "beijing", "shanghai",
+      "shenzhen", "hong kong", "taipei", "bangkok", "kuala lumpur"
+    ],
+    "australia": [
+      "sydney", "melbourne", "brisbane", "perth", "adelaide",
+      "canberra", "auckland", "wellington"
+    ]
+  }
+}

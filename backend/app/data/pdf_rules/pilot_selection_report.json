@@ -1,0 +1,472 @@
+{
+  "total_extracted": 500,
+  "eligible": 500,
+  "after_dedup": 500,
+  "selected_count": 50,
+  "target_count": 50,
+  "selection_criteria": {
+    "state": "DISCOVERED or VERIFIED (pre-ingestion)",
+    "min_confidence": ">= 0.7 or None (default during ingestion)",
+    "requires_source_document": true,
+    "requires_source_page": true,
+    "requires_extraction_timestamp": true,
+    "requires_rule_hash": true
+  },
+  "by_source": {
+    "harvard": 17,
+    "yale": 17,
+    "stanford": 16
+  },
+  "selected_rules": [
+    {
+      "rule_id": "PDF_COV_A5C8D7E2",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Create a Strong Resume",
+      "confidence": null,
+      "section": "summary",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_RES_381BB007",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Ence. It should highlight your strongest assets",
+      "confidence": null,
+      "section": "summary",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_COV_0628A31E",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Alone will not get you a job or internship, a good and bolts of getting started. See the CARC or OCS",
+      "confidence": null,
+      "section": "skills",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_RES_1B1BC533",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Tailor your resume to the type of position you",
+      "confidence": null,
+      "section": "skills",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_RES_E0457779",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Resume should reflect the kind of skills the \u2022 Career Advising Appointments. Matriculated degree stu",
+      "confidence": null,
+      "section": "experience",
+      "category": "Relevance"
+    },
+    {
+      "rule_id": "PDF_RES_4EF1021F",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "RESUME LANGUAGE SHOULD BE:",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_CEB25636",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Active rather than passive 4. Not well organized, concise, or easy to skim",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EXP_0EF34FDD",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Written to express not impress 5. Not tailored to the position or industry",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EXP_45B3034E",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Fact-based (quantify and qualify) DO:",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Quantification"
+    },
+    {
+      "rule_id": "PDF_FOR_E5294C7F",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Make it easy to read and follow, balancing white",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_FOR_25B0A7E1",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Use personal pronouns (such as I) \u2022Use consistent spacing, bold, and capitalization",
+      "confidence": null,
+      "section": "experience",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_FOR_7B572765",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Use a narrative style \u2022List headings (such as Experience) in order of",
+      "confidence": null,
+      "section": "experience",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_FOR_88F0BC77",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Use slang or colloquialisms \u2022Within headings, list information in reverse chron-",
+      "confidence": null,
+      "section": "experience",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_COV_E02E677A",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Include a picture ological order (most recent first)",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Quantification"
+    },
+    {
+      "rule_id": "PDF_FOR_7030B2F4",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Include age or sex \u2022Avoid information gaps such as a missing summer",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_EXP_1A4EC884",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "List references \u2022Be sure that your formatting translated properly if",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_RES_B030B3D7",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "source_page": 3,
+      "instruction": "Start each line with a date converted to a .pdf",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_RES_A1EA2608",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "THE YALE SOM RESUME CHECKLIST",
+      "confidence": null,
+      "section": "general",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_RES_6A8A5E2C",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Please use the following checklist to ensure all requirements have been met prior to uploading your ",
+      "confidence": null,
+      "section": "general",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_RES_02885B25",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "While each individual will have a primary resume, you may also want to create different versions of ",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_RES_EDAEB386",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Are tailored to specific industries, functions, employers, or opportunities.",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_FOR_D64655D3",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Make it easier for employers to find the critical information they need to know about you.",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_FOR_C472F6C5",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020Yale SOM resume template used (hint: if you are having trouble with the template or if you are hav",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Length"
+    },
+    {
+      "rule_id": "PDF_FOR_ABACC4CD",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Issues, show the gridlines so that you can see where the sections begin and end)",
+      "confidence": null,
+      "section": "formatting",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_EXP_14105291",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Internship \u2013 list as \u201cSummer 20XX\u201d",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_A31E247F",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020Bullet points correct (\uf09f) and do not use periods at the end of each bullet/statement",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_3B30FCF1",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "This section includes your name and contact information where an employer is able to contact you.",
+      "confidence": null,
+      "section": "experience",
+      "category": "Specificity"
+    },
+    {
+      "rule_id": "PDF_EDU_349C932D",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020Photo \u2013 do not include",
+      "confidence": null,
+      "section": "experience",
+      "category": "Quantification"
+    },
+    {
+      "rule_id": "PDF_EDU_7497233F",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020Education list in reverse chronological order, with Yale SOM listed first",
+      "confidence": null,
+      "section": "education",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_COV_456B5FC0",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020School location includes City and State (or Country if not in US)",
+      "confidence": null,
+      "section": "education",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_EXP_25CF4EDF",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "Undergraduate \u2013 include Latin honors or if GPA > 3.5/4.0",
+      "confidence": null,
+      "section": "education",
+      "category": "Quantification"
+    },
+    {
+      "rule_id": "PDF_EXP_5AAC073D",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 2,
+      "instruction": "\uf0a8\uf020Education related activities included in bullet points (e.g. academic awards, scholarships, leader",
+      "confidence": null,
+      "section": "education",
+      "category": "Quantification"
+    },
+    {
+      "rule_id": "PDF_EXP_5992C7FA",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 3,
+      "instruction": "This section is the heart of your resume and where many employers focus. Make sure to leverage",
+      "confidence": null,
+      "section": "experience",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EXP_ADD71D67",
+      "source_document": "Yale resume guidance letter.pdf",
+      "source_page": 3,
+      "instruction": "\uf0a8\uf020If company not widely known, business is described in one sentence, in italics under company name",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_1A350441",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Therefore, the information must be conveyed in a clear, well-organized style . The sections of a res",
+      "confidence": null,
+      "section": "summary",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_EXP_916D4D66",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "This section is optional. The objective can include the specific position",
+      "confidence": null,
+      "section": "summary",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EXP_E79F5C34",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "You are seeking, skills you wish to use on the job, field or organization Sample Objectives",
+      "confidence": null,
+      "section": "summary",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EDU_18B1A966",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "This section should include: internship.",
+      "confidence": null,
+      "section": "education",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_EDU_2ABEC9E1",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Name of the degree-granting institutions; List most recent first. \u2022 To obtain a position in finance.",
+      "confidence": null,
+      "section": "education",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_EXP_DF790299",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Seeking a position in museum",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_0017BDD3",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Any minors, specialization or focus areas writing skills and a background",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_4B8FA0FE",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Freshmen and sophomores can include high school",
+      "confidence": null,
+      "section": "experience",
+      "category": "Length"
+    },
+    {
+      "rule_id": "PDF_EXP_FF22BE7C",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Descriptions of responsibilities beginning with action verbs (avoid phrases such as \u201cduties included",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_EXP_6ACFA9AD",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "You may choose to divide your experience into two or more sections. Possible section headers might i",
+      "confidence": null,
+      "section": "experience",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_EXP_287C5DBF",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "This section could include computer skills, languages, volunteer work, sports, and interests. If one",
+      "confidence": null,
+      "section": "experience",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_EXP_F0A9393E",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 1,
+      "instruction": "Relevant to the job, however, you may choose to put it in the \u201cExperience\u201d section. You may also cho",
+      "confidence": null,
+      "section": "experience",
+      "category": "Tailoring"
+    },
+    {
+      "rule_id": "PDF_RES_1A0F126B",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 2,
+      "instruction": "2 8 Stanford Career Center",
+      "confidence": null,
+      "section": "general",
+      "category": "General"
+    },
+    {
+      "rule_id": "PDF_RES_238B1232",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 2,
+      "instruction": "RESUME and especially useful for anyone with a history of directly relevant",
+      "confidence": null,
+      "section": "experience",
+      "category": "Formatting"
+    },
+    {
+      "rule_id": "PDF_RES_E9125A8F",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 2,
+      "instruction": "Do design your descriptions to focus on your accomplishments,",
+      "confidence": null,
+      "section": "experience",
+      "category": "Action Verbs"
+    },
+    {
+      "rule_id": "PDF_SKI_87219D73",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "source_page": 2,
+      "instruction": "Using action verbs to clearly indicate the skills you\u2019ve used . See Functional/Skills Format",
+      "confidence": null,
+      "section": "experience",
+      "category": "Quantification"
+    }
+  ]
+}

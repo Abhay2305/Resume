@@ -1,0 +1,42 @@
+{
+  "cloud": [
+    "aws certified solutions architect", "aws certified developer", "aws certified sysops",
+    "aws certified devops engineer", "aws certified security", "aws certified machine learning",
+    "azure certified", "azure fundamentals", "azure developer associate", "azure administrator associate",
+    "azure solutions architect", "azure devops engineer expert",
+    "google cloud certified", "gcp cloud architect", "gcp data engineer", "gcp cloud developer",
+    "gcp cloud security", "gcp ml engineer"
+  ],
+  "programming": [
+    "oracle certified java programmer", "sun certified java programmer",
+    "microsoft certified: azure developer associate", "python institute certification",
+    "pcep", "pcap", "cisco certified devnet associate", "cisco certified devnet professional"
+  ],
+  "project_management": [
+    "pmp", "project management professional", "prince2", "certified scrum master",
+    "csm", "certified scrum product owner", "cspo", "safe agile certified",
+    "certified associate in project management", "capm", "compTIA project+"
+  ],
+  "security": [
+    "certified information systems security professional", "cissp",
+    "certified ethical hacker", "ceh", "comptia security+",
+    "certified information security manager", "cism",
+    "certified information systems auditor", "cisa",
+    "oscp", "offensive security certified professional"
+  ],
+  "data": [
+    "google data analytics", "ibm data scientist", "ibm data engineer",
+    "databricks certified", "snowflake snowpro core", "snowflake snowpro advanced",
+    "tableau desktop specialist", "tableau certified data analyst",
+    "microsoft certified: data analyst associate", "microsoft certified: data engineer associate"
+  ],
+  "devops": [
+    "certified kubernetes administrator", "cka", "certified kubernetes application developer", "ckad",
+    "certified kubernetes security specialist", "ckss", "docker certified associate",
+    "hashicorp certified terraform associate", "hashicorp certified vault associate"
+  ],
+  "it_service": [
+    "itil foundation", "itil 4 foundation", "compTIA a+", "compTIA network+",
+    "compTIA server+", "cisco certified network associate", "ccna"
+  ]
+}

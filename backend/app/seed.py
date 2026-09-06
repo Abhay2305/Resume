@@ -1,7 +1,13 @@
 import json
+import logging
 from sqlalchemy.orm import Session
 from .database import engine, SessionLocal, Base
 from .models import Template, ResumeRule
+from .models.identity import User, Profile, Subscription, Role, Permission, RolePermission, UserRole
+from .models.audit import AuditConfig
+from .models.error import ErrorCategory
+
+logger = logging.getLogger(__name__)
 
 TEMPLATES_DATA = [
     # ATS CATEGORY
@@ -178,46 +184,427 @@ TEMPLATES_DATA = [
     }
 ]
 
-RULES_DATA = [
-    {
-        "category": "verbs",
-        "rule_name": "Use Strong Action Verbs",
-        "rule_description": "Bullet points must start with powerful verbs (e.g., Developed, Spearheaded, Implemented) to demonstrate initiative.",
-        "rule_prompt_instruction": "Ensure all bullet points for work experiences begin with a strong action verb in the past tense (or present tense for current job). Avoid generic verbs like 'helped', 'worked', or 'was responsible for'."
-    },
-    {
-        "category": "quantify",
-        "rule_name": "Quantify Achievements",
-        "rule_description": "Use metrics, growth percentages, and dollar amounts to back up success statements.",
-        "rule_prompt_instruction": "Quantify outcomes where possible. If a task mentions working on a project, explain the scale (e.g., 'supporting 10k+ users', 'speeding up performance by 30%', or 'generating $50k in revenue')."
-    },
-    {
-        "category": "first_person",
-        "rule_name": "Avoid First-Person Pronouns",
-        "rule_description": "Never use 'I', 'me', 'my', 'we' in resume bullet points or professional summaries.",
-        "rule_prompt_instruction": "Eliminate first-person pronouns completely. Instead of 'I designed a database', write 'Designed a database'."
-    },
-    {
-        "category": "punctuation",
-        "rule_name": "Consistent Punctuation",
-        "rule_description": "Use a consistent standard of trailing punctuation (periods or semicolons) at the end of lists.",
-        "rule_prompt_instruction": "End every experience bullet point with a period. Ensure summary paragraphs are properly punctuated with standard sentence structures."
-    },
-    {
-        "category": "ats",
-        "rule_name": "ATS Section Standard",
-        "rule_description": "Ensure clear segment headers for easy parsing.",
-        "rule_prompt_instruction": "Ensure clear, standard section headings (Education, Experience, Projects, Skills) and avoid obscure custom section titles."
-    }
-]
+# RULES_DATA removed — rules are now governed via KnowledgeRule DB.
+# See scripts/seed_hand_authored.py and scripts/migrate_shadow1_rules.py
+
+def _seed_role_permissions(db: Session) -> None:
+    """Seed role-permission mappings for system roles."""
+    # Get all permissions
+    all_permissions = db.query(Permission).all()
+    perm_map = {p.name: p.id for p in all_permissions}
+    
+    # Admin gets all permissions
+    admin_role = db.query(Role).filter(Role.name == "admin").first()
+    if admin_role:
+        for perm_name, perm_id in perm_map.items():
+            existing = db.query(RolePermission).filter(
+                RolePermission.role_id == admin_role.id,
+                RolePermission.permission_id == perm_id,
+            ).first()
+            if not existing:
+                db.add(RolePermission(role_id=admin_role.id, permission_id=perm_id))
+    
+    # User gets basic permissions
+    user_role = db.query(Role).filter(Role.name == "user").first()
+    user_perms = [
+        "resume:create", "resume:read", "resume:update", "resume:delete",
+        "cover_letter:create", "cover_letter:read", "cover_letter:update", "cover_letter:delete",
+        "ai:use",
+        "billing:read",
+    ]
+    if user_role:
+        for perm_name in user_perms:
+            if perm_name in perm_map:
+                existing = db.query(RolePermission).filter(
+                    RolePermission.role_id == user_role.id,
+                    RolePermission.permission_id == perm_map[perm_name],
+                ).first()
+                if not existing:
+                    db.add(RolePermission(role_id=user_role.id, permission_id=perm_map[perm_name]))
+    
+    # Premium gets user + extra AI
+    premium_role = db.query(Role).filter(Role.name == "premium").first()
+    premium_perms = user_perms + ["ai:unlimited"]
+    if premium_role:
+        for perm_name in premium_perms:
+            if perm_name in perm_map:
+                existing = db.query(RolePermission).filter(
+                    RolePermission.role_id == premium_role.id,
+                    RolePermission.permission_id == perm_map[perm_name],
+                ).first()
+                if not existing:
+                    db.add(RolePermission(role_id=premium_role.id, permission_id=perm_map[perm_name]))
+    
+    # Viewer gets read-only permissions
+    viewer_role = db.query(Role).filter(Role.name == "viewer").first()
+    viewer_perms = ["resume:read", "cover_letter:read"]
+    if viewer_role:
+        for perm_name in viewer_perms:
+            if perm_name in perm_map:
+                existing = db.query(RolePermission).filter(
+                    RolePermission.role_id == viewer_role.id,
+                    RolePermission.permission_id == perm_map[perm_name],
+                ).first()
+                if not existing:
+                    db.add(RolePermission(role_id=viewer_role.id, permission_id=perm_map[perm_name]))
+    
+    # Organization admin gets org management
+    org_admin_role = db.query(Role).filter(Role.name == "organization_admin").first()
+    org_admin_perms = user_perms + ["org:manage", "org:member"]
+    if org_admin_role:
+        for perm_name in org_admin_perms:
+            if perm_name in perm_map:
+                existing = db.query(RolePermission).filter(
+                    RolePermission.role_id == org_admin_role.id,
+                    RolePermission.permission_id == perm_map[perm_name],
+                ).first()
+                if not existing:
+                    db.add(RolePermission(role_id=org_admin_role.id, permission_id=perm_map[perm_name]))
+    
+    db.commit()
+    logger.info("Seeded role-permission mappings.")
+
+
+def _seed_audit_configs(db: Session) -> None:
+    """Seed default audit configurations for all entity types."""
+    default_configs = [
+        # User entity - track all mutations
+        {
+            "entity_type": "User",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 730,  # 2 years for user accounts
+            "archive_after_days": 180,
+            "sensitive_fields": json.dumps(["hashed_password", "last_login_ip"]),
+        },
+        # Resume entity - track all mutations
+        {
+            "entity_type": "Resume",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+        # CoverLetter entity
+        {
+            "entity_type": "CoverLetter",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+        # Session entity - security critical
+        {
+            "entity_type": "Session",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+            "sensitive_fields": json.dumps(["token_hash"]),
+        },
+        # LoginHistory - immutable, track all
+        {
+            "entity_type": "LoginHistory",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": False,
+            "audit_delete": False,
+            "retention_days": 730,  # 2 years for security
+            "archive_after_days": 365,
+        },
+        # Subscription entity
+        {
+            "entity_type": "Subscription",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": False,
+            "retention_days": 1095,  # 3 years for billing
+            "archive_after_days": 365,
+        },
+        # Payment entity - financial records
+        {
+            "entity_type": "Payment",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": False,
+            "audit_delete": False,
+            "retention_days": 2555,  # 7 years for financial compliance
+            "archive_after_days": 365,
+        },
+        # Organization entity
+        {
+            "entity_type": "Organization",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+        # Role entity - security critical
+        {
+            "entity_type": "Role",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 730,
+            "archive_after_days": 365,
+        },
+        # Permission entity
+        {
+            "entity_type": "Permission",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 730,
+            "archive_after_days": 365,
+        },
+        # HTTP requests - low retention
+        {
+            "entity_type": "http_request",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": False,
+            "audit_delete": False,
+            "retention_days": 30,
+            "archive_after_days": 7,
+            "sample_rate": 100,
+        },
+        # PROCS entity: admin_user management
+        {
+            "entity_type": "admin_user",
+            "is_enabled": True,
+            "audit_create": False,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 730,
+            "archive_after_days": 180,
+            "sensitive_fields": json.dumps(["hashed_password"]),
+        },
+        # PROCS entity: admin_resume management
+        {
+            "entity_type": "admin_resume",
+            "is_enabled": True,
+            "audit_create": False,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+        # PROCS entity: admin_template management
+        {
+            "entity_type": "admin_template",
+            "is_enabled": True,
+            "audit_create": False,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": True,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+        # PROCS entity: admin_auth events (LOGIN, LOGOUT, ACCESS_DENIED)
+        {
+            "entity_type": "admin_auth",
+            "is_enabled": True,
+            "audit_create": True,
+            "audit_read": False,
+            "audit_update": False,
+            "audit_delete": False,
+            "retention_days": 730,
+            "archive_after_days": 365,
+        },
+        # PROCS entity: admin_config changes
+        {
+            "entity_type": "admin_config",
+            "is_enabled": True,
+            "audit_create": False,
+            "audit_read": False,
+            "audit_update": True,
+            "audit_delete": False,
+            "retention_days": 365,
+            "archive_after_days": 90,
+        },
+    ]
+    
+    for config_data in default_configs:
+        existing = db.query(AuditConfig).filter(
+            AuditConfig.entity_type == config_data["entity_type"]
+        ).first()
+        if not existing:
+            config = AuditConfig(**config_data)
+            db.add(config)
+            logger.info("Seeding audit config: %s", config_data['entity_type'])
+    
+    db.commit()
+    logger.info("Seeded audit configurations.")
+
+
+def _seed_error_categories(db: Session) -> None:
+    """Seed default error categories."""
+    default_categories = [
+        {
+            "name": "Authentication",
+            "description": "Login, registration, and authentication errors",
+            "color": "#EF4444",
+            "icon": "lock",
+            "default_severity": "high",
+            "patterns": json.dumps(["auth", "login", "password", "token", "jwt"]),
+        },
+        {
+            "name": "Authorization",
+            "description": "Permission and access control errors",
+            "color": "#F59E0B",
+            "icon": "shield",
+            "default_severity": "high",
+            "patterns": json.dumps(["permission", "forbidden", "unauthorized", "access"]),
+        },
+        {
+            "name": "Validation",
+            "description": "Input validation and data integrity errors",
+            "color": "#3B82F6",
+            "icon": "check-circle",
+            "default_severity": "low",
+            "patterns": json.dumps(["validation", "invalid", "required", "format"]),
+        },
+        {
+            "name": "Database",
+            "description": "Database connection and query errors",
+            "color": "#8B5CF6",
+            "icon": "database",
+            "default_severity": "critical",
+            "patterns": json.dumps(["database", "sql", "connection", "query", "integrity"]),
+        },
+        {
+            "name": "API",
+            "description": "External API and service integration errors",
+            "color": "#EC4899",
+            "icon": "globe",
+            "default_severity": "high",
+            "patterns": json.dumps(["api", "request", "timeout", "connection", "endpoint"]),
+        },
+        {
+            "name": "AI Service",
+            "description": "AI provider and model errors",
+            "color": "#10B981",
+            "icon": "cpu",
+            "default_severity": "high",
+            "patterns": json.dumps(["ai", "llm", "gemini", "openai", "model", "generation"]),
+        },
+        {
+            "name": "File System",
+            "description": "File I/O and storage errors",
+            "color": "#6366F1",
+            "icon": "file",
+            "default_severity": "medium",
+            "patterns": json.dumps(["file", "directory", "path", "storage", "upload"]),
+        },
+        {
+            "name": "PDF Generation",
+            "description": "PDF rendering and export errors",
+            "color": "#14B8A6",
+            "icon": "file-text",
+            "default_severity": "medium",
+            "patterns": json.dumps(["pdf", "render", "export", "template"]),
+        },
+        {
+            "name": "Resume Processing",
+            "description": "Resume parsing and processing errors",
+            "color": "#F97316",
+            "icon": "file",
+            "default_severity": "medium",
+            "patterns": json.dumps(["resume", "parse", "section", "content"]),
+        },
+        {
+            "name": "System",
+            "description": "System and infrastructure errors",
+            "color": "#DC2626",
+            "icon": "alert-triangle",
+            "default_severity": "critical",
+            "patterns": json.dumps(["system", "memory", "resource", "limit", "overflow"]),
+        },
+        {
+            "name": "Network",
+            "description": "Network and connectivity errors",
+            "color": "#7C3AED",
+            "icon": "wifi",
+            "default_severity": "high",
+            "patterns": json.dumps(["network", "connect", "dns", "socket", "refused"]),
+        },
+        {
+            "name": "Subscription",
+            "description": "Billing and subscription errors",
+            "color": "#059669",
+            "icon": "credit-card",
+            "default_severity": "medium",
+            "patterns": json.dumps(["subscription", "billing", "payment", "plan"]),
+        },
+    ]
+    
+    for cat_data in default_categories:
+        existing = db.query(ErrorCategory).filter(ErrorCategory.name == cat_data["name"]).first()
+        if not existing:
+            category = ErrorCategory(**cat_data)
+            db.add(category)
+            logger.info("Seeding error category: %s", cat_data['name'])
+    
+    db.commit()
+    logger.info("Seeded error categories.")
+
 
 def seed_db():
     db: Session = SessionLocal()
     try:
         # Create tables
         Base.metadata.create_all(bind=engine)
-        print("Database tables verified.")
+        logger.info("Database tables verified.")
 
+        # Seed sentinel guest user (required for FK constraints on guest data)
+        guest_user = db.query(User).filter(User.id == "guest").first()
+        if not guest_user:
+            guest_user = User(
+                id="guest",
+                email="guest@promptresume.local",
+                full_name="Guest User",
+                is_active=False,  # Not a real user
+                is_verified=False,
+            )
+            db.add(guest_user)
+            db.flush()
+            
+            # Create guest profile
+            guest_profile = Profile(user_id="guest")
+            db.add(guest_profile)
+            
+            # Create guest subscription
+            guest_sub = Subscription(user_id="guest", plan_type="free", status="active")
+            db.add(guest_sub)
+            
+            logger.info("Seeded sentinel guest user.")
+        
         # Seed Templates
         for t_info in TEMPLATES_DATA:
             existing = db.query(Template).filter(Template.id == t_info["id"]).first()
@@ -230,27 +617,116 @@ def seed_db():
                     layout_schema=t_info["layout_schema"]
                 )
                 db.add(template)
-                print(f"Seeding template: {t_info['name']}")
+                logger.info("Seeding template: %s", t_info['name'])
         
-        # Seed Rules
-        for r_info in RULES_DATA:
-            existing = db.query(ResumeRule).filter(ResumeRule.rule_name == r_info["rule_name"]).first()
+        # Rules seeding removed — rules are now governed via KnowledgeRule DB.
+        # See scripts/seed_hand_authored.py and scripts/migrate_shadow1_rules.py
+        
+        # Seed Identity - System Roles
+        default_roles = [
+            {"name": "admin", "description": "Full system administrator with all permissions", "is_system": True},
+            {"name": "user", "description": "Standard user with basic permissions", "is_system": True},
+            {"name": "premium", "description": "Premium subscriber with enhanced features", "is_system": True},
+            {"name": "organization_admin", "description": "Organization administrator", "is_system": True},
+            {"name": "viewer", "description": "Read-only access", "is_system": True},
+        ]
+        for role_data in default_roles:
+            existing = db.query(Role).filter(Role.name == role_data["name"]).first()
             if not existing:
-                rule = ResumeRule(
-                    category=r_info["category"],
-                    rule_name=r_info["rule_name"],
-                    rule_description=r_info["rule_description"],
-                    rule_prompt_instruction=r_info["rule_prompt_instruction"],
-                    is_active=True
-                )
-                db.add(rule)
-                print(f"Seeding rule: {r_info['rule_name']}")
+                role = Role(**role_data)
+                db.add(role)
+                logger.info("Seeding role: %s", role_data['name'])
+        
+        # Seed Identity - Permissions
+        default_permissions = [
+            # Resume permissions
+            {"name": "resume:create", "resource": "resume", "action": "create"},
+            {"name": "resume:read", "resource": "resume", "action": "read"},
+            {"name": "resume:update", "resource": "resume", "action": "update"},
+            {"name": "resume:delete", "resource": "resume", "action": "delete"},
+            # Cover letter permissions
+            {"name": "cover_letter:create", "resource": "cover_letter", "action": "create"},
+            {"name": "cover_letter:read", "resource": "cover_letter", "action": "read"},
+            {"name": "cover_letter:update", "resource": "cover_letter", "action": "update"},
+            {"name": "cover_letter:delete", "resource": "cover_letter", "action": "delete"},
+            # AI permissions
+            {"name": "ai:use", "resource": "ai", "action": "use"},
+            {"name": "ai:unlimited", "resource": "ai", "action": "unlimited"},
+            # Subscription permissions
+            {"name": "subscription:manage", "resource": "subscription", "action": "manage"},
+            {"name": "billing:read", "resource": "billing", "action": "read"},
+            # Admin permissions
+            {"name": "admin:users", "resource": "admin", "action": "users"},
+            {"name": "admin:system", "resource": "admin", "action": "system"},
+            # Organization permissions
+            {"name": "org:manage", "resource": "organization", "action": "manage"},
+            {"name": "org:member", "resource": "organization", "action": "member"},
+        ]
+        for perm_data in default_permissions:
+            existing = db.query(Permission).filter(Permission.name == perm_data["name"]).first()
+            if not existing:
+                permission = Permission(**perm_data)
+                db.add(permission)
+                logger.info("Seeding permission: %s", perm_data['name'])
         
         db.commit()
-        print("Database seeded successfully.")
+        
+        # Seed Role-Permission mappings
+        _seed_role_permissions(db)
+
+        # Seed admin user with superuser privileges
+        admin_email = "admin@example.com"
+        admin_user = db.query(User).filter(User.email == admin_email).first()
+        if not admin_user:
+            from .auth import get_password_hash
+            admin_user = User(
+                email=admin_email,
+                hashed_password=get_password_hash("Admin123!"),
+                full_name="Admin User",
+                is_active=True,
+                is_verified=True,
+                is_superuser=True,
+            )
+            db.add(admin_user)
+            db.flush()
+
+            admin_profile = Profile(user_id=admin_user.id)
+            db.add(admin_profile)
+
+            admin_sub = Subscription(user_id=admin_user.id, plan_type="pro", status="active")
+            db.add(admin_sub)
+
+            logger.info("Seeded admin user: %s", admin_email)
+        else:
+            # Ensure existing admin user has superuser flag
+            if not admin_user.is_superuser:
+                admin_user.is_superuser = True
+                logger.info("Updated admin user to is_superuser=True")
+
+        # Ensure admin user has the admin role
+        admin_role = db.query(Role).filter(Role.name == "admin").first()
+        if admin_role and admin_user:
+            existing_ur = db.query(UserRole).filter(
+                UserRole.user_id == admin_user.id,
+                UserRole.role_id == admin_role.id,
+            ).first()
+            if not existing_ur:
+                db.add(UserRole(user_id=admin_user.id, role_id=admin_role.id, is_active=True))
+                logger.info("Assigned admin role to %s", admin_email)
+
+        db.commit()
+
+        # Seed Audit domain - Default configurations
+        _seed_audit_configs(db)
+        
+        # Seed Error domain - Default categories
+        _seed_error_categories(db)
+        
+        logger.info("Database seeded successfully.")
     except Exception as e:
         db.rollback()
-        print(f"Error seeding database: {e}")
+        logger.exception("Error seeding database")
+        raise
     finally:
         db.close()
 

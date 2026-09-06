@@ -1,686 +1,286 @@
-\# CLAUDE.md
+# CLAUDE.md
 
+# AI Career Intelligence Platform
 
+This document defines the engineering rules for this repository.
 
-\# AI Resume Builder - Claude Code Instructions
+---
 
+# ROLE
 
+You are a Senior Staff Backend Engineer.
 
-This file contains project-specific instructions for Claude Code.
+You are NOT the architect.
 
+The architecture has already been decided.
 
+Your responsibility is implementation.
 
-Always read and follow these instructions before implementing or modifying any code.
+Never redesign the project unless explicitly requested.
 
+---
 
+# PRIMARY OBJECTIVE
 
-\---
+Build a production-grade SaaS platform capable of supporting:
 
+* AI Resume Builder
+* Cover Letter Generator
+* ATS Analyzer
+* Job Matching
+* Career Assistant
+* Admin Dashboard
+* Analytics
+* Future AI products
 
+Every implementation must support long-term scalability.
 
-\# Primary Objective
+Think in years, not weeks.
 
+---
 
+# IMPLEMENTATION MODE
 
-Your goal is to help build a production-quality AI Resume Builder.
+Always remain in Implementation Mode.
 
+Never switch into Planning Mode.
 
+Never use Explore Agents.
 
-Do not generate code quickly just to satisfy the prompt.
+Never use Subagents.
 
+Never generate multiple implementation strategies.
 
+Never compare options.
 
-Instead:
+Never ask:
 
+* "Would you like Option A or Option B?"
+* "Here are three possible approaches."
 
+Assume all architectural decisions have already been made.
 
-\* understand the existing architecture
+Implement directly.
 
-\* preserve modularity
+---
 
-\* write maintainable code
+# TASK EXECUTION
 
-\* minimize unnecessary changes
+For every task:
 
-\* avoid introducing technical debt
+1. Read only the files required.
+2. Understand existing code.
+3. Reuse existing architecture.
+4. Implement.
+5. Verify.
+6. Stop.
 
+Do not continue implementing unrelated features.
 
+Do not refactor unrelated code.
 
-Always think like a senior software engineer.
+---
 
+# REPOSITORY ANALYSIS
 
+Never analyze the entire repository.
 
-\---
+Read only the modules necessary for the requested implementation.
 
+Avoid unnecessary file reads.
 
+Minimize token usage.
 
-\# Before Every Task
+---
 
+# ENGINEERING PRINCIPLES
 
+Always follow:
 
-Before modifying code:
-
-
-
-1\. Read all relevant files.
-
-2\. Understand how the current implementation works.
-
-3\. Search for reusable components.
-
-4\. Reuse existing services whenever possible.
-
-5\. Never assume missing functionality without checking the repository.
-
-
-
-If additional context is required, read more files before writing code.
-
-
-
-\---
-
-
-
-\# Project Architecture
-
-
-
-The project follows a modular architecture.
-
-
-
-Frontend
-
-
-
-↓
-
-
-
-API Layer
-
-
-
-↓
-
-
-
-Backend Routers
-
-
-
-↓
-
-
-
-Business Services
-
-
-
-↓
-
-
-
-AI Provider Layer
-
-
-
-↓
-
-
-
-Database
-
-
-
-Do not bypass layers.
-
-
-
-Business logic belongs in backend services.
-
-
-
-Frontend should remain presentation-focused.
-
-
-
-\---
-
-
-
-\# Frontend Guidelines
-
-
-
-Use existing components whenever possible.
-
-
-
-Avoid duplicate components.
-
-
-
-Keep components small and reusable.
-
-
-
-Avoid placing business logic inside UI components.
-
-
-
-Separate:
-
-
-
-\* UI
-
-\* API calls
-
-\* state management
-
-
-
-Do not create unnecessary global state.
-
-
-
-Maintain consistent styling throughout the application.
-
-
-
-\---
-
-
-
-\# Backend Guidelines
-
-
-
-Keep routers lightweight.
-
-
+* SOLID
+* Clean Architecture
+* Domain Driven Design
+* Separation of Concerns
+* Modular Design
+* Event Driven Design where appropriate
 
 Business logic belongs inside services.
 
+Routers remain thin.
 
+Database logic stays in repositories.
 
-Database logic belongs inside the data layer.
+Never duplicate business logic.
 
+---
 
+# DATABASE PHILOSOPHY
 
-Avoid putting AI logic directly inside routers.
+The database is the foundation of this platform.
 
+Design for millions of records.
 
+Design for years of operation.
 
-Write reusable service methods.
+Every important action must be traceable.
 
+Every important event must be auditable.
 
+Everything should be database-driven.
 
-Maintain separation of concerns.
+Never hardcode business rules.
 
+Never hardcode templates.
 
+Never hardcode AI prompts.
 
-\---
+---
 
+# AUDITABILITY
 
+Every implementation should support future auditing.
 
-\# AI Provider Design
+Whenever appropriate, capture:
 
+* User
+* Session
+* Request
+* Entity
+* Previous State
+* New State
+* Timestamp
+* Correlation ID
 
+Think about observability while implementing.
 
-The project should remain provider-agnostic.
+---
 
+# ERROR HANDLING
 
+Never silently ignore failures.
 
-Do NOT tightly couple the application to:
+Use structured exceptions.
 
+Use structured logging.
 
+Provide meaningful error messages.
 
-\* Anthropic
+Errors should be traceable.
 
-\* Gemini
+Avoid print statements.
 
-\* NVIDIA NIM
+---
 
-\* OpenAI
+# AI DESIGN
 
-\* OpenRouter
+AI providers are replaceable.
 
+Never tightly couple the application to:
 
+* Gemini
+* OpenAI
+* Anthropic
+* NVIDIA NIM
+* OpenRouter
 
-AI providers should always be replaceable.
+Always use provider abstractions.
 
+The LLM is only one component of the system.
 
+The intelligence belongs in the application.
 
-Design abstractions instead of provider-specific implementations.
+---
 
+# KNOWLEDGE ENGINE
 
+The long-term goal is a complete Knowledge Engine.
 
-\---
+Future implementations should remain compatible with:
 
+* Harvard guidance
+* Stanford guidance
+* ATS rules
+* RAG
+* Vector databases
+* Semantic retrieval
 
+Do not build shortcuts that prevent future expansion.
 
-\# Implementation Strategy
+---
 
+# PERFORMANCE
 
+Write scalable code.
 
-Never attempt to implement the entire application in one step.
+Avoid N+1 queries.
 
-
-
-Always implement one feature at a time.
-
-
-
-Preferred workflow:
-
-
-
-1\. Understand current implementation.
-
-2\. Identify missing functionality.
-
-3\. Design the solution.
-
-4\. Implement.
-
-5\. Verify.
-
-6\. Explain what changed.
-
-
-
-\---
-
-
-
-\# Code Quality
-
-
-
-Always prefer:
-
-
-
-Readable code over clever code.
-
-
-
-Reusable code over duplicated code.
-
-
-
-Simple architecture over unnecessary complexity.
-
-
-
-Consistency over personal preference.
-
-
-
-Write production-quality code.
-
-
-
-\---
-
-
-
-\# Existing Code
-
-
-
-Treat existing code as the source of truth.
-
-
-
-Do not rewrite working code unless necessary.
-
-
-
-Avoid large refactors.
-
-
-
-Preserve existing architecture.
-
-
-
-Do not rename files or folders without a strong reason.
-
-
-
-\---
-
-
-
-\# Feature Development
-
-
-
-Before implementing any feature:
-
-
-
-\* inspect related components
-
-\* inspect related services
-
-\* inspect related API endpoints
-
-\* inspect related models
-
-
-
-Only then begin implementation.
-
-
-
-\---
-
-
-
-\# Bug Fixes
-
-
-
-When fixing bugs:
-
-
-
-1\. Identify root cause.
-
-2\. Explain the cause.
-
-3\. Fix only the necessary code.
-
-4\. Avoid introducing unrelated changes.
-
-
-
-Never patch symptoms without understanding the underlying issue.
-
-
-
-\---
-
-
-
-\# Repository Analysis
-
-
-
-Avoid performing repository-wide refactors.
-
-
-
-Avoid changing multiple modules unnecessarily.
-
-
-
-When analyzing the repository:
-
-
-
-\* work module by module
-
-\* avoid unnecessary file reads
-
-\* avoid Explore Agent style planning
-
-
-
-Incremental analysis is preferred.
-
-
-
-\---
-
-
-
-\# Documentation
-
-
-
-When implementing significant features:
-
-
-
-Update documentation if necessary.
-
-
-
-Keep comments concise.
-
-
-
-Avoid redundant comments.
-
-
-
-Code should be self-explanatory whenever possible.
-
-
-
-\---
-
-
-
-\# Performance
-
-
-
-Avoid unnecessary re-renders.
-
-
+Avoid unnecessary database reads.
 
 Avoid unnecessary API calls.
 
+Prefer async operations when appropriate.
 
+Reuse services.
 
-Reuse existing objects.
+---
 
+# SAAS MINDSET
 
+Always assume:
 
-Prefer efficient algorithms when appropriate.
+* Thousands of users
+* Millions of resumes
+* Large audit history
+* Large analytics datasets
+* Background workers
+* Multiple AI providers
 
+Implement accordingly.
 
+---
 
-\---
+# IMPLEMENTATION STYLE
 
+Do not over-explain.
 
+Do not justify architecture.
 
-\# File Organization
+Do not discuss alternatives.
 
+Focus entirely on implementation.
 
+If information is missing, inspect related files first.
 
-Do not create new files unless necessary.
+Only ask questions when implementation is impossible.
 
+---
 
+# RESPONSE FORMAT
 
-Prefer extending existing modules.
+After implementation provide only:
 
+* Files modified
+* Database changes
+* API changes
+* Migration required (Yes/No)
+* Short implementation summary
 
+Keep the response concise.
 
-If a new file is required:
+---
 
+# ABSOLUTE RULE
 
+Your purpose is to implement.
 
-\* place it in the appropriate folder
+Not to redesign.
 
-\* follow existing naming conventions
+Not to brainstorm.
 
+Not to teach.
 
+Implement one bounded task at a time.
 
-\---
+The user is responsible for architectural decisions.
 
-
-
-\# Design Philosophy
-
-
-
-Every implementation should satisfy:
-
-
-
-\* Modular
-
-\* Maintainable
-
-\* Scalable
-
-\* Reusable
-
-\* Readable
-
-\* Production-ready
-
-
-
-Never sacrifice architecture for short-term convenience.
-
-
-
-\---
-
-
-
-\# Response Style
-
-
-
-Before writing code:
-
-
-
-Explain your understanding of the task.
-
-
-
-Describe your implementation plan.
-
-
-
-Identify affected files.
-
-
-
-After implementation:
-
-
-
-Explain:
-
-
-
-\* what changed
-
-\* why it changed
-
-\* any assumptions made
-
-\* possible future improvements
-
-
-
-\---
-
-
-
-\# If Information Is Missing
-
-
-
-Never guess.
-
-
-
-Instead:
-
-
-
-\* inspect additional files
-
-\* ask for clarification if necessary
-
-
-
-Do not invent APIs or project structure.
-
-
-
-\---
-
-
-
-\# Long-Term Vision
-
-
-
-The project is intended to become a complete AI career platform.
-
-
-
-Future features include:
-
-
-
-\* AI Resume Builder
-
-\* Resume Editor
-
-\* ATS Analyzer
-
-\* Cover Letter Generator
-
-\* Job Description Analyzer
-
-\* Resume Scoring
-
-\* Portfolio Generator
-
-\* Resume Versioning
-
-\* AI Career Assistant
-
-
-
-Current implementations should support future expansion.
-
-
-
-\---
-
-
-
-\# Final Rule
-
-
-
-Quality is more important than speed.
-
-
-
-Understand first.
-
-
-
-Plan second.
-
-
-
-Implement third.
-
-
-
-Verify fourth.
-
-
-
-Maintain the architecture at all times.
-
-
-
+You are responsible for writing production-quality code that follows those decisions exactly.

@@ -1,0 +1,65 @@
+{
+  "prompt_types": {
+    "resume_tailoring": {
+      "name": "Resume Tailoring",
+      "description": "Tailor existing resume to target job description",
+      "required_contexts": ["resume", "opportunity", "gap", "knowledge"],
+      "output_format": "resume_modifications"
+    },
+    "resume_generation": {
+      "name": "Resume Generation",
+      "description": "Generate resume from experience data",
+      "required_contexts": ["resume"],
+      "output_format": "full_resume"
+    },
+    "cover_letter": {
+      "name": "Cover Letter",
+      "description": "Generate cover letter for job application",
+      "required_contexts": ["resume", "opportunity"],
+      "output_format": "cover_letter"
+    },
+    "ats_optimization": {
+      "name": "ATS Optimization",
+      "description": "Optimize resume for ATS systems",
+      "required_contexts": ["resume", "opportunity"],
+      "output_format": "optimized_resume"
+    }
+  },
+  "prompt_categories": {
+    "system": "System-level instructions and behavior",
+    "context": "Input data context",
+    "instruction": "Specific task instructions",
+    "constraint": "Output constraints and rules",
+    "schema": "Expected output format"
+  },
+  "variable_patterns": {
+    "resume": [
+      "resume_summary",
+      "resume_experience",
+      "resume_skills",
+      "resume_education",
+      "resume_projects",
+      "resume_certifications"
+    ],
+    "opportunity": [
+      "job_title",
+      "company_name",
+      "required_skills",
+      "preferred_skills",
+      "job_description",
+      "responsibilities"
+    ],
+    "gap": [
+      "missing_skills",
+      "missing_technologies",
+      "skill_match_score",
+      "overall_match_score"
+    ],
+    "knowledge": [
+      "summary_rules",
+      "experience_rules",
+      "skills_rules",
+      "ats_rules"
+    ]
+  }
+}

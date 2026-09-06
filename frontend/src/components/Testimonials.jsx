@@ -1,32 +1,46 @@
-const TESTIMONIALS = [
-  {
-    stars: 5, avatar: "AK", bg: "rgba(123,196,190,0.18)", text: "#2D7A74",
-    quote: "Uploaded my experience as a prompt and had a polished, ATS-ready resume in under two minutes.",
-    name: "Arjun K.", role: "Software Engineer, Fresher"
-  },
-  {
-    stars: 5, avatar: "SC", bg: "rgba(246,178,51,0.15)", text: "#8A5A00",
-    quote: "The manual mode gives me total control while the AI suggestions keep everything sharp.",
-    name: "Sophia C.", role: "Senior Product Manager"
-  },
-  // Add the rest of your testimonials here...
-];
-
 export default function Testimonials() {
+  const testimonials = [
+    {
+      stars: "★★★★★",
+      quote: "\"I was skeptical at first, but Prompt Resume generated a better resume in 2 minutes than I'd created in 2 hours. The ATS score feature gave me confidence before applying.\"",
+      name: "Sarah Mitchell",
+      role: "Product Manager, Google",
+      color: "#7BC4BE"
+    },
+    {
+      stars: "★★★★★",
+      quote: "\"As a recruiter, I see hundreds of resumes daily. The ones made with Prompt Resume consistently stand out. Clean formatting, relevant keywords, and professional structure.\"",
+      name: "James Chen",
+      role: "Senior Recruiter, Meta",
+      color: "#F6B233"
+    },
+    {
+      stars: "★★★★★",
+      quote: "\"Switched from my old resume builder and the difference is night and day. The AI actually understands context and tailors content to my industry. Got 3 interview calls in a week.\"",
+      name: "Maria Rodriguez",
+      role: "Software Engineer, Stripe",
+      color: "#4A9E98"
+    }
+  ];
+
   return (
-    <div className="testimonials-section">
+    <section className="testimonials-section" id="testimonials">
       <div className="testimonials-inner">
-        <div className="text-centered">
-          <div className="section-tag reveal" style={{ display: "inline-flex" }}>◈ Testimonials</div>
-          <h2 className="section-headline reveal delay-1">Trusted by job seekers<br />across every industry</h2>
+        <div className="reveal">
+          <div className="section-tag section-tag-amber">Testimonials</div>
+          <h2 className="section-headline" style={{ maxWidth: 540 }}>Loved by professionals worldwide</h2>
+          <p className="section-sub">Join thousands who've transformed their job search with AI-powered resumes.</p>
         </div>
+
         <div className="testimonials-grid">
-          {TESTIMONIALS.map((t, i) => (
-            <div className={`testimonial-card reveal delay-${i + 2}`} key={i}>
-              <div className="testimonial-stars">{"★".repeat(t.stars)}</div>
-              <p className="testimonial-quote">"{t.quote}"</p>
+          {testimonials.map((t, i) => (
+            <div key={i} className="testimonial-card reveal">
+              <div className="testimonial-stars">{t.stars}</div>
+              <p className="testimonial-quote">{t.quote}</p>
               <div className="testimonial-author">
-                <div className="testimonial-avatar" style={{ background: t.bg, color: t.text }}>{t.avatar}</div>
+                <div className="testimonial-avatar" style={{ background: `${t.color}22`, color: t.color }}>
+                  {t.name.charAt(0)}
+                </div>
                 <div>
                   <div className="testimonial-name">{t.name}</div>
                   <div className="testimonial-role">{t.role}</div>
@@ -36,6 +50,6 @@ export default function Testimonials() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

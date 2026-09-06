@@ -1,0 +1,143 @@
+{
+  "programming_languages": [
+    "python", "javascript", "typescript", "java", "c++", "c#", "go", "rust",
+    "ruby", "php", "swift", "kotlin", "scala", "r", "matlab", "perl",
+    "haskell", "elixir", "clojure", "f#", "groovy", "lua", "objective-c",
+    "dart", "zig", "ocaml", "erlang", "fortran", "cobol", "assembly"
+  ],
+  "web_frameworks": [
+    "react", "angular", "vue", "vue.js", "svelte", "next.js", "nuxt.js",
+    "remix", "astro", "solidjs", "qwik",
+    "django", "flask", "fastapi", "starlette", "bottle", "falcon",
+    "express", "nestjs", "koa", "hapi", "fastify", "adonis",
+    "spring", "spring boot", "spring mvc", "struts",
+    "ruby on rails", "sinatra", "hanami",
+    "laravel", "symfony", "codeigniter", "cakephp",
+    "asp.net", "asp.net core", "blazor",
+    "gin", "echo", "fiber", "chi",
+    "actix", "rocket", "axum",
+    "php", "wordpress", "drupal", "magento"
+  ],
+  "data_science": [
+    "pandas", "numpy", "scipy", "scikit-learn", "matplotlib", "seaborn",
+    "plotly", "bokeh", "jupyter", "jupyterlab", "ipython",
+    "tensorflow", "pytorch", "keras", "jax", "xgboost", "lightgbm",
+    "opencv", "pillow", "scrapy", "beautifulsoup", "selenium",
+    "spacy", "nltk", "gensim", "hugging face", "transformers",
+    "langchain", "llamaindex", "openai api", "anthropic api",
+    "mlflow", "weights & biases", "dvc", "kubeflow",
+    "apache spark", "pyspark", "dask", "ray",
+    "dbt", "airflow", "prefect", "dagster"
+  ],
+  "devops_tools": [
+    "docker", "kubernetes", "helm", "istio", "envoy",
+    "terraform", "pulumi", "cloudformation", "ansible", "chef", "puppet",
+    "jenkins", "github actions", "gitlab ci", "circleci", "travis ci", "buildkite",
+    "prometheus", "grafana", "datadog", "new relic", "splunk", "elk stack",
+    "nginx", "apache", "haproxy", "traefik",
+    "consul", "etcd", "vault", "boundary",
+    "argocd", "flux", "spinnaker", "tekton",
+    "packer", "vagrant"
+  ],
+  "cloud_platforms": [
+    "aws", "amazon web services", "ec2", "s3", "lambda", "ecs", "eks",
+    "rds", "dynamodb", "sqs", "sns", "cloudfront", "route53", "iam",
+    "azure", "microsoft azure", "azure devops", "azure functions",
+    "azure kubernetes service", "azure sql", "cosmos db",
+    "gcp", "google cloud", "google cloud platform",
+    "cloud run", "cloud functions", "bigquery", "cloud spanner",
+    "cloud firestore", "firebase", "supabase",
+    "heroku", "vercel", "netlify", "cloudflare", "digitalocean",
+    "linode", "vulcan", "render", "railway"
+  ],
+  "databases": [
+    "postgresql", "postgres", "mysql", "mariadb", "sqlite",
+    "mongodb", "redis", "elasticsearch", "opensearch",
+    "dynamodb", "cassandra", "couchdb", "neo4j", "arangodb",
+    "influxdb", "timescaledb", "clickhouse", "snowflake",
+    "bigquery", "redshift", "planetscale", "supabase",
+    "firebase firestore", "fauna", "dgraph",
+    "memcached", "riak", "cockroachdb", "yugabyte",
+    "singlestore", "materialize"
+  ],
+  "mobile_development": [
+    "ios", "android", "react native", "flutter", "xamarin",
+    "ionic", "swift ui", "jetpack compose", "kotlin multiplatform",
+    "capacitor", "cordova"
+  ],
+  "ai_ml_tools": [
+    "tensorflow", "pytorch", "keras", "scikit-learn", "xgboost",
+    "hugging face transformers", "langchain", "llamaindex",
+    "openai api", "anthropic api", "cohere",
+    "vertex ai", "sagemaker", "azure ml", "mlflow",
+    "weights & biases", "neptune",
+    "opencv", "pillow", "nltk", "spacy", "gensim",
+    "ray", "dask", "spark mllib", "kubeflow",
+    "tensorrt", "onnx", "triton inference server",
+    "dvc", "feast"
+  ],
+  "security": [
+    "owasp", "sast", "dast", "sca", "secrets management",
+    "oauth", "jwt", "saml", "oidc", "ldap", "active directory",
+    "penetration testing", "vulnerability assessment",
+    "firewall", "ids", "ips", "siem",
+    "encryption", "tls", "ssl", "pki",
+    "kubernetes security", "container security", "cloud security"
+  ],
+  "testing": [
+    "jest", "mocha", "chai", "cypress", "playwright", "selenium",
+    "pytest", "unittest", "nose", "tox", "coverage",
+    "junit", "testng", "mockito", "wiremock",
+    "rspec", "minitest", "capybara",
+    "phpunit", "behat",
+    "k6", "locust", "jmeter", "gatling",
+    "postman", "insomnia"
+  ],
+  "message_queues": [
+    "kafka", "rabbitmq", "redis pub/sub", "nats", "pulsar",
+    "aws sqs", "aws sns", "azure service bus", "google pub/sub",
+    "celery", "bull", "sidekiq", "resque", "rq"
+  ],
+  "version_control": [
+    "git", "github", "gitlab", "bitbucket", "svn",
+    "mercurial", "perforce"
+  ],
+  "agile_tools": [
+    "jira", "confluence", "trello", "asana", "monday.com",
+    "linear", "shortcut", "notion", "clickup",
+    "scrum", "kanban", "safe", "leSS"
+  ],
+  "soft_skills": [
+    "communication", "leadership", "teamwork", "problem solving",
+    "critical thinking", "time management", "adaptability",
+    "creativity", "attention to detail", "analytical thinking",
+    "collaboration", "mentoring", "stakeholder management",
+    "project management", "presentation", "negotiation",
+    "conflict resolution", "decision making", "emotional intelligence",
+    "self-motivation", "work ethic", "flexibility", "patience",
+    "empathy", "active listening", "written communication",
+    "verbal communication", "interpersonal skills", "customer service",
+    "multitasking", "organization", "prioritization"
+  ],
+  "certifications": [
+    "aws certified solutions architect", "aws certified developer",
+    "aws certified devops engineer", "aws certified security",
+    "azure fundamentals", "azure developer associate",
+    "azure solutions architect", "azure devops engineer",
+    "gcp associate cloud engineer", "gcp professional cloud architect",
+    "gcp professional data engineer", "gcp professional ml engineer",
+    "kubernetes administrator cka", "kubernetes application developer ckd",
+    "terraform associate", "hashicorp vault associate",
+    "docker certified associate",
+    "certified scrum master", "certified scrum product owner",
+    "pmp", "prince2", "six sigma green belt", "six sigma black belt",
+    "compTIA security+", "compTIA network+", "compTIA a+",
+    "certified information systems security professional cissp",
+    "certified ethical hacker ceh",
+    "google analytics", "google ads", "hubspot inbound",
+    "salesforce administrator", "salesforce developer",
+    "snowflake snowpro core", "databricks certified",
+    "mongoDB certified developer", "redis certified",
+    "confluent kafka developer"
+  ]
+}

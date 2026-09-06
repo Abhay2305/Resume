@@ -1,0 +1,62 @@
+{
+  "requirements": [
+    "requirements", "qualifications", "what you need", "what we're looking for",
+    "must have", "must-have", "required skills", "required qualifications",
+    "minimum qualifications", "basic qualifications", "you should have",
+    "you'll need", "the ideal candidate", "we're looking for",
+    "key requirements", "core requirements", "job requirements",
+    "who you are", "what you bring", "your background"
+  ],
+  "preferred": [
+    "nice to have", "nice-to-have", "preferred qualifications",
+    "preferred skills", "bonus", "plus", "desirable", "advantageous",
+    "it would be great if", "even better if", "ideal qualifications",
+    "preferred requirements", "additional qualifications",
+    "what would be great", "bonus points"
+  ],
+  "responsibilities": [
+    "responsibilities", "what you'll do", "what you will do", "duties",
+    "role", "the role", "about the role", "job description",
+    "position summary", "job summary", "overview",
+    "key responsibilities", "core responsibilities", "your responsibilities",
+    "day to day", "day-to-day", "what the job involves",
+    "you'll be responsible", "you will be responsible"
+  ],
+  "benefits": [
+    "benefits", "perks", "what we offer", "what we provide",
+    "compensation", "salary and benefits", "total compensation",
+    "employee benefits", "our benefits", "benefits and perks",
+    "why join us", "what you get", "we provide",
+    "competitive benefits", "comprehensive benefits"
+  ],
+  "about": [
+    "about us", "about the company", "about the team", "about the organization",
+    "who we are", "company overview", "organization overview",
+    "our company", "our team", "our organization", "our mission",
+    "company description"
+  ],
+  "experience": [
+    "experience", "work experience", "professional experience",
+    "relevant experience", "industry experience",
+    "years of experience", "experience requirements"
+  ],
+  "education": [
+    "education", "educational requirements", "education requirements",
+    "academic requirements", "degree requirements",
+    "educational background", "academic background"
+  ],
+  "skills": [
+    "skills", "technical skills", "key skills", "core skills",
+    "technology skills", "required skills", "desired skills",
+    "proficiencies", "technical proficiencies", "competencies"
+  ],
+  "location": [
+    "location", "work location", "office location", "job location",
+    "where you'll work", "workplace", "work arrangement"
+  ],
+  "salary": [
+    "salary", "compensation", "pay", "salary range", "pay range",
+    "compensation range", "salary band", "pay band",
+    "annual salary", "hourly rate"
+  ]
+}

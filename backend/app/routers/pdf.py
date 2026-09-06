@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException, Depends, Response
 from fastapi.responses import StreamingResponse
 import io
@@ -6,6 +7,8 @@ from ..auth import get_current_user
 from ..models import User
 from ..services.pdf_service import PDFExportService
 from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
 
 class PDFExportRequest(BaseModel):
     html_content: str
@@ -33,5 +36,5 @@ def export_pdf(req: PDFExportRequest, current_user: User = Depends(get_current_u
             }
         )
     except Exception as e:
-        print(f"Error serving PDF download: {e}")
+        logger.exception("Error serving PDF download")
         raise HTTPException(status_code=500, detail=f"PDF compilation failed: {e}")

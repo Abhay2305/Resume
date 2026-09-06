@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { COLORS } from "../utils/constants";
 
 function ATSCriteria() {
   const [animated, setAnimated] = useState(false);

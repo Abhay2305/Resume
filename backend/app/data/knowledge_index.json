@@ -1,0 +1,36 @@
+{
+  "gap_category_to_section": {
+    "skills": ["skills"],
+    "technology": ["skills", "experience"],
+    "experience": ["experience"],
+    "education": ["education"],
+    "certifications": ["certifications"],
+    "keywords": ["skills", "summary", "experience"],
+    "summary": ["summary"],
+    "projects": ["projects"],
+    "achievements": ["achievements"],
+    "leadership": ["leadership"],
+    "formatting": ["formatting"]
+  },
+  "gap_action_to_category": {
+    "add_skill": ["quantification", "keywords", "relevance"],
+    "strengthen_skill": ["impact", "specificity"],
+    "add_technology": ["keywords", "relevance"],
+    "highlight_experience": ["quantification", "action_verbs", "impact"],
+    "add_education": ["specificity"],
+    "add_certification": ["keywords", "relevance"],
+    "add_keyword": ["keywords", "ats"],
+    "enhance_keyword": ["keywords", "ats"],
+    "rewrite_summary": ["clarity", "tailoring", "length"],
+    "expand_project": ["specificity", "impact", "quantification"],
+    "reorder_skills": ["keywords", "ats"],
+    "remove_technology": ["relevance", "tailoring"],
+    "add_metrics": ["quantification", "impact"],
+    "add_achievements": ["impact", "quantification"]
+  },
+  "rule_priority_mapping": {
+    "high": ["quantification", "keywords", "tailoring"],
+    "medium": ["action_verbs", "impact", "clarity"],
+    "low": ["formatting", "length"]
+  }
+}

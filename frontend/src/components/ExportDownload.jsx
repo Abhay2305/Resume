@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { COLORS } from "../utils/constants";
-import { Download, FileText, Clipboard, Copy, Check, Info, FileSpreadsheet, Sparkles, ArrowLeft, RefreshCw } from "lucide-react";
+import { Download, FileText, Clipboard, Copy, Check, Info, FileSpreadsheet, RefreshCw, LogIn, UserPlus } from "lucide-react";
 import { api } from "../services/api";
+import { useAuth } from "../hooks/useAuth";
+import { saveGuestSession, markPendingDownload } from "../utils/guestSession";
 import ResumePreview from "./ResumePreview";
 
-export default function ExportDownload({ data, template, onBack, onExit }) {
+export default function ExportDownload({ data, template, onExit }) {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [downloading, setDownloading] = useState(null); // 'pdf' | 'docx' | 'txt'
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(""); // format
   const [copied, setCopied] = useState(false);
-  const [fileName, setFileName] = useState(`${data.personalInfo.fullName ? data.personalInfo.fullName.replace(/\s+/g, "_") : "My"}_Resume`);
+  const [fileName, setFileName] = useState(`${data?.personalInfo?.fullName ? data.personalInfo.fullName.replace(/\s+/g, "_") : "My"}_Resume`);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
 
   const handleDownload = async (format) => {
+    // If not authenticated, show auth prompt instead of blocking entire component
+    if (!isAuthenticated) {
+      // Save current state to guest session
+      saveGuestSession({
+        generatedResume: data,
+        selectedTemplate: template,
+      });
+      markPendingDownload();
+      setShowAuthPrompt(true);
+      return;
+    }
+
     if (format !== "pdf") {
       setDownloading(format);
       setTimeout(() => {
@@ -52,7 +70,7 @@ export default function ExportDownload({ data, template, onBack, onExit }) {
       `;
 
       // Export file
-      const blob = await api.exportPDF(resumeHtml, `${fileName}.pdf`);
+      const blob = await api.pdf.export(resumeHtml, `${fileName}.pdf`);
       
       const downloadUrl = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -70,6 +88,15 @@ export default function ExportDownload({ data, template, onBack, onExit }) {
     } finally {
       setDownloading(null);
     }
+  };
+
+  const handleLoginRedirect = (path) => {
+    navigate(path, {
+      state: {
+        returnUrl: "/resume/guest-edit",
+        message: "Sign in to download your resume. Your work has been saved."
+      }
+    });
   };
 
   const handleCopyText = () => {
@@ -96,6 +123,48 @@ ${(data.skills || []).join(", ")}
     navigator.clipboard.writeText(textContent);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  // Auth prompt modal for guests
+  if (showAuthPrompt) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+          <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Download className="w-8 h-8 text-teal-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Download Your Resume</h2>
+          <p className="text-gray-600 mb-8">
+            Create a free account to download your resume as PDF and save your progress.
+          </p>
+          
+          <div className="space-y-4">
+            <button
+              onClick={() => handleLoginRedirect("/register")}
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors"
+            >
+              <UserPlus className="w-5 h-5" />
+              Create Free Account
+            </button>
+            
+            <button
+              onClick={() => handleLoginRedirect("/login")}
+              className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 px-6 rounded-xl border border-gray-300 flex items-center justify-center gap-2 transition-colors"
+            >
+              <LogIn className="w-5 h-5" />
+              Sign In
+            </button>
+          </div>
+          
+          <button
+            onClick={() => setShowAuthPrompt(false)}
+            className="mt-6 text-sm text-gray-500 hover:text-gray-700"
+          >
+            Continue editing
+          </button>
+        </div>
+      </div>
+    );
+  }
 
 
   return (
@@ -188,7 +257,7 @@ ${(data.skills || []).join(", ")}
             </button>
           </div>
 
-          {/* More Actions (Save, Duplicate) */}
+          {/* More Actions (Save) */}
           <div className="border-t pt-5 flex flex-col gap-3" style={{ borderColor: COLORS.border }}>
             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Document Utilities</span>
             <div className="flex gap-2">
@@ -198,13 +267,6 @@ ${(data.skills || []).join(", ")}
                 style={{ borderColor: COLORS.borderMid }}
               >
                 Save Draft
-              </button>
-              <button
-                onClick={() => alert("Resume duplicated! You now have a copy in your dashboard.")}
-                className="flex-1 py-2 px-3 border rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
-                style={{ borderColor: COLORS.borderMid }}
-              >
-                Duplicate Resume
               </button>
             </div>
           </div>

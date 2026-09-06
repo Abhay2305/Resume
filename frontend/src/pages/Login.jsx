@@ -1,29 +1,91 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, ArrowRight, UserCheck } from "lucide-react";
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn";
 import { api } from "../services/api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login, loginWithGoogle, sessionExpired, clearSessionExpired } = useAuth();
+
+  // Get return URL and message from location state
+  const returnUrl = location.state?.returnUrl;
+  const welcomeMessage = location.state?.message;
+
+  // Show session expired message
+  React.useEffect(() => {
+    if (sessionExpired) {
+      (async () => {
+        setError("Your session has expired. Please log in again.");
+        clearSessionExpired();
+      })();
+    }
+  }, [sessionExpired, clearSessionExpired]);
+
+  const checkProfileAndRedirect = async () => {
+    // If there's a return URL, go there directly
+    if (returnUrl) {
+      // For guest resume flows, check if there's pending data to restore
+      const hasGuestData = localStorage.getItem("guest_resume_session") || 
+                          localStorage.getItem("guest_resume_data") ||
+                          localStorage.getItem("guest_ai_resume_data");
+      
+      if (hasGuestData) {
+        // Navigate to the return URL to restore the session
+        navigate(returnUrl, { replace: true });
+        return;
+      }
+    }
+
+    try {
+      const profile = await api.user.getProfile();
+      if (!profile.profile_completed && !profile.job_title) {
+        navigate("/profile/setup");
+      } else {
+        navigate(returnUrl || "/dashboard");
+      }
+    } catch {
+      navigate(returnUrl || "/dashboard");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
-      await api.login(email, password);
-      navigate("/dashboard");
+      await login(email, password, rememberMe);
+      await checkProfileAndRedirect();
     } catch (err) {
       setError(err.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }
   };
+
+  const handleGoogleSuccess = async (response) => {
+    setError("");
+    setLoading(true);
+    try {
+      await loginWithGoogle(response.credential);
+      await checkProfileAndRedirect();
+    } catch (err) {
+      setError(err.message || "Google sign-in failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useGoogleSignIn("google-signin-button", handleGoogleSuccess);
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#1A2B2A] via-[#0F1E1E] to-[#2D3F3E] flex items-center justify-center p-4">
@@ -43,7 +105,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-block mb-3">
             <span className="text-2xl font-bold tracking-tight text-white flex items-center justify-center gap-1.5">
-              <span className="text-[#7BC4BE]">✦</span> Prompt<span className="text-[#7BC4BE]">Resume</span>
+              <span className="text-[#7BC4BE]">&#10022;</span> Prompt<span className="text-[#7BC4BE]">Resume</span>
             </span>
           </Link>
           <h2 className="text-xl font-medium text-white/90">Welcome back</h2>
@@ -59,6 +121,31 @@ export default function Login() {
             {error}
           </motion.div>
         )}
+
+        {/* Welcome message for return URL */}
+        {welcomeMessage && !error && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            className="mb-6 p-3 bg-[#7BC4BE]/10 border border-[#7BC4BE]/20 text-[#7BC4BE] text-xs rounded-lg text-center"
+          >
+            {welcomeMessage}
+          </motion.div>
+        )}
+
+        {/* Google Sign-In Button */}
+        <div className="mb-6">
+          <div id="google-signin-button" className="w-full flex justify-center" />
+        </div>
+
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/10" />
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="px-2 bg-transparent text-gray-400">or continue with email</span>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -81,21 +168,43 @@ export default function Login() {
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="text-xs font-semibold uppercase tracking-wider text-gray-400">Password</label>
-              <a href="#" className="text-xs text-[#7BC4BE] hover:underline">Forgot password?</a>
+              <Link to="/forgot-password" className="text-xs text-[#7BC4BE] hover:underline font-semibold">
+                Forgot password?
+              </Link>
             </div>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                 <Lock size={16} />
               </span>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE] focus:ring-1 focus:ring-[#7BC4BE] transition-all"
+                placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE] focus:ring-1 focus:ring-[#7BC4BE] transition-all"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
+          </div>
+
+          {/* Remember Me */}
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 rounded border-white/20 bg-white/5 text-[#7BC4BE] focus:ring-[#7BC4BE] focus:ring-offset-0"
+              />
+              <span className="text-sm text-gray-400">Remember me</span>
+            </label>
           </div>
 
           <button

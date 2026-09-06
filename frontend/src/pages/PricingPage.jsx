@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, Star, ShieldAlert } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import { api } from "../services/api";
+import { useAuth } from "../hooks/useAuth";
 
 export default function PricingPage() {
   const [currentPlan, setCurrentPlan] = useState("free");
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const checkAuth = async () => {
-      const auth = api.isAuthenticated();
-      setIsLoggedIn(auth);
-      if (auth) {
+      setIsLoggedIn(isAuthenticated);
+      if (isAuthenticated) {
         try {
-          const sub = await api.getSubscription();
+          const sub = await api.user.getSubscription();
           setCurrentPlan(sub.plan_type);
         } catch (err) {
           console.error(err);

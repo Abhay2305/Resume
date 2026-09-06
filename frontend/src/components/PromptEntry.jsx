@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { COLORS } from "../utils/constants";
-import { Sparkles, FileText, CheckCircle2, ChevronRight, CornerDownLeft } from "lucide-react";
+import { Sparkles, FileText, CheckCircle2, ChevronRight } from "lucide-react";
 
 export default function PromptEntry({ onSubmit, onStartManual }) {
   const [promptText, setPromptText] = useState("");

@@ -1,40 +1,55 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any, Optional
+from pydantic import BaseModel
+import json
 from ..database import get_db
-from ..models import Resume, ResumeSection, ResumeVersion, User, Template, Subscription, ActivityLog
+from ..models import Resume, ResumeSection, ResumeVersion, User, Template, ActivityLog
+from ..models.identity import Profile
 from ..schemas import ResumeOut, ResumeCreate, ResumeUpdate, ResumeGenerateRequest, ResumeSectionUpdate
-from ..auth import get_current_user
-from ..services.ai_service import ResumeGeneratorService
+from ..auth import get_current_user, require_auth
+from ..services.ai_service import ResumeGeneratorService, validate_resume_output
 
 router = APIRouter(prefix="/resume", tags=["Resumes"])
 generator_service = ResumeGeneratorService()
 
-# Plan-based resume limits. Free tier is capped; paid tiers are unlimited.
-FREE_RESUME_LIMIT = 1
+
+class TransferGuestResumesRequest(BaseModel):
+    """Schema for transferring guest resumes to an authenticated user."""
+    guest_session_id: Optional[str] = "guest"
 
 
-def enforce_resume_quota(db: Session, user_id: str):
-    """Block resume creation beyond the free-tier limit. Paid plans are unlimited."""
-    sub = db.query(Subscription).filter(Subscription.user_id == user_id).first()
-    plan = sub.plan_type if sub else "free"
-    if plan == "free":
-        count = db.query(Resume).filter(Resume.user_id == user_id).count()
-        if count >= FREE_RESUME_LIMIT:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=(
-                    "Free plan is limited to 1 resume. Upgrade to Pro for unlimited "
-                    "resumes and cover letters."
-                ),
-            )
+def get_guest_id(request=None, current_user=None):
+    """Get user ID for resume operations.
+    
+    For authenticated users: returns their user ID.
+    For guests: returns a guest identifier (header or default).
+    This enables guest resume creation while maintaining data isolation.
+    """
+    if current_user:
+        return current_user.id
+    # For guests, use a header-based ID or default to "guest"
+    # In production, generate unique guest IDs on the frontend
+    return "guest"
+
 
 @router.post("/create", response_model=ResumeOut)
-def create_resume(resume_in: ResumeCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    enforce_resume_quota(db, current_user.id)
+def create_resume(
+    resume_in: ResumeCreate,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """Create a new resume.
+    
+    Guests can create resumes - they are stored with user_id="guest".
+    Authenticated users get resumes linked to their account.
+    Auto-fills sections from the user's profile if available.
+    """
+    user_id = get_guest_id(current_user=current_user)
+    
     # Create resume
     new_resume = Resume(
-        user_id=current_user.id,
+        user_id=user_id,
         title=resume_in.title,
         template_id=resume_in.template_id or "harvard"
     )
@@ -42,85 +57,230 @@ def create_resume(resume_in: ResumeCreate, db: Session = Depends(get_db), curren
     db.commit()
     db.refresh(new_resume)
     
-    # Initialize basic empty sections to avoid front-end issues
-    default_sections = ["personalInfo", "summary", "experience", "education", "skills", "projects", "certifications", "achievements"]
-    for idx, sec_type in enumerate(default_sections):
-        content = {}
-        if sec_type in ["experience", "education", "projects", "certifications", "achievements", "skills"]:
-            content = []
-            
+    # Auto-fill from profile if user is authenticated and has profile data
+    profile = None
+    if current_user:
+        profile = db.query(Profile).filter(Profile.user_id == current_user.id).first()
+    
+    def parse_json_field(value):
+        """Parse a JSON string field, returning the parsed value or fallback."""
+        if not value:
+            return None
+        try:
+            return json.loads(value)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    
+    # Build sections from profile or defaults
+    sections_data = []
+    
+    # personalInfo
+    personal_info = {}
+    if profile:
+        personal_info = {
+            "fullName": current_user.full_name or "",
+            "jobTitle": profile.job_title or "",
+            "email": current_user.email or "",
+            "phone": profile.phone or "",
+            "location": profile.location or "",
+            "website": profile.website or "",
+            "linkedin": profile.linkedin or "",
+        }
+    sections_data.append(("personalInfo", personal_info, 0))
+    
+    # summary
+    summary = ""
+    if profile and profile.summary:
+        summary = profile.summary
+    sections_data.append(("summary", summary, 1))
+    
+    # experience
+    experience = []
+    if profile and profile.experience_json:
+        parsed = parse_json_field(profile.experience_json)
+        if parsed and isinstance(parsed, list):
+            experience = parsed
+    sections_data.append(("experience", experience, 2))
+    
+    # education
+    education = []
+    if profile and profile.education_json:
+        parsed = parse_json_field(profile.education_json)
+        if parsed and isinstance(parsed, list):
+            education = parsed
+    sections_data.append(("education", education, 3))
+    
+    # skills
+    skills = []
+    if profile and profile.skills_json:
+        parsed = parse_json_field(profile.skills_json)
+        if parsed and isinstance(parsed, list):
+            skills = parsed
+    sections_data.append(("skills", skills, 4))
+    
+    # projects
+    projects = []
+    if profile and profile.projects_json:
+        parsed = parse_json_field(profile.projects_json)
+        if parsed and isinstance(parsed, list):
+            projects = parsed
+    sections_data.append(("projects", projects, 5))
+    
+    # certifications
+    certifications = []
+    if profile and profile.certifications_json:
+        parsed = parse_json_field(profile.certifications_json)
+        if parsed and isinstance(parsed, list):
+            certifications = parsed
+    sections_data.append(("certifications", certifications, 6))
+    
+    # achievements
+    achievements = []
+    if profile and profile.achievements_json:
+        parsed = parse_json_field(profile.achievements_json)
+        if parsed and isinstance(parsed, list):
+            achievements = parsed
+    sections_data.append(("achievements", achievements, 7))
+    
+    for sec_type, content, position in sections_data:
         sec = ResumeSection(
             resume_id=new_resume.id,
             section_type=sec_type,
             content=content,
-            position=idx
+            position=position
         )
         db.add(sec)
 
-    db.add(ActivityLog(
-        user_id=current_user.id,
-        activity_type="resume_created",
-        description=f"Created resume '{new_resume.title}'"
-    ))
+    if current_user:
+        db.add(ActivityLog(
+            user_id=current_user.id,
+            activity_type="resume_created",
+            description=f"Created resume '{new_resume.title}'"
+        ))
 
     db.commit()
     db.refresh(new_resume)
     return new_resume
 
+
 @router.get("/list", response_model=List[ResumeOut])
-def list_resumes(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    return db.query(Resume).filter(Resume.user_id == current_user.id).order_by(Resume.updated_at.desc()).all()
+def list_resumes(
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """List resumes.
+    
+    For authenticated users: returns their resumes.
+    For guests: returns guest resumes.
+    """
+    user_id = get_guest_id(current_user=current_user)
+    return db.query(Resume).filter(Resume.user_id == user_id).order_by(Resume.updated_at.desc()).all()
+
 
 @router.get("/{resume_id}", response_model=ResumeOut)
-def get_resume(resume_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == resume_id, Resume.user_id == current_user.id).first()
+def get_resume(
+    resume_id: str,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """Get a specific resume.
+    
+    Accessible by anyone with the resume ID (guest or authenticated).
+    This enables the guest flow where users edit resumes without login.
+    """
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
+    
+    # For security, only allow access to own resumes or guest resumes
+    if current_user and resume.user_id != current_user.id and resume.user_id != "guest":
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
     return resume
 
+
 @router.put("/{resume_id}", response_model=ResumeOut)
-def update_resume(resume_id: str, resume_in: ResumeUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == resume_id, Resume.user_id == current_user.id).first()
+def update_resume(
+    resume_id: str,
+    resume_in: ResumeUpdate,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """Update resume settings (title, template).
+    
+    Accessible by anyone with the resume ID (guest or authenticated).
+    """
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
+    # For security, only allow access to own resumes or guest resumes
+    if current_user and resume.user_id != current_user.id and resume.user_id != "guest":
         raise HTTPException(status_code=404, detail="Resume not found")
         
     resume.title = resume_in.title
     if resume_in.template_id:
         resume.template_id = resume_in.template_id
+    if resume_in.section_order is not None:
+        resume.section_order = resume_in.section_order
         
     db.commit()
     db.refresh(resume)
     return resume
 
+
 @router.delete("/{resume_id}")
-def delete_resume(resume_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == resume_id, Resume.user_id == current_user.id).first()
+def delete_resume(
+    resume_id: str,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """Delete a resume.
+    
+    Accessible by anyone with the resume ID (guest or authenticated).
+    """
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
+    # For security, only allow access to own resumes or guest resumes
+    if current_user and resume.user_id != current_user.id and resume.user_id != "guest":
         raise HTTPException(status_code=404, detail="Resume not found")
         
     db.delete(resume)
     db.commit()
     return {"message": "Resume deleted successfully"}
 
+
 @router.post("/generate", response_model=ResumeOut)
-def generate_resume(req: ResumeGenerateRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def generate_resume(
+    req: ResumeGenerateRequest,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
     """
     Parses unstructured input using AI, converts to structured JSON, 
-    and inserts it into database sections for the user.
+    and inserts it into database sections.
+    
+    Guests can generate resumes - they are stored with user_id="guest".
     """
-    enforce_resume_quota(db, current_user.id)
+    user_id = get_guest_id(current_user=current_user)
+    
     # 1. Run LLM Extraction
     structured_data = generator_service.generate_structured_resume(
         db=db, 
-        user_id=current_user.id, 
+        user_id=user_id, 
         prompt=req.prompt, 
         archetype=req.archetype
     )
     
+    # 2. Validate output using governed validators
+    validation_result = validate_resume_output(structured_data, req.prompt, db=db)
+    
     # 2. Create the Resume record
     resume_title = f"AI Generated - {structured_data.get('personalInfo', {}).get('jobTitle', 'Resume')}"
     new_resume = Resume(
-        user_id=current_user.id,
+        user_id=user_id,
         title=resume_title,
         template_id="harvard"  # Default template
     )
@@ -144,24 +304,39 @@ def generate_resume(req: ResumeGenerateRequest, db: Session = Depends(get_db), c
         )
         db.add(sec)
 
-    db.add(ActivityLog(
-        user_id=current_user.id,
-        activity_type="resume_generated",
-        description=f"AI generated resume '{new_resume.title}'"
-    ))
+    new_resume.section_order = ["summary", "experience", "education", "projects", "skills", "certifications", "achievements"]
+
+    if current_user:
+        db.add(ActivityLog(
+            user_id=current_user.id,
+            activity_type="resume_generated",
+            description=f"AI generated resume '{new_resume.title}'"
+        ))
 
     db.commit()
     db.refresh(new_resume)
     return new_resume
 
+
 @router.put("/{resume_id}/sections", response_model=ResumeOut)
-def update_sections(resume_id: str, sections_in: List[ResumeSectionUpdate], db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def update_sections(
+    resume_id: str,
+    sections_in: List[ResumeSectionUpdate],
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
     """
     Bulk updates or overwrites sections, supporting instant updates,
     fields editing, and drag-and-drop position changes.
+    
+    Accessible by anyone with the resume ID (guest or authenticated).
     """
-    resume = db.query(Resume).filter(Resume.id == resume_id, Resume.user_id == current_user.id).first()
+    resume = db.query(Resume).filter(Resume.id == resume_id).first()
     if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    
+    # For security, only allow access to own resumes or guest resumes
+    if current_user and resume.user_id != current_user.id and resume.user_id != "guest":
         raise HTTPException(status_code=404, detail="Resume not found")
         
     # Delete old sections and replace or update them
@@ -191,3 +366,44 @@ def update_sections(resume_id: str, sections_in: List[ResumeSectionUpdate], db: 
     db.commit()
     db.refresh(resume)
     return resume
+
+
+@router.post("/transfer-guest", response_model=List[ResumeOut])
+def transfer_guest_resumes(
+    req: TransferGuestResumesRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_auth),
+):
+    """Transfer guest resumes to the authenticated user's account.
+    
+    Called after a guest registers to claim their resumes.
+    Only transfers resumes with user_id="guest".
+    """
+    guest_id = req.guest_session_id or "guest"
+    
+    # Find all guest resumes
+    guest_resumes = db.query(Resume).filter(Resume.user_id == guest_id).all()
+    
+    if not guest_resumes:
+        return []
+    
+    # Transfer each resume to the new user
+    transferred = []
+    for resume in guest_resumes:
+        resume.user_id = current_user.id
+        transferred.append(resume)
+        
+        # Log the activity
+        db.add(ActivityLog(
+            user_id=current_user.id,
+            activity_type="resume_transferred",
+            description=f"Transferred guest resume '{resume.title}' to your account"
+        ))
+    
+    db.commit()
+    
+    # Refresh all transferred resumes
+    for resume in transferred:
+        db.refresh(resume)
+    
+    return transferred

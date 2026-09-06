@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { COLORS } from "../utils/constants";
 import { ChevronRight, ArrowLeft, Check, Eye, RefreshCw } from "lucide-react";
 import { api } from "../services/api";
 import ResumePreview from "./ResumePreview";
-
-const CATEGORY_ORDER = ["ATS", "Corporate", "Technology", "Creative"];
 
 export default function TemplateSelection({ resumeData, selectedTemplate, onSelect, onBack }) {
   const [templates, setTemplates] = useState([]);
@@ -18,7 +16,9 @@ export default function TemplateSelection({ resumeData, selectedTemplate, onSele
     const loadTemplates = async () => {
       try {
         setLoading(true);
-        const list = await api.listTemplates();
+        const res = await api.templates.getPublished();
+        // Normalize: handle both { items: [...] } and bare [...]
+        const list = Array.isArray(res) ? res : (res?.items || res?.data?.items || []);
         setTemplates(list);
         if (list.length > 0 && !list.some((t) => t.id === (selectedTemplate || activeTemplate))) {
           setActiveTemplate(list[0].id);
@@ -32,12 +32,6 @@ export default function TemplateSelection({ resumeData, selectedTemplate, onSele
     loadTemplates();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (selectedTemplate) {
-      setActiveTemplate(selectedTemplate);
-    }
-  }, [selectedTemplate]);
 
   const handleConfirm = () => {
     onSelect(activeTemplate);

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS } from "../utils/constants";
-import { Loader2, CheckCircle2, ChevronRight, HelpCircle } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 
 export default function AIGenerator({ onComplete }) {
   const [currentStep, setCurrentStep] = useState(0);

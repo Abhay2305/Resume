@@ -1,0 +1,3155 @@
+{
+  "hand_authored_count": 28,
+  "extracted_count": 500,
+  "duplicates": [],
+  "conflicts": [],
+  "equivalents": [
+    {
+      "hand_authored": {
+        "instruction": "Include skills mentioned in the job description.",
+        "source": "Harvard Resume Guide"
+      },
+      "extracted": {
+        "instruction": "Address key requirements listed in the job description ",
+        "source_document": "cover-letter-guidelines.pdf",
+        "page": 1
+      },
+      "similarity": 0.673,
+      "resolution": "PENDING - manual review required"
+    }
+  ],
+  "ambiguous": [],
+  "unique_hand_authored": [
+    {
+      "instruction": "Tailor your summary to each specific job application.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Keep your summary to 3-4 lines or 50-75 words.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Lead with your strongest qualification or most relevant experience.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Quantify accomplishments whenever possible.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Start each bullet point with a strong action verb.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Focus on results and impact rather than responsibilities.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Prioritize experience most relevant to the target role.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Group skills by category for better readability.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Include relevant coursework, projects, and achievements.",
+      "source": "Harvard Resume Guide",
+      "section": ""
+    },
+    {
+      "instruction": "Use the STAR method: Situation, Task, Action, Result.",
+      "source": "MIT Career Services",
+      "section": ""
+    },
+    {
+      "instruction": "Include technical keywords relevant to the position.",
+      "source": "MIT Career Services",
+      "section": ""
+    },
+    {
+      "instruction": "Order skills by relevance to the target role.",
+      "source": "MIT Career Services",
+      "section": ""
+    },
+    {
+      "instruction": "Include project links and technologies used.",
+      "source": "MIT Career Services",
+      "section": ""
+    },
+    {
+      "instruction": "Write in third person implied (no 'I' or 'my').",
+      "source": "Yale University",
+      "section": ""
+    },
+    {
+      "instruction": "Demonstrate progression and growth in your career.",
+      "source": "Yale University",
+      "section": ""
+    },
+    {
+      "instruction": "Include GPA if 3.5 or higher.",
+      "source": "Yale University",
+      "section": ""
+    },
+    {
+      "instruction": "Use standard section headings (Summary, Experience, Education, Skills).",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Avoid tables, columns, headers, and footers.",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Use exact keywords from the job description.",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Include both acronyms and full terms.",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Use standard fonts (Arial, Calibri, Garamond).",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Include job title keywords in your experience bullets.",
+      "source": "Industry Best Practices",
+      "section": ""
+    },
+    {
+      "instruction": "Every experience bullet should contain at least one metric.",
+      "source": "Platform Internal",
+      "section": ""
+    },
+    {
+      "instruction": "Summary must mention the target role or industry.",
+      "source": "Platform Internal",
+      "section": ""
+    },
+    {
+      "instruction": "Skills section should have 10-15 relevant skills.",
+      "source": "Platform Internal",
+      "section": ""
+    },
+    {
+      "instruction": "Address the hiring manager by name when possible.",
+      "source": "Platform Internal",
+      "section": ""
+    },
+    {
+      "instruction": "Connect your experience directly to the job requirements.",
+      "source": "Platform Internal",
+      "section": ""
+    }
+  ],
+  "unique_extracted": [
+    {
+      "instruction": "Please use the following checklist as a guide for writing and editing your cover letter.",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Include the title of the job and the requisition number in the first paragraph ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Make a clear statement of what value you will bring to the department and ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "education"
+    },
+    {
+      "instruction": "Look up the department on-line and use specific information from your ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Using specific examples, quantify or qualify results in alignment with the job ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Translate prior experiences to demonstrate preparedness for the desired role ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Do not use generic cover letters or the same draft for multiple jobs ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Do not copy and paste the job description into your cover letter ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Avoid spelling errors, grammatical errors, and other mistakes. Write your ",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "REMEMBER: Double check that you are sending the correct cover letter to the correct posting.",
+      "source_document": "cover-letter-guidelines.pdf",
+      "page": 1,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Create a Strong Resume",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "summary"
+    },
+    {
+      "instruction": "Ence. It should highlight your strongest assets",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "summary"
+    },
+    {
+      "instruction": "Alone will not get you a job or internship, a good and bolts of getting started. See the CARC or OCS",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Tailor your resume to the type of position you",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Resume should reflect the kind of skills the • Career Advising Appointments. Matriculated degree stu",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "RESUME LANGUAGE SHOULD BE:",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Active rather than passive 4. Not well organized, concise, or easy to skim",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Written to express not impress 5. Not tailored to the position or industry",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Fact-based (quantify and qualify) DO:",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Make it easy to read and follow, balancing white",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Use personal pronouns (such as I) •Use consistent spacing, bold, and capitalization",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Use a narrative style •List headings (such as Experience) in order of",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Use slang or colloquialisms •Within headings, list information in reverse chron-",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Include a picture ological order (most recent first)",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Include age or sex •Avoid information gaps such as a missing summer",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "List references •Be sure that your formatting translated properly if",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Start each line with a date converted to a .pdf",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Organized Oversaw Planned Predicted Prioritized Produced Proved Recommended",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Regulated Reorganized Reviewed Scheduled Spearheaded Strengthened Supervised Surpassed",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Developed Directed Documented Drafted Edited Energized Enlisted Formulated",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Interpreted Interviewed Investigated Modeled Organized Resolved Reviewed Summarized",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Acted Composed Conceived Conceptualized Created Customized Designed Developed",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Assessed Assisted Clarified Coached Counseled Demonstrated Diagnosed Educated",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Provided Referred Rehabilitated Represented Served Supported",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Operated Organized Prepared Processed Purchased Recorded Reduced Reinforced",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Chances of being interviewed. A good way to create a response-producing cover letter is to highlight",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "That are most applicable to the job or industry and to tailor the letter to the specific organizatio",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Address your letters to a specific person if you can. •Remember that this is a marketing tool. Use l",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "general"
+    },
+    {
+      "instruction": "Tailor your letters to specific situations or organizations by words.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Doing research before writing your letters. •Have an OCS adviser provide feedback, when possible.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Keep letters concise and factual, no more than a single page. •If converting to a .pdf, check that y",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Avoid flowery language. correctly.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Put yourself in the reader’s shoes. What can you write that will draw connections to your credential",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Convince the reader that you are ready and able to do the job? •Make sure your resume and cover lett",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Use complete Street Address",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Remember to use",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Middle paragraph(s): Provide supporting examples to demonstrate",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "Have mentioned in the first paragraph; but do not reiterate your entire",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "Make the ad- resume. Explain why you are interested in this employer and your",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "Manner and remember that the reader will view your letter as an",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "The organization. Thank the reader for their consideration of your",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "And remember to",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 5,
+      "section": "skills"
+    },
+    {
+      "instruction": "Unix Scripting •Oracle/SQL Server • PLSQL/T-SQL •Data Warehouse/ETL",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Built a new application support team of 5 people focusing on post-trading straight-",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 6,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Through processing and data warehouse extract-transform-load processing",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 6,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Fashion retailor",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 7,
+      "section": "skills"
+    },
+    {
+      "instruction": "Tracked spending against budget and project progress to ensure effectiveness of financial controls a",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 9,
+      "section": "experience"
+    },
+    {
+      "instruction": "Provide guidance and enable departments estimate post spin-off revenue and cost synergies.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 9,
+      "section": "experience"
+    },
+    {
+      "instruction": "Dean’s List, GPA 3.89",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 10,
+      "section": "education"
+    },
+    {
+      "instruction": "Summa Cum Laude, Dean’s List, GPA 3.92",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 10,
+      "section": "experience"
+    },
+    {
+      "instruction": "Personal Interests: Avid reader, traveller, bicyclist",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 10,
+      "section": "formatting"
+    },
+    {
+      "instruction": " Developed a systematic approach to organize and document the requirements of the to-be-system",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": " Provided leadership to off-shore tech teams via training and analyzing business requirements",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Organized computer and English literacy workshops for underprivileged children in South Asia, 2013",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": " Group leader and Fixed Income manager",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "education"
+    },
+    {
+      "instruction": " Team ranked highest among all groups of the Investment Management class",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Synopsis is a publicly-traded provider of software for ASIC and FPGA microchip design serving Fortun",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Demonstrated Revenue Growth:",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": " Implemented synthesis flow for top storage provider, resulting in client's record purchase of Synp",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": " Selected as Synplicite Track Leader for Boston Synopsis User Group event with 400+ clients, team e",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": " Eliminated competition at critical accounts and averted ASIC designer division layoff for telecomm",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 12,
+      "section": "summary"
+    },
+    {
+      "instruction": "The world's leading provider of Telecom software and systems",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Billing domains. Prepared service proposals, RFP responses & worked closely with sales groups to sec",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Largest & most innovative paging service provider in India",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 14,
+      "section": "projects"
+    },
+    {
+      "instruction": "Create and maintain computer databases for statistical analyses",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "Prepared syllabus and created course materials",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "Organized guest lectures featuring several prominent researchers in the field of sleep medicine",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "Big Brothers Big Sisters of Massachusetts Bay: Serve in both the school-based and community-",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "IBM Software Group (SWG) HQ division, which manages services to 7 brands/divisions, including:",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Saved an estimated $2M yearly by increasing productivity of 600 employees. Organized the",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Considered “best in breed” application by IBM managers.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Developed and managed a $30M yearly IT spending budget split between 35 groups/divisions",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Managed relationships with Sun Microsystems and Hewlett Packard, to provide ongoing discounts",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created the first standardized high-end ThinkPad to meet the needs of the Software Group",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Reuse. Member of The Asset Reutilization Council, and founder of The Asset Sharing Database.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 16,
+      "section": "experience"
+    },
+    {
+      "instruction": "Windows servers on a cross-platform LAN/WAN with 200 nodes, and 50 remote users.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 17,
+      "section": "general"
+    },
+    {
+      "instruction": "Held internal training classes in computer use, software applications, Internet, and project",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 17,
+      "section": "skills"
+    },
+    {
+      "instruction": "Hardware: IBM System x, BladeCenter, Intellistation, ThinkPad, PowerBook, AMD, Dell, Cisco,",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 17,
+      "section": "skills"
+    },
+    {
+      "instruction": "Mgmt software, middleware, BrioQuery, ACT!, Filemaker Pro, Eudora Pro, Apple: iLife, iWork.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 17,
+      "section": "skills"
+    },
+    {
+      "instruction": "SmartSuite,Adobe: Photoshop, Illustrator, PageMaker, Acrobat.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 17,
+      "section": "skills"
+    },
+    {
+      "instruction": "Cum Laude, Dean’s List, GPA 3.62",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Trainings to generate greater revenue. Create and distribute promotional materials.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Christie’s Auction House New York, NY",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Active participant in wine program, including weekly blind-tastings. Created suitable beverage",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Staff Writer 2011- 2013",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Participation in wine related events. Provided up to three articles per print issue and once weekly",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "200 Shell Fish Blvd, Suite 199",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "general"
+    },
+    {
+      "instruction": "Towards strategy. My area of focus and interest varies from quantitative analysis to project managem",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "education"
+    },
+    {
+      "instruction": "Industry experiences have provided me with the credentials needed to thrive as an Associate.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "experience"
+    },
+    {
+      "instruction": "Improve processes has provided me with a deeper understanding of multifaceted problems that companie",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "experience"
+    },
+    {
+      "instruction": "Encounter in their daily operations. Moreover, because of my work experiences, I fully understand ho",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "experience"
+    },
+    {
+      "instruction": "Is through strategy consulting that I can use my analytical aptitude and creative problem solving sk",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "experience"
+    },
+    {
+      "instruction": "From the client’s standpoint but also from a marketplace, best practices and “think out of the box” ",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "skills"
+    },
+    {
+      "instruction": "Thank you for your time and consideration.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 19,
+      "section": "general"
+    },
+    {
+      "instruction": "Than discussing a bottle with a table. This enthusiasm allowed me to introduce a list of reserve",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "Resume below per your request. Please do not hesitate to contact me if you have any questions. I",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 20,
+      "section": "education"
+    },
+    {
+      "instruction": "Appreciate your consideration and look forward to hearing from you.",
+      "source_document": "Harvard-resume-cover-letter-guide.pdf",
+      "page": 20,
+      "section": "education"
+    },
+    {
+      "instruction": "Therefore, the information must be conveyed in a clear, well-organized style . The sections of a res",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "summary"
+    },
+    {
+      "instruction": "This section is optional. The objective can include the specific position",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "summary"
+    },
+    {
+      "instruction": "You are seeking, skills you wish to use on the job, field or organization Sample Objectives",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "summary"
+    },
+    {
+      "instruction": "This section should include: internship.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "education"
+    },
+    {
+      "instruction": "Name of the degree-granting institutions; List most recent first. • To obtain a position in finance.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "education"
+    },
+    {
+      "instruction": "Seeking a position in museum",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Any minors, specialization or focus areas writing skills and a background",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Freshmen and sophomores can include high school",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Descriptions of responsibilities beginning with action verbs (avoid phrases such as “duties included",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "You may choose to divide your experience into two or more sections. Possible section headers might i",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "This section could include computer skills, languages, volunteer work, sports, and interests. If one",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "Relevant to the job, however, you may choose to put it in the “Experience” section. You may also cho",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 1,
+      "section": "experience"
+    },
+    {
+      "instruction": "2 8 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "general"
+    },
+    {
+      "instruction": "RESUME and especially useful for anyone with a history of directly relevant",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Do design your descriptions to focus on your accomplishments,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Using action verbs to clearly indicate the skills you’ve used . See Functional/Skills Format",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Do try quantifying results in your descriptions, such as conveying your strengths to an employer, al",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "“Created marketing campaign that increased club membership are not as familiar with this format as w",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Pages if your experience is extensive) . your work experience and is more commonly used by people wi",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "To critique your resume . chronological and functional formats . This style allows you to group",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Don’t make your margins and font size too small: margins no list those experiences in reverse chrono",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Don’t include personal pronouns (e .g . I, me, we) .",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Don’t include personal information, physical characteristics, or",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Countries may include these on their resumes . body of the email . Having your resume in the body of",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Don’t include the last line: “References available upon well as an attachment gives the employer the",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Not take the time . Use a simple format for the resume you put in the",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "High school experiences . However, important high school include a cover letter in the body of the e",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "summary"
+    },
+    {
+      "instruction": "Include your non-immigrant visa status or permanent address When emailing resume files, name them so",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Should be discussed later during the interview . If you have name and the word “resume” is most help",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "To your advantage to list the information on your resume . RESOURCES",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Choose should present your strengths clearly . See sample formats • The Google resume: how to prepar",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "This format is most familiar to employers and most commonly • Knock’em Dead Resumes: Smart advice to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Used by Stanford students . This style of resume presents your and paper resumes more productive, Ya",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Location and a description of your activities are listed as part of select “Vault Careerinsider”",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Influenced Classified Drove Organized Tested",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Conceptualized Appraised Demonstrated Recommended Coached",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Created Explained Developed",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Illustrated Figured Mentored Collected Provided",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Imagined Maintained Provided Computed Represented",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "3 0 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Course work includes economics, organizational behavior, computer science, and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "education"
+    },
+    {
+      "instruction": "9/XX-present Resident Assistant, Madera House, Stanford University, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "experience"
+    },
+    {
+      "instruction": "Create, plan and implement academic, cultural and social activities with the students",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "experience"
+    },
+    {
+      "instruction": "Coordinator for “Madera Makes Music,” a weekly educational program during winter",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "experience"
+    },
+    {
+      "instruction": "Schedule performances, organize the budget and create publicity",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "experience"
+    },
+    {
+      "instruction": "10/XX-6/XX Visual Display Artist/Salesperson, The Gap, Palo Alto, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "experience"
+    },
+    {
+      "instruction": "1/XX-1/XX Vice President, Delta Gamma Sorority, Stanford University, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "education"
+    },
+    {
+      "instruction": "Created prototype for annual chapter retreat and member recognition program",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Organized rush activities",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Created business offering fashion design and clothing construction courses to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Researched local, state, and national issues for congressional use",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 4,
+      "section": "education"
+    },
+    {
+      "instruction": "Course work has included criminal law, economics, political science, and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 5,
+      "section": "summary"
+    },
+    {
+      "instruction": "Organized and supervised committees to assist in publicizing,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "Them of senior class activities and enlisted their support and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 5,
+      "section": "experience"
+    },
+    {
+      "instruction": "3 2 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "general"
+    },
+    {
+      "instruction": "Summary: • Proficient with MS Word, Excel, FileMaker Pro, and PageMaker.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "summary"
+    },
+    {
+      "instruction": "Bachelor of Arts degree in Psychology with Honors. Course work includes",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Newspapers. Used PageMaker to create mastheads and retype opinion editorials.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "9/XX-6/XX Feature Writer, The Stanford Daily, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Developed journalistic writing style and interviewing skills. Successfully met all",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "10/XX-present Math/English Tutor, Self-initiated and directed, Palo Alto, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Homework. Design tests to chart their progress. Create interactive games to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "9/XX-6/XX Focus Assistant, Stanford’s Environmental Theme House, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Participated on a team of five to develop well organized, thought provoking, and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Worked with a team to plan, organize, and publicize a variety of activities",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Coursework includes communication, English, and psychology",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "education"
+    },
+    {
+      "instruction": "Advanced placement coursework included calculus, biology, and English",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "education"
+    },
+    {
+      "instruction": "National Honor Roll • Gates Millennium Scholar Finalist",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "experience"
+    },
+    {
+      "instruction": "Provide assistance to students using the jobs/internships database",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "experience"
+    },
+    {
+      "instruction": "Organized pool competitions and special events",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Interests include jazz, basketball, and baseball card collecting",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 7,
+      "section": "certifications"
+    },
+    {
+      "instruction": "3 4 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "general"
+    },
+    {
+      "instruction": "Aristotle.” Academic work focused on economic ideas among major Greek philosophers, and also on",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "education"
+    },
+    {
+      "instruction": "Labor economics. Conducted quantitative and qualitative research, collected and analyzed data, creat",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "6/XX-8/XX Summer Analyst, Galleon Group, New York, NY",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Assigned to track a group of technology companies for the New York based hedge fund, Galleon",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Group. Worked with three other analysts in collecting and analyzing relevant financial statistics,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Econometrics and statistics. Organized review sessions and prepared practice problems for upcoming",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "7/XX-9/XX Business Intern, American International Group (AIG), New York, NY",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Recently formed a joint venture. Wrote a report on Sri Lanka’s insurance sector, focusing on",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "With distributing the journal to think tanks, academic institutions, and faculty and students at Sta",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Coordinate all aspects of the tutoring program including recruitment of tutors and tutees. Organize",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "1/XX-6/XX Staff Editor, Undergraduate Journal of Philosophy, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Journal, The Dualist. Focused on reviewing papers on political philosophy and ethics.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Computer: Proficient in Excel, PowerPoint, and FileMaker.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "B.A. in American Studies with Mass Media & Consumer Culture focus, expected 6/XX - GPA: 3.7",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 9,
+      "section": "education"
+    },
+    {
+      "instruction": "Write lyrics and work in studio recording and editing",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 9,
+      "section": "experience"
+    },
+    {
+      "instruction": "Chose artists and track listings for Stanford Soundtrack, Vol. 3 and developed record image",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Identified leads and used persuasive communication skills to generate advertising prospects",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 9,
+      "section": "experience"
+    },
+    {
+      "instruction": "Writer—contribute to Womenspeak and Black Arts Quarterly publications, Stanford University",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 9,
+      "section": "skills"
+    },
+    {
+      "instruction": "3 6 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 10,
+      "section": "general"
+    },
+    {
+      "instruction": "20214 NE 39th Street",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "summary"
+    },
+    {
+      "instruction": "10-week course on sustainable development and poverty alleviation; 1-week trip to the capitol to mee",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "education"
+    },
+    {
+      "instruction": "Independently organized, developed proposals/budget, and received grants for travel & research.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Educated visitors about animals. Created educational literature on endangered species at zoo.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Collaborated with team of eight teaching assistants to design sections and write exams and problem s",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Advised students on planning classes, internships, and jobs. Organized educational and social progra",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "3 8 Stanford Career Center",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "general"
+    },
+    {
+      "instruction": "Coursework includes: political science, urban studies, sociology, psychology, calculus, and Spanish",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "3/XX-4/XX Co-Chair, 3rd Annual Stanford Dance Marathon, Stanford University, Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "9/XX-6/XX Kitchen Manager, Columbae House, Stanford University Stanford, CA",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Managed residents and planned house activities as a member of the staff",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created lesson plans, organized field trips and workshops",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Provide customer service at front desk for Undergraduate Admissions and light accounting work",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Of this internet marketing start-up",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Oversaw trade-show planning and preparation",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 12,
+      "section": "experience"
+    },
+    {
+      "instruction": "Research ethical challenges to enrolling women in research studies globally. Organize Global Women’s",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "And presentation for a conference speaker. Created and designed a course investigating the physical,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Effects of sexual abuse through the life course and from multiple perspectives. Identified course to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Memorandum of understanding between Stanford Health 4 America and Community Partners. Create promoti",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Assisted with the development of a clinical trial investigating use of a novel drug in children with",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Village and created health fairs for children and adults. Organized and taught leadership workshops ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Public speaking, goal setting, and professional career skills to students. Created a healthy lifesty",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "ThinkMath Instructor, Trainer, and Assistant Team Lead | Stanford, CA 9/xx – 1/xx",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Taught elementary school students from a Singaporean math curriculum. Led training sessions for new ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "About lesson planning and teaching techniques. Organized placement results for students and communic",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 13,
+      "section": "experience"
+    },
+    {
+      "instruction": "Research and write global pharmaceutical policy articles for publication",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "Parse large data sets and model trends by age, sex, and cause of death with the statistical computer",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "Discovered critical sex disparities in younger age groups not in previous literature.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "Organized materials, coordinated with other research assistants, and met strict deadlines.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "Research seminars with faculty, organized 500+-person campus speaker event with Paul Farmer, and led",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "HIV*PACT: Provided anonymous, confidential HIV testing, counseling, and personalized health",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "experience"
+    },
+    {
+      "instruction": "P lanned, led, and spoke at multiple broadcast/media engagements, youth group presentations, and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "education"
+    },
+    {
+      "instruction": "Total $85,000 as a group",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 14,
+      "section": "skills"
+    },
+    {
+      "instruction": "Residential Assistant, Yost House (Dorm), Stanford CA 9/XX - present",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "Supported logistics operations at Museum and Grounds Department.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 15,
+      "section": "experience"
+    },
+    {
+      "instruction": "Expanded assessment of technologies to include installation and operating costs specific to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 16,
+      "section": "summary"
+    },
+    {
+      "instruction": "Interests: Skiing, mountain biking, playing piano, listening to jazz",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 16,
+      "section": "skills"
+    },
+    {
+      "instruction": "Provided drafting and engineering support at a plant manufacturing drives and motors",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 17,
+      "section": "experience"
+    },
+    {
+      "instruction": "Led committee that planned and organized monthly events for all 50 women in the house",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 17,
+      "section": "experience"
+    },
+    {
+      "instruction": "Organized a successful benefit dinner that exceeded fundraising goal (>$5000)",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 17,
+      "section": "experience"
+    },
+    {
+      "instruction": "Stanford, CA 94309 • Don’t forget to include a cover",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "general"
+    },
+    {
+      "instruction": "Summer intern position focusing on software development Last name, followed by first name",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "summary"
+    },
+    {
+      "instruction": "Acrobat, FileMakerPro, Lotus Notes Databases",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "experience"
+    },
+    {
+      "instruction": "Set up and maintain JSP server for connectivity to FileMakerPro databases",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "education"
+    },
+    {
+      "instruction": "Redesigned and maintained related FileMakerPro, Lotus Notes, and Oracle databases with team of two",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Companies sometimes use applicant",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Use. In addition, if you are responding to a",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "skills"
+    },
+    {
+      "instruction": "Specific job listing, integrate words from",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "skills"
+    },
+    {
+      "instruction": "The listing into your resume and cover",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 18,
+      "section": "skills"
+    },
+    {
+      "instruction": "SAMPLE REFERENCE LIST",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 19,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "At the point you are considered a",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 19,
+      "section": "education"
+    },
+    {
+      "instruction": "Finalist for the position.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 19,
+      "section": "education"
+    },
+    {
+      "instruction": "The cover letter provides you with an opportunity to introduce yourself and state your objective, pe",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "Your resume, and highlight information that addresses the needs and interests of the employer . Bear",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "That letters you write not only convey your interest and qualifications, but also give the employer ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "Make sure that you spend some",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "general"
+    },
+    {
+      "instruction": "Address • W hat you write and how you write",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "general"
+    },
+    {
+      "instruction": "Paragraph can also be used to refer to the individual who",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "general"
+    },
+    {
+      "instruction": "On your resume. It should",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "general"
+    },
+    {
+      "instruction": "That prompted you to write. If possible, convey why you are persuade the employer to invite",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "general"
+    },
+    {
+      "instruction": "Describe highlights from your background that would be of greatest interest to the organization. Foc",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "If possible, demonstrate that you know something about the organization and industry/field. Use acti",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "Verbs that describe relevant skills and expertise you can contribute. Mention specific knowledge you",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "You are attempting to create a match or “notion of fit” between the employer’s hiring needs and your",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "With the individual and that you will call to follow up on your letter. This demonstrates your initi",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "Express your willingness to provide additional information",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "Most importantly, remember to address the cover letter to a person. If you do not have a name, call ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "Department or human resources to find out to whom your letter should be addressed. As a last resort,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "TIPS FOR CREATING AN EFFECTIVE • Don’t use someone else’s letter . If you are using the same",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "COVER LETTER letter for several companies, remember to change the name in",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "Sequentially, but write them down . Don’t judge and evaluate, • Devise a system to keep track of the",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "Write a draft, let it cool off overnight, and then rewrite if",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "general"
+    },
+    {
+      "instruction": "Use a strong close, e .g ., “After you have had an opportunity to",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "general"
+    },
+    {
+      "instruction": "Review this letter, I will call you . . .” Avoid weak endings such",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "general"
+    },
+    {
+      "instruction": "Say something about you, while also focusing on the needs of COVER LETTERS ONLINE",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "The employer . Write the way you talk . It should be well-worded,",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "Concise, and controlled in the use of the pronoun “I” .",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "While a general cover letter can be used, best results come",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "Avoid cluttered desktop publishing . Business letters should",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "Choice of words . If should be aesthetically appealing with Publications available at the Career Res",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Careful attention to spacing and format . Use letter-quality • C over Letters That Knock ‘em Dead, Y",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Remember to sign it personally and include your telephone Leifman, et al . (available via your Vault",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 21,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "SAMPLE #1 - Letter of Application in Response to a Job Listing (This letter accompanies a completed ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 22,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "May be used to respond to a specific job listing that requests a letter and resume, and possibly oth",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 22,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "At Stanford, I demonstrated leadership ability by serving as the elected president for a service org",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Over one hundred active members. In this effort, I honed my ability to make good decisions, plan and",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Will follow up in two weeks to see if there is additional information you would like me to provide o",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "SAMPLE #2 - Letter of Application in Response to an Internship Listing",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 23,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "123 Fifth Avenue",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 23,
+      "section": "general"
+    },
+    {
+      "instruction": "Of designers and follow fashion critics like Suzy Menkes. After beginning to write for the",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 23,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Toward the new creative director Heather London’s vision. It must be a very exciting time for",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 23,
+      "section": "general"
+    },
+    {
+      "instruction": "Time and consideration.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 23,
+      "section": "general"
+    },
+    {
+      "instruction": "SAMPLE #3 - Letter Accompanying a Resume for an On-Campus Interview (While not always required, resu",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "cover_letter"
+    },
+    {
+      "instruction": "For campus interviews are often accompanied by cover letters . This letter provides you with an oppo",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "Your knowledge of the organization, indicates why you are interested in the position, and highlights",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "22244 Stevens Creek Blvd.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "education"
+    },
+    {
+      "instruction": "Done at Hillview (Or highlight previous summer experience, coursework, thesis topic, or special",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "Skills that may be relevant to this employer. DO highlight or expand on a relevant entry from your",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "Resume, but DO NOT simply repeat what is already on your resume.).",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "Caller-Times has always been part of my life. Now that I am older I have come to respect it as a pro",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "skills"
+    },
+    {
+      "instruction": "Service vital to our community, and am now eager to enlist and gain insight into the career I dream ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "general"
+    },
+    {
+      "instruction": "Writers as part of the overall process of overseeing production of the newspaper from conception to ",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "skills"
+    },
+    {
+      "instruction": "As my resume indicates, I have demonstrated strong leadership and undergone extensive training throu",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "skills"
+    },
+    {
+      "instruction": "In addition to my experience in journalism, my instruction includes coursework in statistics, psycho",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "experience"
+    },
+    {
+      "instruction": "Provide additional information. In the meantime, should you have questions, I can be reached at 650-",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 25,
+      "section": "formatting"
+    },
+    {
+      "instruction": "12396 Park Blvd.",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 26,
+      "section": "general"
+    },
+    {
+      "instruction": "In addition to economics, my academic training includes extensive coursework in the sciences where I",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 26,
+      "section": "skills"
+    },
+    {
+      "instruction": "As my resume indicates, I have demonstrated strong leadership and decision-making skills through act",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 26,
+      "section": "skills"
+    },
+    {
+      "instruction": "To explore in your company. I will follow up in a week to answer questions you may have or provide a",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 26,
+      "section": "education"
+    },
+    {
+      "instruction": "12 Front Street",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 27,
+      "section": "general"
+    },
+    {
+      "instruction": "Advertising and will soon seek a position as a Junior or Assistant Copywriter. Robert Blum encourage",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Contact you, suggesting that you might be willing to meet with me and provide an insider’s view of h",
+      "source_document": "standord-resume-and-cover-letter-examples.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "THE YALE SOM RESUME CHECKLIST",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "general"
+    },
+    {
+      "instruction": "Please use the following checklist to ensure all requirements have been met prior to uploading your ",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "general"
+    },
+    {
+      "instruction": "While each individual will have a primary resume, you may also want to create different versions of ",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Are tailored to specific industries, functions, employers, or opportunities.",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Make it easier for employers to find the critical information they need to know about you.",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Yale SOM resume template used (hint: if you are having trouble with the template or if you are hav",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Issues, show the gridlines so that you can see where the sections begin and end)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Internship – list as “Summer 20XX”",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Bullet points correct () and do not use periods at the end of each bullet/statement",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "This section includes your name and contact information where an employer is able to contact you.",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Photo – do not include",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "experience"
+    },
+    {
+      "instruction": "Education list in reverse chronological order, with Yale SOM listed first",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "education"
+    },
+    {
+      "instruction": "School location includes City and State (or Country if not in US)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "education"
+    },
+    {
+      "instruction": "Undergraduate – include Latin honors or if GPA > 3.5/4.0",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "education"
+    },
+    {
+      "instruction": "Education related activities included in bullet points (e.g. academic awards, scholarships, leader",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 2,
+      "section": "education"
+    },
+    {
+      "instruction": "This section is the heart of your resume and where many employers focus. Make sure to leverage",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "If company not widely known, business is described in one sentence, in italics under company name",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "All accomplishment statements start with a powerful action verb (see appendix for list of action v",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Statements are concise, relevant and results-oriented rather than a list of tasks and responsibili",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "₋ Currency included when stating monetary value",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "Key words and phrases relative to target work area included",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "experience"
+    },
+    {
+      "instruction": "This last section provides you with the opportunity to highlight additional information you would",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Like employers to know about you outside of work and school and infuse your personality into your",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "certifications"
+    },
+    {
+      "instruction": "Professional qualifications & memberships included (e.g. CFA, CPA, licenses, accreditations, affil",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Language skills included (proficient and fluent, do not include basic)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Volunteer work included",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Interests included (e.g. hobbies, sports, unique interests)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "skills"
+    },
+    {
+      "instruction": "Additional information to keep in mind when crafting your resume.",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Be honest – many employers conduct background checks and ask for references after extending offers",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Save resume in multiple formats for easy application submission; make it easy for the recipient to",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Make sure your resume and any online profiles (e.g. LinkedIn) are consistent and don’t include any",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "summary"
+    },
+    {
+      "instruction": "Statements. Proofing to make sure years of employment match is particularly important.",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 3,
+      "section": "summary"
+    },
+    {
+      "instruction": "LIST OF RESUME ACTION VERBS",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Conserved Deducted Circulated Created Budgeted",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "general"
+    },
+    {
+      "instruction": "Elected Displayed Communicate Customized (models)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Manufactured Maintained Demonstrated Founded Constructed",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Mastered Nominated Harmonized Influenced Created",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Reorganized Prepared Presented Revamped Financed",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Resolved Provided Proposed Shaped Formulated",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Teach Manage Organize Research Technical",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Helped Enlisted Grouped Investigated Maintained",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Participated Issued Organized Qualified Repaired",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 4,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Lead the development of strategic and financial • Research, gather and organize capital and financia",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "summary"
+    },
+    {
+      "instruction": "Consult with business units to keep measures • Cultivate and maintain effective partnerships/ relati",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "summary"
+    },
+    {
+      "instruction": "Identify potential growth opportunities • Source, gather and organize information",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Negotiation strategy; lead and/or participate in the • Create and draft proposals",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Quick and independent thinker",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "13 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 6,
+      "section": "experience"
+    },
+    {
+      "instruction": "Core Skills: Research & Analysis, Problem Solving / Strategic Thinking, Communication, Leadership",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "summary"
+    },
+    {
+      "instruction": "Codify frameworks and methodologies for Problem Solving / Strategic Thinking",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "summary"
+    },
+    {
+      "instruction": "Think creatively, independently and innovatively",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "formatting"
+    },
+    {
+      "instruction": "And other analytical models to provide",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Optimize business performance and provide",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "skills"
+    },
+    {
+      "instruction": "Listen actively and ask critical/probing questions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 7,
+      "section": "skills"
+    },
+    {
+      "instruction": "Programs • Create business models including value of social investment and",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "summary"
+    },
+    {
+      "instruction": "Develop mechanisms to improve group norms",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "summary"
+    },
+    {
+      "instruction": "Analyze community needs, and make Leadership",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "summary"
+    },
+    {
+      "instruction": "Create business plans and action items",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "summary"
+    },
+    {
+      "instruction": "Public sector trends and issues important to the • Conceptual thinking",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Development and management of action plans • Synthesize information, make recommendations",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Engage key stakeholders to facilitate the • Plan and organize resources around strategic goals",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Ability to think strategically, operate tactically",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Manage communications to highlight",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Sustainability action plan progress, focusing on",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "15 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 8,
+      "section": "experience"
+    },
+    {
+      "instruction": "Create, sustain, and when necessary, dissolve a • Calculate risk/benefit potential of new product or",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "summary"
+    },
+    {
+      "instruction": "Organize resources and factors of production needs",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "summary"
+    },
+    {
+      "instruction": "Direct all business activities and use of all • Articulate passion to reveal vision",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "summary"
+    },
+    {
+      "instruction": "Organize available resources in new and more valuable ways",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Focus energy on outcome and results",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Build effective, energized and focused teams",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Organize production and delivery resources",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Use and manage the factors of production (land, labor, capital,",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Social entrepreneurs’ principal objectives include the creation of a",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 9,
+      "section": "summary"
+    },
+    {
+      "instruction": "Write rating reports",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "summary"
+    },
+    {
+      "instruction": "Make presentations to rating committee and senior management",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "summary"
+    },
+    {
+      "instruction": "Analyze new credit requests and make credit decisions of the firm",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "summary"
+    },
+    {
+      "instruction": "Financial plans and projections to insure that the • Sell your ideas; listen, align, propose, modify",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "summary"
+    },
+    {
+      "instruction": "Provide timely explanations of variances between • Work on project teams and cross-functional teams",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "summary"
+    },
+    {
+      "instruction": "17 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 10,
+      "section": "experience"
+    },
+    {
+      "instruction": "Results focused",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Identify and develop new business opportunities • Create, build and manage long-term relationships",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Provide investment advice and portfolio • Exercise verbal and written communication skills to convey",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Financial product groups • Target prospective clients and develop marketing strategies to",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Institutional investors such as pension funds, • Design creative wealth management approaches and sa",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Worth individuals and family groups, advising • Maintain high energy, drive to achieve, and entrepre",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Services management, group heads, investment",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Bankers, research analysts, product specialists and",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 11,
+      "section": "experience"
+    },
+    {
+      "instruction": "Create financial models and complete analysis of • Analyze valuation and financial information",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "summary"
+    },
+    {
+      "instruction": "Real estate transactions • Quantify and qualify valuation and financing data through",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "summary"
+    },
+    {
+      "instruction": "Documents • Create financial models to support financing proposal",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "summary"
+    },
+    {
+      "instruction": "Various risk processes and tools • Create accurate statistical models",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "projects"
+    },
+    {
+      "instruction": "Evaluate new trade and deal structures • Master use of risk management processes and tools to measu",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "projects"
+    },
+    {
+      "instruction": "Assess pricing and valuation models • Innovative and conceptual thinking",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "projects"
+    },
+    {
+      "instruction": "Methodologies • Make disciplined decisions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "skills"
+    },
+    {
+      "instruction": "19 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 12,
+      "section": "projects"
+    },
+    {
+      "instruction": "Test the latest thinking on stock selection, asset • Analyze investments based on qualitative inform",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "Companies, analyze corporate strategies, and • Organize and communicate decisions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "skills"
+    },
+    {
+      "instruction": "Organize work flow and tasks",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Test the latest thinking on stock selection, asset • Create financial models using Excel and other t",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "And optimization • Calculate and quantify equity valuation",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "Write research reports and updates on companies and industries",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "Create and maintain financial models • Prepare written material for morning calls",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "Write company and industry reports and notes on • Comfortable formulating and giving an opinion",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 13,
+      "section": "projects"
+    },
+    {
+      "instruction": "Environment, operating as a market maker, while Leadership",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 14,
+      "section": "summary"
+    },
+    {
+      "instruction": "Situations and use that information to analyze the • Work efficiently and effectively under pressure",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 14,
+      "section": "summary"
+    },
+    {
+      "instruction": "21 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 14,
+      "section": "summary"
+    },
+    {
+      "instruction": "International teams • Identify, quantify and solve key business problems",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 15,
+      "section": "summary"
+    },
+    {
+      "instruction": "Provide project leadership in matrix teams • Adjust communication to needs of different audiences",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 15,
+      "section": "summary"
+    },
+    {
+      "instruction": "Conduct market studies, research competitive • Listen and respond to diverse perspectives",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 15,
+      "section": "summary"
+    },
+    {
+      "instruction": "Demonstrated entrepreneurial ability in a business initiative or",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 15,
+      "section": "summary"
+    },
+    {
+      "instruction": "Companies • Develop customized solutions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 16,
+      "section": "summary"
+    },
+    {
+      "instruction": "Provide service excellence by identifying key Communication",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 16,
+      "section": "summary"
+    },
+    {
+      "instruction": "Client business issues, determine client needs by • Listen and ask probing questions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 16,
+      "section": "summary"
+    },
+    {
+      "instruction": "To ensure exceptional performance",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 16,
+      "section": "skills"
+    },
+    {
+      "instruction": "23 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 16,
+      "section": "skills"
+    },
+    {
+      "instruction": "Provide support as well as strategic direction for • Build consensus",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 17,
+      "section": "summary"
+    },
+    {
+      "instruction": "Organize and manage resources",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 17,
+      "section": "summary"
+    },
+    {
+      "instruction": "Show enthusiasm and initiative",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 17,
+      "section": "summary"
+    },
+    {
+      "instruction": "Focus work to produce results",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 17,
+      "section": "summary"
+    },
+    {
+      "instruction": "Organize and manage multiple tasks/assignments to meet",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 17,
+      "section": "summary"
+    },
+    {
+      "instruction": "Gather data on competitors, and provide the • Write research reports",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 18,
+      "section": "summary"
+    },
+    {
+      "instruction": "25 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 18,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Develop strategy and concepts, implement • Source, gather and organize data and market information",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 19,
+      "section": "summary"
+    },
+    {
+      "instruction": "International teams • Create financial and economic models to support proposals",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 19,
+      "section": "summary"
+    },
+    {
+      "instruction": "Provide project leadership in matrix teams • Strong influencing and presentation skills",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 19,
+      "section": "summary"
+    },
+    {
+      "instruction": "Provide high-level financial expertise and • Manage projects",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 19,
+      "section": "summary"
+    },
+    {
+      "instruction": "Self-starter, resourceful, hands-on, risk taker",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 19,
+      "section": "summary"
+    },
+    {
+      "instruction": "Collaborate to ensure successful implementation • Implement solutions",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "Critical Thinking",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "Ensure adequacy; reformulate models as",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "summary"
+    },
+    {
+      "instruction": "Partners • Make recommendations for capital investments based on",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Develop strategies to cut costs, improve quality, • Provide clear direction to team members",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Examine opportunities to streamline production, • Write and present operations reports for senior ma",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Organize operations to flow in a meticulous manner",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "projects"
+    },
+    {
+      "instruction": "Develop business goals, organize resources for optimum efficiency",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "projects"
+    },
+    {
+      "instruction": "27 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 20,
+      "section": "experience"
+    },
+    {
+      "instruction": "135 Prospect Street, PO Box 208200  New Haven, CT 06520 Tel. (203)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "education"
+    },
+    {
+      "instruction": "Finalist, Chicago Booth IPO Challenge, one of 15 teams selected nationwide to compete in final round",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "education"
+    },
+    {
+      "instruction": "Dean’s List, Golden Key National Honor Society (top 15% of graduating class)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Summer Associate, Leveraged Finance Group Summer 2016",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Supported group’s efforts to originate, structure and execute bank loans and high yield bond financi",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Business Analyst, Capital Mobilization and Transaction Advisory Group 2013 – 2015",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Legal Assistant, Leveraged Finance Group 2008 – 2011",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Leveraged finance market. Transaction highlights include the $45 billion leveraged buyout of TXU Cor",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "29 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 22,
+      "section": "experience"
+    },
+    {
+      "instruction": "Computers, sewing machines, books and bicycles for school use",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 23,
+      "section": "education"
+    },
+    {
+      "instruction": "Products of interest; worked with User Experience designer to generate mockups and specifications fo",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "Improved productivity by tailoring processes, restructuring team and enhancing technical competence",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 24,
+      "section": "experience"
+    },
+    {
+      "instruction": "31 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 24,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Finalist, Net Impact Case Competition: developed strategic human capital plan for social enterprise",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 25,
+      "section": "general"
+    },
+    {
+      "instruction": "Placed first among 200+ classmates in a bridge design competition; Finalist, MIT’s Soldier Design Co",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 25,
+      "section": "experience"
+    },
+    {
+      "instruction": "Orchestrated effort to make Gimme 5 plastic collection program carbon, water neutral by 2013; create",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 25,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created energy and water efficiency tracking system and metrics for first-ever tea brand within Nest",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 25,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created and distributed customized training guides in English and Dari that enabled 200 coalition po",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 25,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created electronic funds transfer service, achieving 40% average utilization among clients’ constitu",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 26,
+      "section": "experience"
+    },
+    {
+      "instruction": "Designed and planned inaugural nationwide project to build 400 houses in more than 130 locations fro",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 26,
+      "section": "experience"
+    },
+    {
+      "instruction": "Helped identify and solicit national builders and suppliers for funding and house sponsorships, resu",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 26,
+      "section": "experience"
+    },
+    {
+      "instruction": "33 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 26,
+      "section": "formatting"
+    },
+    {
+      "instruction": "Adidas GROUP Boston, MA",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Led strategy initiative for global expansion of adidas GROUP’s greenEnergy Venture Capital Fund",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created the “Global Energy Audit Program,” a $3 million initiative to find and implement energy effi",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Global energy supply financial model, and presented business case to adidas Group CFO",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Managed cross-functional teams to provide over $2.5 million in contract work to clients",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Information Administration. Results of the project were covered in every major media outlet and were",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Briefing to senior White House staff on international energy trends",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Reduced man-hours needed to quantify nation-wide CO 2 storage capacity estimates by 90% (from 80 hou",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Launched a consultancy that created brand identities and online sales platforms for sustainably-prod",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created “Rainfloresta,” a line of 22 herbal supplements and skin-care products sourced from the Braz",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "experience"
+    },
+    {
+      "instruction": "Language Skills: Proficiency in Brazilian Portuguese (advanced) and Mandarin Chinese (beginner)",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 27,
+      "section": "skills"
+    },
+    {
+      "instruction": "Teaching Fellow, Critical Issues in Global Health– Lead discussion groups, advise students, and grad",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "education"
+    },
+    {
+      "instruction": "Dean’s Honor List; HBAA Leadership Award; Exchange at Bogazici University, Istanbul Turkey",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "experience"
+    },
+    {
+      "instruction": "Ensure accountability and determine future policy directions in innovation and access",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "experience"
+    },
+    {
+      "instruction": "Increase knowledge and used in Tanzania to build health innovation and access policies",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "experience"
+    },
+    {
+      "instruction": "Interviewed 170+ borrowers on the social impact of their loans and provided field feedback to improv",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "experience"
+    },
+    {
+      "instruction": "Sales tool; tool is used by the client’s national sales force to better tailor product offering to c",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "experience"
+    },
+    {
+      "instruction": "35 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 28,
+      "section": "skills"
+    },
+    {
+      "instruction": "MASSACHUSETTS INSTITUTE OF TECHNOLOGY Cambridge, MA",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 29,
+      "section": "education"
+    },
+    {
+      "instruction": "Created budgeting dashboard used at three schools, empowering school leaders to manage budgeting pro",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 29,
+      "section": "education"
+    },
+    {
+      "instruction": "Founded and directed Achievement First (AF) Amistad High School service learning program that create",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 29,
+      "section": "experience"
+    },
+    {
+      "instruction": "Designed and ran summer service learning internship program to create leadership opportunities for 1",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 29,
+      "section": "experience"
+    },
+    {
+      "instruction": "Developed SAT Math curriculum used by three teachers to impact 200 students at Achievement First hig",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 29,
+      "section": "experience"
+    },
+    {
+      "instruction": "Created strategic market development plan to launch new format across all Unilever hair brands globa",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "experience"
+    },
+    {
+      "instruction": "Analyzed customer survey data, developed competitive landscape reports, created concise marketing co",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "experience"
+    },
+    {
+      "instruction": "Managed a portfolio of $3MM and provided on-site consulting for 35 clients; led cross-functional cli",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "summary"
+    },
+    {
+      "instruction": "Analyzed hospital quality and surgical data and delivered easy to use dashboards for physicians to i",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "experience"
+    },
+    {
+      "instruction": "For judicious use of broad spectrum antibiotics",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "experience"
+    },
+    {
+      "instruction": "Conducted pro-forma analysis for expansion of client base to physical group practices and assisted i",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "experience"
+    },
+    {
+      "instruction": "37 Yale School of Management │ Career Development Office",
+      "source_document": "Yale resume guidance letter.pdf",
+      "page": 30,
+      "section": "skills"
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "harvard_resume_rules": [
+    {
+      "rule_id": "HARVARD_SUM_001",
+      "source": "Harvard Resume Guide",
+      "section": "Summary",
+      "priority": "High",
+      "category": "Tailoring",
+      "instruction": "Tailor your summary to each specific job application.",
+      "reason": "A generic summary fails to demonstrate fit for the specific role.",
+      "examples": ["Replace generic phrases with keywords from the job description"]
+    },
+    {
+      "rule_id": "HARVARD_SUM_002",
+      "source": "Harvard Resume Guide",
+      "section": "Summary",
+      "priority": "Medium",
+      "category": "Length",
+      "instruction": "Keep your summary to 3-4 lines or 50-75 words.",
+      "reason": "Recruiters spend an average of 7 seconds scanning a resume.",
+      "examples": ["Focus on your most relevant qualifications and career goals"]
+    },
+    {
+      "rule_id": "HARVARD_SUM_003",
+      "source": "Harvard Resume Guide",
+      "section": "Summary",
+      "priority": "High",
+      "category": "Impact",
+      "instruction": "Lead with your strongest qualification or most relevant experience.",
+      "reason": "The first impression should immediately demonstrate value.",
+      "examples": ["Start with years of experience, key achievement, or relevant certification"]
+    },
+    {
+      "rule_id": "HARVARD_EXP_001",
+      "source": "Harvard Resume Guide",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Quantification",
+      "instruction": "Quantify accomplishments whenever possible.",
+      "reason": "Numbers provide concrete evidence of impact and improve credibility.",
+      "examples": ["Increased sales by 25% in Q3", "Managed team of 8 engineers", "Reduced processing time by 35%"]
+    },
+    {
+      "rule_id": "HARVARD_EXP_002",
+      "source": "Harvard Resume Guide",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Action Verbs",
+      "instruction": "Start each bullet point with a strong action verb.",
+      "reason": "Action verbs demonstrate initiative and make descriptions more dynamic.",
+      "examples": ["Spearheaded", "Implemented", "Optimized", "Delivered", "Negotiated"]
+    },
+    {
+      "rule_id": "HARVARD_EXP_003",
+      "source": "Harvard Resume Guide",
+      "section": "Experience",
+      "priority": "Medium",
+      "category": "Impact",
+      "instruction": "Focus on results and impact rather than responsibilities.",
+      "reason": "Employers want to see what you accomplished, not just what you were supposed to do.",
+      "examples": ["Instead of 'Responsible for sales', write 'Exceeded sales targets by 15% for 3 consecutive quarters'"]
+    },
+    {
+      "rule_id": "HARVARD_EXP_004",
+      "source": "Harvard Resume Guide",
+      "section": "Experience",
+      "priority": "Medium",
+      "category": "Relevance",
+      "instruction": "Prioritize experience most relevant to the target role.",
+      "reason": "Relevant experience demonstrates immediate value to the employer.",
+      "examples": ["Move relevant roles higher, de-emphasize less relevant positions"]
+    },
+    {
+      "rule_id": "HARVARD_SKL_001",
+      "source": "Harvard Resume Guide",
+      "section": "Skills",
+      "priority": "High",
+      "category": "Keywords",
+      "instruction": "Include skills mentioned in the job description.",
+      "reason": "ATS systems and recruiters look for keyword matches.",
+      "examples": ["Mirror the exact terminology used in the job posting"]
+    },
+    {
+      "rule_id": "HARVARD_SKL_002",
+      "source": "Harvard Resume Guide",
+      "section": "Skills",
+      "priority": "Medium",
+      "category": "Relevance",
+      "instruction": "Group skills by category for better readability.",
+      "reason": "Organized skills are easier to scan and demonstrate breadth.",
+      "examples": ["Programming Languages: Python, JavaScript, SQL", "Cloud: AWS, Azure"]
+    },
+    {
+      "rule_id": "HARVARD_EDU_001",
+      "source": "Harvard Resume Guide",
+      "section": "Education",
+      "priority": "Medium",
+      "category": "Specificity",
+      "instruction": "Include relevant coursework, projects, and achievements.",
+      "reason": "Education details demonstrate knowledge and initiative.",
+      "examples": ["Relevant Coursework: Machine Learning, Data Structures", "Senior Project: Built predictive model"]
+    }
+  ],
+  "mit_resume_rules": [
+    {
+      "rule_id": "MIT_EXP_001",
+      "source": "MIT Career Services",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Quantification",
+      "instruction": "Use the STAR method: Situation, Task, Action, Result.",
+      "reason": "Structured bullets are easier to read and demonstrate clear impact.",
+      "examples": ["Situation: Legacy system slow", "Task: Improve performance", "Action: Refactored code", "Result: 50% faster"]
+    },
+    {
+      "rule_id": "MIT_EXP_002",
+      "source": "MIT Career Services",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Keywords",
+      "instruction": "Include technical keywords relevant to the position.",
+      "reason": "Technical roles require specific skill demonstrations.",
+      "examples": ["Mention specific technologies, frameworks, and tools used"]
+    },
+    {
+      "rule_id": "MIT_SKL_001",
+      "source": "MIT Career Services",
+      "section": "Skills",
+      "priority": "Medium",
+      "category": "Tailoring",
+      "instruction": "Order skills by relevance to the target role.",
+      "reason": "Most relevant skills should be most visible.",
+      "examples": ["Put required skills first, then preferred skills"]
+    },
+    {
+      "rule_id": "MIT_PRJ_001",
+      "source": "MIT Career Services",
+      "section": "Projects",
+      "priority": "Medium",
+      "category": "Specificity",
+      "instruction": "Include project links and technologies used.",
+      "reason": "Projects demonstrate practical application of skills.",
+      "examples": ["GitHub link, technologies used, impact achieved"]
+    }
+  ],
+  "yale_resume_rules": [
+    {
+      "rule_id": "YALE_SUM_001",
+      "source": "Yale University",
+      "section": "Summary",
+      "priority": "High",
+      "category": "Clarity",
+      "instruction": "Write in third person implied (no 'I' or 'my').",
+      "reason": "Professional convention for resumes.",
+      "examples": ["Instead of 'I managed a team', write 'Managed team of 10'"]
+    },
+    {
+      "rule_id": "YALE_EXP_001",
+      "source": "Yale University",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Impact",
+      "instruction": "Demonstrate progression and growth in your career.",
+      "reason": "Shows ambition and capability for advancement.",
+      "examples": ["Promoted from Analyst to Senior Analyst within 18 months"]
+    },
+    {
+      "rule_id": "YALE_EDU_001",
+      "source": "Yale University",
+      "section": "Education",
+      "priority": "Low",
+      "category": "Relevance",
+      "instruction": "Include GPA if 3.5 or higher.",
+      "reason": "Strong GPA demonstrates academic excellence.",
+      "examples": ["GPA: 3.8/4.0"]
+    }
+  ],
+  "ats_rules": [
+    {
+      "rule_id": "ATS_FMT_001",
+      "source": "Industry Best Practices",
+      "section": "Formatting",
+      "priority": "Critical",
+      "category": "Formatting",
+      "instruction": "Use standard section headings (Summary, Experience, Education, Skills).",
+      "reason": "ATS systems parse standard headings to categorize content.",
+      "examples": ["Use 'Work Experience' instead of 'My Journey'"]
+    },
+    {
+      "rule_id": "ATS_FMT_002",
+      "source": "Industry Best Practices",
+      "section": "Formatting",
+      "priority": "Critical",
+      "category": "Formatting",
+      "instruction": "Avoid tables, columns, headers, and footers.",
+      "reason": "ATS systems cannot parse complex formatting correctly.",
+      "examples": ["Use simple single-column layout"]
+    },
+    {
+      "rule_id": "ATS_KWD_001",
+      "source": "Industry Best Practices",
+      "section": "Skills",
+      "priority": "High",
+      "category": "Keywords",
+      "instruction": "Use exact keywords from the job description.",
+      "reason": "ATS systems score resumes based on keyword matches.",
+      "examples": ["If job says 'React', use 'React' not 'React.js' or 'ReactJS'"]
+    },
+    {
+      "rule_id": "ATS_KWD_002",
+      "source": "Industry Best Practices",
+      "section": "Skills",
+      "priority": "High",
+      "category": "Keywords",
+      "instruction": "Include both acronyms and full terms.",
+      "reason": "ATS may search for either form.",
+      "examples": ["Search Engine Optimization (SEO)", "Project Management Professional (PMP)"]
+    },
+    {
+      "rule_id": "ATS_FMT_003",
+      "source": "Industry Best Practices",
+      "section": "Formatting",
+      "priority": "High",
+      "category": "Formatting",
+      "instruction": "Use standard fonts (Arial, Calibri, Garamond).",
+      "reason": "Non-standard fonts may not render correctly in ATS.",
+      "examples": ["Avoid decorative fonts like Comic Sans or Papyrus"]
+    },
+    {
+      "rule_id": "ATS_EXP_001",
+      "source": "Industry Best Practices",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Keywords",
+      "instruction": "Include job title keywords in your experience bullets.",
+      "reason": "ATS scores experience sections for keyword relevance.",
+      "examples": ["If applying for 'Software Engineer', include 'software engineering' in bullets"]
+    }
+  ],
+  "internal_rules": [
+    {
+      "rule_id": "INT_EXP_001",
+      "source": "Platform Internal",
+      "section": "Experience",
+      "priority": "High",
+      "category": "Quantification",
+      "instruction": "Every experience bullet should contain at least one metric.",
+      "reason": "Quantified achievements are 40% more likely to be remembered.",
+      "examples": ["Percentages, dollar amounts, time frames, team sizes, or counts"]
+    },
+    {
+      "rule_id": "INT_SUM_001",
+      "source": "Platform Internal",
+      "section": "Summary",
+      "priority": "High",
+      "category": "Tailoring",
+      "instruction": "Summary must mention the target role or industry.",
+      "reason": "Demonstrates clear intent and relevance.",
+      "examples": ["Experienced software engineer seeking senior backend role"]
+    },
+    {
+      "rule_id": "INT_SKL_001",
+      "source": "Platform Internal",
+      "section": "Skills",
+      "priority": "Medium",
+      "category": "Relevance",
+      "instruction": "Skills section should have 10-15 relevant skills.",
+      "reason": "Too few skills looks thin; too many looks unfocused.",
+      "examples": ["Group by category: Languages, Frameworks, Tools, Cloud"]
+    },
+    {
+      "rule_id": "INT_CL_001",
+      "source": "Platform Internal",
+      "section": "Cover Letter",
+      "priority": "High",
+      "category": "Tailoring",
+      "instruction": "Address the hiring manager by name when possible.",
+      "reason": "Personalization shows effort and attention to detail.",
+      "examples": ["Dear Hiring Manager is last resort; research the name"]
+    },
+    {
+      "rule_id": "INT_CL_002",
+      "source": "Platform Internal",
+      "section": "Cover Letter",
+      "priority": "High",
+      "category": "Impact",
+      "instruction": "Connect your experience directly to the job requirements.",
+      "reason": "Shows you understand the role and can deliver results.",
+      "examples": ["Your requirement for X aligns with my experience in Y"]
+    }
+  ]
+}

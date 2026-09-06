@@ -1,0 +1,51 @@
+{
+  "email_pattern": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+  "phone_patterns": [
+    "\\+?\\d{1,3}[-.\\s]?\\(?\\d{2,4}\\)?[-.\\s]?\\d{3,4}[-.\\s]?\\d{3,4}",
+    "\\d{3}[-.]?\\d{3}[-.]?\\d{4}",
+    "\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}"
+  ],
+  "linkedin_patterns": [
+    "linkedin\\.com/in/[a-zA-Z0-9_-]+",
+    "linkedin\\.com/profile/[a-zA-Z0-9_-]+"
+  ],
+  "github_patterns": [
+    "github\\.com/[a-zA-Z0-9_-]+",
+    "[a-zA-Z0-9_-]+@github"
+  ],
+  "website_patterns": [
+    "https?://[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}[/a-zA-Z0-9._-]*",
+    "www\\.[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}[/a-zA-Z0-9._-]*"
+  ],
+  "location_keywords": [
+    "san francisco",
+    "new york",
+    "los angeles",
+    "chicago",
+    "houston",
+    "phoenix",
+    "seattle",
+    "boston",
+    "denver",
+    "austin",
+    "miami",
+    "atlanta",
+    "dallas",
+    "portland",
+    "san diego",
+    "minneapolis",
+    "detroit",
+    "washington dc",
+    "london",
+    "berlin",
+    "tokyo",
+    "singapore",
+    "toronto",
+    "vancouver",
+    "bangalore",
+    "mumbai",
+    "hyderabad",
+    "pune",
+    "delhi"
+  ]
+}

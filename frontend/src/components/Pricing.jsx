@@ -1,93 +1,87 @@
-const PRICING_PLANS = [
-  {
-    plan: "Free",
-    price: "0",
-    desc: "Perfect for getting started",
-    features: [
-      "2 resumes",
-      "5 templates",
-      "PDF export",
-      "Basic ATS score",
-      "Manual mode"
-    ],
-    cta: "Start free",
-    popular: false,
-  },
-  {
-    plan: "Pro",
-    price: "9",
-    desc: "For serious job seekers",
-    features: [
-      "Unlimited resumes",
-      "All 24 templates",
-      "AI resume mode",
-      "Advanced ATS analysis",
-      "PDF + DOCX export",
-      "Priority support"
-    ],
-    cta: "Start Pro",
-    popular: true,
-  },
-  {
-    plan: "Team",
-    price: "29",
-    desc: "For career coaches & teams",
-    features: [
-      "Everything in Pro",
-      "Up to 10 seats",
-      "Shared template library",
-      "Bulk export",
-      "Analytics dashboard",
-      "Custom branding"
-    ],
-    cta: "Contact us",
-    popular: false,
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 export default function Pricing() {
+  const navigate = useNavigate();
+
+  const plans = [
+    {
+      name: "Starter",
+      price: "$0",
+      desc: "Perfect for trying out Prompt Resume",
+      features: [
+        "1 resume generation",
+        "Basic templates",
+        "PDF export",
+        "Email support"
+      ],
+      cta: "Get started",
+      onClick: () => navigate("/register")
+    },
+    {
+      name: "Pro",
+      price: "$9",
+      period: "/month",
+      desc: "For serious job seekers",
+      features: [
+        "Unlimited generations",
+        "All premium templates",
+        "ATS optimization",
+        "Priority support",
+        "Cover letter AI"
+      ],
+      cta: "Start Pro trial",
+      popular: true,
+      onClick: () => navigate("/pricing")
+    },
+    {
+      name: "Enterprise",
+      price: "$29",
+      period: "/month",
+      desc: "For teams and recruiters",
+      features: [
+        "Everything in Pro",
+        "Team collaboration",
+        "Custom branding",
+        "API access",
+        "Dedicated support"
+      ],
+      cta: "Contact sales",
+      onClick: () => navigate("/contact")
+    }
+  ];
+
   return (
-    <div className="pricing-section" id="pricing">
+    <section className="pricing-section" id="pricing">
       <div className="pricing-inner">
-        <div className="section-tag reveal" style={{ display: "inline-flex" }}>
-          ◧ Pricing
+        <div className="reveal">
+          <div className="section-tag">Pricing</div>
+          <h2 className="section-headline">Simple, transparent pricing</h2>
+          <p className="section-sub centered">No hidden fees. Cancel anytime.</p>
         </div>
-        <h2 className="section-headline reveal delay-1">
-          Simple, transparent pricing
-        </h2>
-        <p className="section-sub centered reveal delay-2">
-          Start free. Upgrade when you're ready. No hidden fees, no surprise charges.
-        </p>
-        
+
         <div className="pricing-grid">
-          {PRICING_PLANS.map((p, i) => (
-            <div className={`pricing-card${p.popular ? " popular" : ""} reveal delay-${i + 2}`} key={i}>
-              {p.popular && <div className="popular-badge">Most Popular</div>}
-              
-              <div className="pricing-plan">{p.plan}</div>
+          {plans.map((plan, i) => (
+            <div key={i} className={`pricing-card reveal ${plan.popular ? 'popular' : ''}`}>
+              {plan.popular && <div className="popular-badge">Most Popular</div>}
+              <div className="pricing-plan">{plan.name}</div>
               <div className="pricing-price">
-                <span className="pricing-price-currency">$</span>
-                {p.price}
-                <span className="pricing-price-period">/mo</span>
+                {plan.price}
+                {plan.period && <span className="pricing-price-period">{plan.period}</span>}
               </div>
-              <p className="pricing-desc">{p.desc}</p>
-              
+              <p className="pricing-desc">{plan.desc}</p>
               <div className="pricing-features">
-                {p.features.map((f, j) => (
-                  <div className="pricing-feature" key={j}>
-                    <div className="pricing-check">✓</div>
+                {plan.features.map((f, fi) => (
+                  <div key={fi} className="pricing-feature">
+                    <span className="pricing-check">✓</span>
                     {f}
                   </div>
                 ))}
               </div>
-              
-              <button className={`btn-plan${p.popular ? " primary" : ""}`}>
-                {p.cta}
-              </button>
+              <button className={`btn-plan ${plan.popular ? 'primary' : ''}`} onClick={plan.onClick}>{plan.cta}</button>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

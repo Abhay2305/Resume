@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { RefreshCw, ArrowLeft, Save } from "lucide-react";
+import { RefreshCw, ArrowLeft } from "lucide-react";
 import { api } from "../services/api";
+import { useAuth } from "../hooks/useAuth";
 import ResumeFlowHeader from "../components/ResumeFlowHeader";
 import ResumeEditor from "../components/ResumeEditor";
 import TemplateSelection from "../components/TemplateSelection";
@@ -31,14 +32,18 @@ export default function ResumeEditorWrapper() {
   });
 
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const autosaveTimer = useRef(null);
+
+  // Check if user is authenticated
+  const { isAuthenticated } = useAuth();
 
   // Load resume on startup
   useEffect(() => {
     const loadResume = async () => {
       try {
         setLoading(true);
-        const res = await api.getResume(id);
+        const res = await api.resumes.get(id);
         setResumeTitle(res.title);
         setSelectedTemplate(res.template_id || "harvard");
 
@@ -56,6 +61,9 @@ export default function ResumeEditorWrapper() {
           res.sections.forEach(s => {
             formatted[s.section_type] = s.content;
           });
+          if (res.section_order && Array.isArray(res.section_order)) {
+            formatted.section_order = res.section_order;
+          }
           setResumeData(formatted);
         }
       } catch (err) {
@@ -79,15 +87,18 @@ export default function ResumeEditorWrapper() {
 
     autosaveTimer.current = setTimeout(async () => {
       try {
-        // Map key-value state to backend array format
-        const payload = Object.keys(updatedData).map((key, idx) => ({
+        const { section_order, ...sectionData } = updatedData;
+        const payload = Object.keys(sectionData).map((key, idx) => ({
           section_type: key,
-          content: updatedData[key],
+          content: sectionData[key],
           position: idx
         }));
-        await api.saveResumeSections(id, payload);
+        await api.resumes.saveSections(id, payload);
+        await api.resumes.update(id, resumeTitle, selectedTemplate, section_order);
+        setSaveError("");
       } catch (err) {
         console.error("Autosave failed:", err);
+        setSaveError("Save failed. Your changes may not be persisted.");
       } finally {
         setSaving(false);
       }
@@ -103,14 +114,18 @@ export default function ResumeEditorWrapper() {
     }
     setSaving(true);
     try {
-      const payload = Object.keys(resumeData).map((key, idx) => ({
+      const { section_order, ...sectionData } = resumeData;
+      const payload = Object.keys(sectionData).map((key, idx) => ({
         section_type: key,
-        content: resumeData[key],
+        content: sectionData[key],
         position: idx
       }));
-      await api.saveResumeSections(id, payload);
+      await api.resumes.saveSections(id, payload);
+      await api.resumes.update(id, resumeTitle, selectedTemplate, section_order);
+      setSaveError("");
     } catch (err) {
       console.error("Flush save failed:", err);
+      setSaveError("Save failed. Your changes may not be persisted.");
     } finally {
       setSaving(false);
     }
@@ -124,9 +139,11 @@ export default function ResumeEditorWrapper() {
   const handleTemplateSelect = async (templateId) => {
     setSelectedTemplate(templateId);
     try {
-      await api.updateResume(id, resumeTitle, templateId);
+      await api.resumes.update(id, resumeTitle, templateId);
+      setSaveError("");
     } catch (err) {
       console.error(err);
+      setSaveError("Failed to save template change.");
     }
     setStep("editor");
   };
@@ -134,9 +151,11 @@ export default function ResumeEditorWrapper() {
   const handleTemplateChange = async (templateId) => {
     setSelectedTemplate(templateId);
     try {
-      await api.updateResume(id, resumeTitle, templateId);
+      await api.resumes.update(id, resumeTitle, templateId);
+      setSaveError("");
     } catch (err) {
       console.error(err);
+      setSaveError("Failed to save template change.");
     }
   };
 
@@ -148,13 +167,15 @@ export default function ResumeEditorWrapper() {
     } else if (step === "editor") {
       setStep("templates");
     } else if (step === "templates") {
-      navigate("/dashboard");
+      // Navigate based on auth status
+      navigate(isAuthenticated ? "/dashboard" : "/");
     }
   };
 
   const handleExit = () => {
-    if (window.confirm("Return to Dashboard? Your changes are autosaved.")) {
-      navigate("/dashboard");
+    const destination = isAuthenticated ? "/dashboard" : "/";
+    if (window.confirm(`Return to ${isAuthenticated ? "Dashboard" : "Home"}? Your changes are autosaved.`)) {
+      navigate(destination);
     }
   };
 
@@ -172,10 +193,10 @@ export default function ResumeEditorWrapper() {
       <div className="min-h-screen bg-[#0F1E1E] text-white flex flex-col items-center justify-center gap-4">
         <p className="text-rose-400 text-sm font-semibold">{error}</p>
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate(isAuthenticated ? "/dashboard" : "/")}
           className="px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-white/10"
         >
-          <ArrowLeft size={14} /> Back to Dashboard
+          <ArrowLeft size={14} /> Back to {isAuthenticated ? "Dashboard" : "Home"}
         </button>
       </div>
     );
@@ -187,9 +208,18 @@ export default function ResumeEditorWrapper() {
       <ResumeFlowHeader step={step} onBack={handleBack} onExit={handleExit} />
       
       {/* Autosave badge indicator */}
-      <div className="bg-white border-b px-6 py-1 text-right text-[10px] text-gray-400 flex justify-end items-center gap-1.5 select-none border-gray-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-        <span>{saving ? "Saving Draft..." : "All changes autosaved to DB"}</span>
+      <div className={`bg-white border-b px-6 py-1 text-right text-[10px] flex justify-end items-center gap-1.5 select-none border-gray-200 ${saveError ? 'text-rose-500' : 'text-gray-400'}`}>
+        {saveError ? (
+          <>
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            <span>{saveError}</span>
+          </>
+        ) : (
+          <>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>{saving ? "Saving Draft..." : "All changes autosaved to DB"}</span>
+          </>
+        )}
       </div>
 
       <main className="flex-1">
@@ -229,7 +259,7 @@ export default function ResumeEditorWrapper() {
             data={resumeData}
             template={selectedTemplate}
             onBack={handleBack}
-            onExit={() => navigate("/dashboard")}
+            onExit={() => navigate(isAuthenticated ? "/dashboard" : "/")}
           />
         )}
       </main>

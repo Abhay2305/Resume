@@ -116,9 +116,14 @@ class KnowledgeRetrieval(
 
     Links a generation to each chunk it used, with similarity ``score`` and
     ``rank``, so retrieval quality is independently debuggable.
+
+    NOTE: This is a legacy model for the future RAG pipeline. The active
+    knowledge retrieval model is in knowledge_intelligence.py with
+    __tablename__ = "knowledge_retrievals". This model uses a different
+    table name to avoid SQLAlchemy mapping conflicts.
     """
 
-    __tablename__ = "knowledge_retrievals"
+    __tablename__ = "knowledge_retrievals_legacy"
 
     generation_id = Column(
         String(36),

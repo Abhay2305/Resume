@@ -1,0 +1,55 @@
+{
+  "categories": {
+    "frontend": [
+      "react", "angular", "vue", "svelte", "nextjs", "nuxtjs",
+      "html", "css", "javascript", "typescript", "tailwind",
+      "bootstrap", "material ui", "chakra ui", "ant design",
+      "redux", "mobx", "zustand", "recoil", "jotai"
+    ],
+    "backend": [
+      "node", "express", "fastify", "nestjs",
+      "django", "flask", "fastapi", "starlette",
+      "spring", "spring boot", "spring cloud",
+      "rails", "sinatra",
+      "laravel", "symfony",
+      "dotnet", "asp.net",
+      "graphql", "grpc", "rest"
+    ],
+    "database": [
+      "postgresql", "mysql", "mariadb", "sql server",
+      "mongodb", "redis", "elasticsearch",
+      "dynamodb", "cassandra", "couchdb",
+      "firebase", "firestore", "neo4j", "sqlite"
+    ],
+    "cloud": [
+      "aws", "azure", "gcp",
+      "heroku", "digitalocean", "linode",
+      "vercel", "netlify", "cloudflare"
+    ],
+    "devops": [
+      "docker", "kubernetes", "terraform", "ansible",
+      "jenkins", "github actions", "gitlab ci",
+      "circleci", "travis ci", "argo cd",
+      "helm", "prometheus", "grafana"
+    ],
+    "mobile": [
+      "flutter", "react native", "swift", "kotlin",
+      "dart", "xamarin", "ionic"
+    ],
+    "ai_ml": [
+      "tensorflow", "pytorch", "scikit-learn",
+      "keras", "opencv", "nlp", "llm",
+      "transformers", "langchain", "openai"
+    ],
+    "testing": [
+      "jest", "pytest", "junit", "selenium",
+      "cypress", "playwright", "mocha", "chai",
+      "xunit", "postman"
+    ],
+    "security": [
+      "owasp", "oauth", "jwt", "ssl", "tls",
+      "encryption", "authentication", "authorization",
+      "sso", "mfa"
+    ]
+  }
+}

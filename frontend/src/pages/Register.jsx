@@ -1,26 +1,46 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, User, ArrowRight } from "lucide-react";
-import { api } from "../services/api";
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn";
+import { validatePassword, getPasswordStrength, getStrengthLabel } from "../utils/passwordValidation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { register, loginWithGoogle } = useAuth();
+
+  const strength = getPasswordStrength(password);
+  const strengthInfo = getStrengthLabel(strength);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Client-side validation
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const pwCheck = validatePassword(password);
+    if (!pwCheck.valid) {
+      setError(pwCheck.errors[0]);
+      return;
+    }
+
     setLoading(true);
     try {
-      await api.register(email, password, fullName);
-      // Auto login after registration
-      await api.login(email, password);
-      navigate("/dashboard");
+      await register(email, password, fullName);
+      navigate("/profile/setup");
     } catch (err) {
       setError(err.message || "Registration failed. Email might already exist.");
     } finally {
@@ -28,9 +48,23 @@ export default function Register() {
     }
   };
 
+  const handleGoogleSuccess = async (response) => {
+    setError("");
+    setLoading(true);
+    try {
+      await loginWithGoogle(response.credential);
+      navigate("/profile/setup");
+    } catch (err) {
+      setError(err.message || "Google sign-in failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useGoogleSignIn("google-signin-button-register", handleGoogleSuccess);
+
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#1A2B2A] via-[#0F1E1E] to-[#2D3F3E] flex items-center justify-center p-4">
-      {/* Blur Orbs */}
       <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#7BC4BE]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FAD07A]/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -45,7 +79,7 @@ export default function Register() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-block mb-3">
             <span className="text-2xl font-bold tracking-tight text-white flex items-center justify-center gap-1.5">
-              <span className="text-[#7BC4BE]">✦</span> Prompt<span className="text-[#7BC4BE]">Resume</span>
+              <span className="text-[#7BC4BE]">&#10022;</span> Prompt<span className="text-[#7BC4BE]">Resume</span>
             </span>
           </Link>
           <h2 className="text-xl font-medium text-white/90">Get started today</h2>
@@ -61,6 +95,20 @@ export default function Register() {
             {error}
           </motion.div>
         )}
+
+        {/* Google Sign-In Button */}
+        <div className="mb-6">
+          <div id="google-signin-button-register" className="w-full flex justify-center" />
+        </div>
+
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/10" />
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="px-2 bg-transparent text-gray-400">or continue with email</span>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -104,14 +152,63 @@ export default function Register() {
                 <Lock size={16} />
               </span>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE] focus:ring-1 focus:ring-[#7BC4BE] transition-all"
+                placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE] focus:ring-1 focus:ring-[#7BC4BE] transition-all"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
+
+            {/* Password strength indicator */}
+            {password.length > 0 && (
+              <div className="mt-2">
+                <div className="flex gap-1 h-1">
+                  <div className={`flex-1 rounded-full ${strength >= 25 ? strengthInfo.color : "bg-white/10"}`} />
+                  <div className={`flex-1 rounded-full ${strength >= 50 ? strengthInfo.color : "bg-white/10"}`} />
+                  <div className={`flex-1 rounded-full ${strength >= 75 ? strengthInfo.color : "bg-white/10"}`} />
+                  <div className={`flex-1 rounded-full ${strength >= 100 ? strengthInfo.color : "bg-white/10"}`} />
+                </div>
+                <p className={`text-xs mt-1 ${strength < 30 ? "text-rose-400" : strength < 60 ? "text-amber-400" : "text-emerald-400"}`}>
+                  {strengthInfo.label}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Confirm Password</label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <Lock size={16} />
+              </span>
+              <input
+                type={showConfirm ? "text" : "password"}
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7BC4BE] focus:ring-1 focus:ring-[#7BC4BE] transition-all"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white transition-colors"
+              >
+                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            {confirmPassword && password !== confirmPassword && (
+              <p className="text-xs text-rose-400 mt-1">Passwords do not match</p>
+            )}
           </div>
 
           <button
